@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",
@@ -35,6 +36,8 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "@types/body-parser": "^1.19.2"
+    "@types/body-parser": "^1.19.2",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vitest": "^0.30.1"
   }
 }

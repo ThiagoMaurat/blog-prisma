@@ -2,7 +2,7 @@ import { Prisma, User } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { UsersRepository } from "../in-memory-user-repository";
 
-export class InMemoryCheckInsRepository implements UsersRepository {
+export class InMemoryUserRepository implements UsersRepository {
   public items: User[] = [];
 
   async findByEmail(email: string): Promise<User | null> {
