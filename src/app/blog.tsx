@@ -14,6 +14,9 @@
 // import { useSearchPost } from "../queries/use-fetch-post-by-input";
 // import { Footer } from "../components/Footer";
 
+import { authOptions } from "@/server/auth";
+import { getServerSession } from "next-auth";
+
 // export default function BlogPage(data: ThemeAndPostData) {
 //   const orderedData = useMemo(() => {
 //     return tail(orderBy(data.allPosts.data, "created_at", "desc"));
@@ -207,6 +210,7 @@
 //   };
 // };
 
-export default function Hello() {
-  <h2>asd</h2>
+export default async function Hello() {
+  const session = await getServerSession(authOptions);
+  return <pre>{JSON.stringify(session, null, 2)}</pre>;
 }
