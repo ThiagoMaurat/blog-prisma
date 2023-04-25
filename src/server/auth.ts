@@ -10,6 +10,9 @@ import { prisma } from "@/lib/prisma";
 import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { makeAuthenticateUseCase } from "./factories/make-authenticate-use-case";
+import { compare } from "bcryptjs";
+import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
+import { AuthenticateUseCase } from "./use-cases/Authenticate/Authenticate";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -62,18 +65,21 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const { execute } = makeAuthenticateUseCase();
+        const prismaUsersRepository = new PrismaUsersRepository();
+        const authenticateUseCase = new AuthenticateUseCase(
+          prismaUsersRepository
+        );
 
-        const { user } = await execute({
+        const { user } = await authenticateUseCase.execute({
           email: credentials.email,
           password: credentials.password,
         });
 
-        return {
-          id: user.id,
-          name: user.name,
-          email: user.email,
-        };
+        if (!user) {
+          return null;
+        }
+
+        return user;
       },
     }),
   ],
