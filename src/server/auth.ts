@@ -5,14 +5,12 @@ import {
   type DefaultSession,
 } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { prisma } from "@/lib/prisma";
 import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { makeAuthenticateUseCase } from "./factories/make-authenticate-use-case";
-import { compare } from "bcryptjs";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 import { AuthenticateUseCase } from "./use-cases/Authenticate/Authenticate";
+import { prisma } from "@/lib/prisma";
+import { compare } from "bcryptjs";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -65,33 +63,43 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const prismaUsersRepository = new PrismaUsersRepository();
-        const authenticateUseCase = new AuthenticateUseCase(
-          prismaUsersRepository
-        );
-
-        const { user } = await authenticateUseCase.execute({
-          email: credentials.email,
-          password: credentials.password,
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
         });
 
         if (!user) {
           return null;
         }
 
+        if (user) {
+          const doesPasswordMatches = await compare(
+            credentials.password,
+            user?.password
+          );
+
+          if (!doesPasswordMatches) {
+            return null;
+          }
+        }
+
         return user;
       },
     }),
   ],
-  // callbacks: {
-  //   session: ({ session, user }) => ({
-  //     ...session,
-  //     user: {
-  //       ...session.user,
-  //       id: user.id,
-  //     },
-  //   }),
-  // },
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token, user }) {
+      (session.user as any) = token;
+      return session;
+    },
+  },
+  pages: {
+    signIn: "/login",
+  },
 };
 
 /**

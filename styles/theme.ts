@@ -28,7 +28,7 @@ export const theme: ThemeConfig = extendTheme({
   components: {},
   styles: {
     global: (props: StyleFunctionProps) => ({
-      "*": {
+      html: {
         margin: "0",
         padding: "0",
         boxSizing: "border-box",
