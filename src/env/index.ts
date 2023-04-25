@@ -3,6 +3,12 @@ import { z } from "zod";
 
 const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
+  GITHUB_ID: z.string(),
+  GITHUB_SECRET: z.string(),
+  NEXTAUTH_SECRET:
+    process.env.NODE_ENV === "production"
+      ? z.string().min(1)
+      : z.string().min(1).optional(),
 });
 
 const _env = envSchema.safeParse(process.env);
@@ -13,4 +19,4 @@ if (_env.success === false) {
   throw new Error("Invalid enviroment variables");
 }
 
-export const env = _env;
+export const { data: env } = _env;
