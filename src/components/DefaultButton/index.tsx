@@ -26,7 +26,7 @@ export const DefaultButton: FC<DefaultButtonProps> = (
         fontSize: "16px",
         fontWeight: 700,
         borderRadius: "8px",
-        height: "38px",
+        height: "40px",
         lineHeight: "20px",
         border: "none",
         width: "100%",

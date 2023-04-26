@@ -32,6 +32,24 @@ export const theme: ThemeConfig = extendTheme({
         margin: "0",
         padding: "0",
         boxSizing: "border-box",
+        overflow: "auto",
+        "&::-webkit-scrollbar": {
+          width: "6px",
+          height: "8px",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "#D9D9D9",
+          borderRadius: "17px",
+          height: "8px",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          background: "#60606C",
+          borderRadius: "17px",
+          height: "8px",
+        },
+        "&::-webkit-scrollbar-corner": {
+          background: "rgba(0,0,0,0)",
+        },
       },
       p: {
         fontFamily: `'Montserrat', sans-serif`,

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import { DefaultButton } from "@/components/DefaultButton";
@@ -54,22 +54,25 @@ export default function Page() {
   });
 
   return (
-    <Limiter minH={"100vh"}>
+    <Limiter>
       <Header />
 
       <Flex
         flexDir={{ base: "column", md: "row" }}
         gap={4}
-        justifyContent={"space-between"}
-        mt="12rem"
+        justifyContent={"space-evenly"}
+        minH={"calc(100vh - 95px)"}
+        alignItems={"center"}
       >
-        <Image
-          src={"/login.webp"}
-          width={500}
-          height={500}
-          style={{ borderRadius: "1rem" }}
-          alt="login-image"
-        />
+        <Flex display={{ base: "none", sm: "flex" }}>
+          <Image
+            src={"/login.png"}
+            width={300}
+            height={500}
+            style={{ borderRadius: "1rem" }}
+            alt="login-image"
+          />
+        </Flex>
 
         <Flex
           as="form"
