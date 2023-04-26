@@ -1,4 +1,3 @@
-"use client";
 import { FlexProps, useColorMode, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import { MenuLinks } from "./MenuLinks";

@@ -1,9 +1,11 @@
-import { Box, Flex, HStack, useColorMode } from "@chakra-ui/react";
+import { Box, Button, Flex, HStack, useColorMode } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/compat/router";
 import styles from "./styles.module.css";
 import { useCallback } from "react";
 import ToggleButtonDarkMode from "../ToogleButtonDarkMode";
+import { signOut, useSession } from "next-auth/react";
+import { MdLogout } from "react-icons/md";
 
 type MenuLinksProps = {
   isOpen: boolean;
@@ -13,6 +15,7 @@ type MenuLinksProps = {
 export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
   const { colorMode } = useColorMode();
   const router = useRouter();
+  const { data } = useSession();
 
   const CheckRouterMatchesLabel = useCallback(
     (label: string) => {
@@ -75,8 +78,16 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
             Blog
           </Link>
         </Flex>
-        <HStack justify={"center"}>
+        <HStack gap={2} justify={"center"}>
           <ToggleButtonDarkMode />
+          {data?.user?.name && (
+            <MdLogout
+              size={24}
+              color={colorMode === "dark" ? "whiteAlpha.900" : "gray.900"}
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              cursor={"pointer"}
+            />
+          )}
         </HStack>
       </Flex>
     </Box>
