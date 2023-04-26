@@ -52,6 +52,9 @@ export const theme: ThemeConfig = extendTheme({
       li: {
         listStyle: "none",
       },
+      button: {
+        fontFamily: `'Montserrat', sans-serif`,
+      },
     }),
   },
 });

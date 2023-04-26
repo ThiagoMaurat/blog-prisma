@@ -1,6 +1,6 @@
-import { Box, Flex, HStack, Stack, useColorMode } from "@chakra-ui/react";
+import { Box, Flex, HStack, useColorMode } from "@chakra-ui/react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useRouter } from "next/compat/router";
 import styles from "./styles.module.css";
 import { useCallback } from "react";
 import ToggleButtonDarkMode from "../ToogleButtonDarkMode";
@@ -12,18 +12,18 @@ type MenuLinksProps = {
 
 export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
   const { colorMode } = useColorMode();
-  const { asPath } = useRouter();
+  const router = useRouter();
 
   const CheckRouterMatchesLabel = useCallback(
     (label: string) => {
-      if (asPath.includes(label.toLowerCase())) {
+      if (router?.asPath.includes(label.toLowerCase())) {
         return true;
-      } else if (asPath === "/" && label === "Home") {
+      } else if (router?.asPath === "/" && label === "Home") {
         return true;
       }
       return false;
     },
-    [asPath]
+    [router?.asPath]
   );
 
   return (

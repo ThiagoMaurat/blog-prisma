@@ -5,6 +5,9 @@ import { Button, Flex } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import { DefaultButton } from "@/components/DefaultButton";
+import { BsGithub } from "react-icons/bs";
+import { Limiter } from "@/components/Limiter";
+import { Header } from "@/components/Header";
 
 interface FormLogin {
   login: string;
@@ -48,7 +51,8 @@ export default function Page() {
   });
 
   return (
-    <>
+    <Limiter>
+      <Header />
       <Flex
         as="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -57,7 +61,12 @@ export default function Page() {
         flexDir={"column"}
         gap={"1rem"}
       >
-        <Button isLoading={isLoading} type="button" onClick={loginWithGitHub}>
+        <Button
+          rightIcon={<BsGithub />}
+          isLoading={isLoading}
+          type="button"
+          onClick={loginWithGitHub}
+        >
           Git Hub
         </Button>
         <FieldInputController
@@ -78,6 +87,6 @@ export default function Page() {
 
         <DefaultButton onClick={() => signOut()} label={"Sair"} />
       </Flex>
-    </>
+    </Limiter>
   );
 }
