@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { Button, Flex } from "@chakra-ui/react";
+import { Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import { DefaultButton } from "@/components/DefaultButton";
@@ -10,6 +10,7 @@ import { Limiter } from "@/components/Limiter";
 import { Header } from "@/components/Header";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "./schema";
+import Image from "next/image";
 
 interface FormLogin {
   login: string;
@@ -53,48 +54,70 @@ export default function Page() {
   });
 
   return (
-    <Limiter>
+    <Limiter minH={"100vh"}>
       <Header />
+
       <Flex
-        as="form"
-        onSubmit={handleSubmit(onSubmit)}
-        maxW="360px"
-        w="100%"
-        flexDir={"column"}
-        gap={"1rem"}
+        flexDir={{ base: "column", md: "row" }}
+        gap={4}
+        justifyContent={"space-between"}
+        mt="12rem"
       >
-        <Button
-          rightIcon={<BsGithub />}
-          isLoading={isLoading}
-          type="button"
-          onClick={loginWithGitHub}
+        <Image
+          src={"/login.webp"}
+          width={500}
+          height={500}
+          style={{ borderRadius: "1rem" }}
+          alt="login-image"
+        />
+
+        <Flex
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
+          maxW="360px"
+          w="100%"
+          flexDir={"column"}
+          gap={4}
         >
-          Git Hub
-        </Button>
+          <VStack gap={4}>
+            <Heading>Welcome back!</Heading>
 
-        <FieldInputController
-          placeholder="Enter Email"
-          label="E-mail"
-          control={control}
-          name="login"
-          type="email"
-          error={errors.login}
-        />
+            <Text>Lets build something great!</Text>
+          </VStack>
 
-        <FieldInputController
-          label="Senha"
-          placeholder="Password"
-          control={control}
-          name="password"
-          type="password"
-          error={errors.password}
-        />
+          <Button
+            rightIcon={<BsGithub />}
+            isLoading={isLoading}
+            type="button"
+            onClick={loginWithGitHub}
+          >
+            Git Hub
+          </Button>
 
-        <DefaultButton
-          isLoading={isSubmitting}
-          type="submit"
-          label={"Enviar"}
-        />
+          <FieldInputController
+            placeholder="Enter Email"
+            label="E-mail"
+            control={control}
+            name="login"
+            type="email"
+            error={errors.login}
+          />
+
+          <FieldInputController
+            label="Senha"
+            placeholder="Password"
+            control={control}
+            name="password"
+            type="password"
+            error={errors.password}
+          />
+
+          <DefaultButton
+            isLoading={isSubmitting}
+            type="submit"
+            label={"Enviar"}
+          />
+        </Flex>
       </Flex>
     </Limiter>
   );
