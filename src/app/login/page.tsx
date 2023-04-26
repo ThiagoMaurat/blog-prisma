@@ -1,6 +1,6 @@
 "use client";
-import { FC, useState } from "react";
-import { signIn, signOut } from "next-auth/react";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 import { Button, Flex } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
@@ -8,6 +8,8 @@ import { DefaultButton } from "@/components/DefaultButton";
 import { BsGithub } from "react-icons/bs";
 import { Limiter } from "@/components/Limiter";
 import { Header } from "@/components/Header";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { schema } from "./schema";
 
 interface FormLogin {
   login: string;
@@ -22,7 +24,6 @@ export default function Page() {
     try {
       await signIn("github");
     } catch (error) {
-      // display error message to user
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -40,14 +41,15 @@ export default function Page() {
   };
 
   const {
-    watch,
     control,
-    register,
-    setValue,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<FormLogin>({
-    // resolver: yupResolver(schema),
+    resolver: zodResolver(schema),
+    defaultValues: {
+      login: "",
+      password: "",
+    },
   });
 
   return (
@@ -69,23 +71,30 @@ export default function Page() {
         >
           Git Hub
         </Button>
+
         <FieldInputController
           placeholder="Enter Email"
+          label="E-mail"
           control={control}
           name="login"
           type="email"
+          error={errors.login}
         />
 
         <FieldInputController
+          label="Senha"
           placeholder="Password"
           control={control}
           name="password"
           type="password"
+          error={errors.password}
         />
 
-        <DefaultButton type="submit" label={"Enviar"} />
-
-        <DefaultButton onClick={() => signOut()} label={"Sair"} />
+        <DefaultButton
+          isLoading={isSubmitting}
+          type="submit"
+          label={"Enviar"}
+        />
       </Flex>
     </Limiter>
   );

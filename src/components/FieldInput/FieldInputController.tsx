@@ -5,6 +5,7 @@ import {
   FormHelperText,
   FormLabel,
   InputProps,
+  useColorMode,
 } from "@chakra-ui/react";
 import { Control, Controller, FieldError } from "react-hook-form";
 import FieldInput from "./index";
@@ -28,18 +29,19 @@ export const FieldInputController: React.FC<FieldInputRegisterProps> = ({
   control,
   ...inputProps
 }) => {
+  const { colorMode } = useColorMode();
+
   return (
     <FormControl isInvalid={!!error}>
       {!!label && (
         <FormLabel
-          fontFamily="Mulish"
           fontStyle="normal"
           fontWeight="600"
           fontSize="16px"
           lineHeight="20px"
           textAlign="left"
           letterSpacing="0.04em"
-          color="#FFFFFF"
+          color={colorMode === "dark" ? "#fff" : "#000"}
           htmlFor={name}
         >
           {label}
