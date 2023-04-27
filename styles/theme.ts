@@ -4,7 +4,7 @@ import type { StyleFunctionProps } from "@chakra-ui/styled-system";
 export const theme: ThemeConfig = extendTheme({
   initialColorMode: "dark",
   breakpoints: {
-    xx: "1550px",
+    xx: "1549px",
   },
   colors: {
     gray: {
