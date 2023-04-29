@@ -1,7 +1,14 @@
 "use client";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import { Box, Button, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Heading,
+  Text,
+  VStack,
+  useToast,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import { DefaultButton } from "@/components/DefaultButton";
@@ -11,7 +18,7 @@ import { Header } from "@/components/Header";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { schema } from "./schema";
 import Image from "next/image";
-
+import { useRouter } from "next/navigation";
 interface FormLogin {
   login: string;
   password: string;
@@ -19,6 +26,8 @@ interface FormLogin {
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
+  const { push } = useRouter();
 
   async function loginWithGitHub() {
     setIsLoading(true);
@@ -32,13 +41,26 @@ export default function Page() {
   }
 
   const onSubmit = async (data: FormLogin) => {
-    console.log(data);
-    await signIn("credentials", {
+    const response = await signIn("credentials", {
       email: data.login,
       password: data.password,
-      redirect: true,
+      redirect: false,
       callbackUrl: "/",
     });
+
+    if (response?.ok) {
+      push("/");
+    }
+
+    if (response?.error) {
+      toast({
+        title: "Erro",
+        description: "Erro ao logar.",
+        status: "error",
+        duration: 4000,
+        isClosable: true,
+      });
+    }
   };
 
   const {

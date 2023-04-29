@@ -60,7 +60,8 @@ export const authOptions: NextAuthOptions = {
         },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
+
+      async authorize(credentials, req) {
         if (!credentials?.email || !credentials.password) {
           return null;
         }
@@ -85,17 +86,27 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: "/login",
-    error: "/login",
   },
-  // callbacks: {
-  //   session: ({ session, user }) => ({
-  //     ...session,
-  //     user: {
-  //       ...session.user,
-  //       id: user.id,
-  //     },
-  //   }),
-  // },
+  callbacks: {
+    async session({ session, token }) {
+      return session;
+    },
+    async jwt({ user, token }) {
+      if (user) {
+        const u = user as unknown as any;
+        return {
+          ...token,
+          user: {
+            id: u.id,
+            name: u.name,
+            email: u.email,
+            image: u.image,
+          },
+        };
+      }
+      return token;
+    },
+  },
 };
 
 /**
