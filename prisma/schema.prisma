@@ -17,7 +17,6 @@ model User {
   password     String
   created_at   DateTime   @default(now())
   roles        Role[]
-  sessions     Session[]
   authoredPost Post[]
   UserRole     UserRole[]
   UserPost     UserPost[]
@@ -59,15 +58,6 @@ model RolePermission {
   permissionId String
   role         Role       @relation(fields: [roleId], references: [id])
   permission   Permission @relation(fields: [permissionId], references: [id])
-}
-
-model Session {
-  id           String   @id @default(uuid())
-  userId       String
-  accessToken  String
-  refreshToken String
-  createdAt    DateTime @default(now())
-  user         User     @relation(fields: [userId], references: [id])
 }
 
 model Post {
