@@ -24,6 +24,15 @@ export class PrismaUsersRepository implements UsersRepository {
         roles: {
           connect: [{ name: "reader" }],
         },
+        UserRole: {
+          create: {
+            role: {
+              connect: {
+                name: "reader",
+              },
+            },
+          },
+        },
       },
     });
 
