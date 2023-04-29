@@ -51,7 +51,7 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
                 ? {
                     borderBottom: "1px solid #35A5F5",
                     borderBottomWidth: "3px",
-                    color: "gray.300",
+                    color: "gray.900",
                     fontWeight: "600",
                   }
                 : undefined

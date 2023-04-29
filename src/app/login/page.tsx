@@ -57,7 +57,7 @@ export default function Page() {
         title: "Erro",
         description: "Erro ao logar.",
         status: "error",
-        duration: 4000,
+        duration: 3000,
         isClosable: true,
       });
     }
@@ -86,7 +86,7 @@ export default function Page() {
         minH={"calc(100vh - 95px)"}
         alignItems={"center"}
       >
-        <Flex display={{ base: "none", sm: "flex" }}>
+        <Flex display={{ base: "none", md: "flex" }}>
           <Image
             src={"/login.png"}
             width={300}
