@@ -23,7 +23,7 @@ export default function Page() {
   async function loginWithGitHub() {
     setIsLoading(true);
     try {
-      await signIn("github");
+      await signIn("github", { callbackUrl: "/" });
     } catch (error) {
       console.log(error);
     } finally {
