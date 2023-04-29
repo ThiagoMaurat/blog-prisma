@@ -1,28 +1,42 @@
 import { Prisma, Post } from "@prisma/client";
 import { PostRepository } from "../in-memory-post-repository";
 import { randomUUID } from "node:crypto";
+import { InMemoryUserRepository } from "./users-repository";
 
 export class InMemoryPostRepository implements PostRepository {
   public items: Post[] = [];
 
+  constructor(private readonly userRepository: InMemoryUserRepository) {}
+
   async create(data: Prisma.PostCreateInput): Promise<Post> {
-    const post = {
-      id: randomUUID(),
+    const author = await this.userRepository.items.find(
+      (item) => item === data.author
+    );
+
+    const post: Post = {
+      id: data.id ?? randomUUID(),
       title: data.title,
       content: data.content,
       publishedAt: new Date(),
-      author: data.author,
-      UserPost: data.UserPost,
+      authorId: author?.id ?? "",
     };
 
     this.items.push(post);
 
     return post;
   }
+
   async find(id: string): Promise<Post | null> {
-    throw new Error("Method not implemented.");
+    const findPost = this.items.find((post) => post.id === id);
+
+    if (!findPost) {
+      return null;
+    }
+
+    return findPost;
   }
+
   async findAll(): Promise<Post[]> {
-    throw new Error("Method not implemented.");
+    return this.items;
   }
 }
