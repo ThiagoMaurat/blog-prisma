@@ -51,7 +51,6 @@ export const authOptions: NextAuthOptions = {
       clientSecret: env.GITHUB_SECRET,
     }),
     CredentialsProvider({
-      name: "Sign in",
       credentials: {
         email: {
           label: "Email",
@@ -77,7 +76,7 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (!user) {
-          return null;
+          throw new Error("Invalid credentials");
         }
 
         return user;

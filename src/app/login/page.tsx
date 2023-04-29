@@ -45,21 +45,20 @@ export default function Page() {
       email: data.login,
       password: data.password,
       redirect: false,
-      callbackUrl: "/",
     });
 
-    if (response?.ok) {
-      push("/");
-    }
-
     if (response?.error) {
-      toast({
+      return toast({
         title: "Erro",
         description: "Erro ao logar.",
         status: "error",
         duration: 3000,
         isClosable: true,
       });
+    }
+
+    if (response?.ok) {
+      return push("/");
     }
   };
 
