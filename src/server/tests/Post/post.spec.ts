@@ -1,5 +1,3 @@
-import { UserAlreadyExistsError } from "@/server/errors/user-already-exists";
-import { UserDoesNotExistsError } from "@/server/errors/user-does-not-exist";
 import { InMemoryPostRepository } from "@/server/repositories/in-memory/post-repository";
 import { InMemoryUserRepository } from "@/server/repositories/in-memory/users-repository";
 import { PostUseCase } from "@/server/use-cases/Posts/post";

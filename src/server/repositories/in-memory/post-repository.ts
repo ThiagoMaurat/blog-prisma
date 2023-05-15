@@ -1,5 +1,5 @@
 import { Prisma, Post } from "@prisma/client";
-import { PostRepository } from "../in-memory-post-repository";
+import { PostRepository } from "../post-repository";
 import { randomUUID } from "node:crypto";
 import { InMemoryUserRepository } from "./users-repository";
 

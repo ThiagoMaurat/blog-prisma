@@ -1,4 +1,3 @@
-import { expect, describe, it, beforeEach } from "vitest";
 import { hash } from "bcryptjs";
 import { InMemoryUserRepository } from "@/server/repositories/in-memory/users-repository";
 import { AuthenticateUseCase } from "@/server/use-cases/Authenticate/Authenticate";

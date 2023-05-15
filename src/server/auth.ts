@@ -20,20 +20,20 @@ import { AuthenticateUseCase } from "./use-cases/Authenticate/Authenticate";
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      // ...other properties
-      // role: UserRole;
-    } & DefaultSession["user"];
-  }
+// declare module "next-auth" {
+//   interface Session extends DefaultSession {
+//     user: {
+//       id: string;
+//       // ...other properties
+//       // role: UserRole;
+//     } & DefaultSession["user"];
+//   }
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
-}
+//   // interface User {
+//   //   // ...other properties
+//   //   // role: UserRole;
+//   // }
+// }
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -41,16 +41,17 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
-  // session: {
-  //   strategy: "jwt",
-  // },
-  // adapter: PrismaAdapter(prisma),
+  session: {
+    strategy: "jwt",
+  },
+  adapter: PrismaAdapter(prisma),
   providers: [
     GitHubProvider({
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
     }),
     CredentialsProvider({
+      name: "Credentials",
       credentials: {
         email: {
           label: "Email",
@@ -87,27 +88,21 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    async session({ session, token }) {
-      return {
-        ...session,
-      };
+    session: ({ session, user, token }) => {
+      session.user.id = token.id;
+
+      return session;
     },
-    async jwt({ user, token }) {
-      if (user) {
-        const u = user as unknown as any;
-        return {
-          ...token,
-          user: {
-            id: u.id,
-            name: u.name,
-            email: u.email,
-            image: u.image,
-          },
-        };
+    jwt: ({ token, user, account }) => {
+      if (account) {
+        token.acessToken = account.access_token;
+        token.id = user.id;
       }
+
       return token;
     },
   },
+  secret: env.NEXTAUTH_SECRET,
 };
 
 /**

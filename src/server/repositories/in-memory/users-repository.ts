@@ -1,9 +1,13 @@
 import { Prisma, User } from "@prisma/client";
 import { randomUUID } from "crypto";
-import { UsersRepository } from "../in-memory-user-repository";
+import { UserWithRoles, UsersRepository } from "../user-repository";
 
 export class InMemoryUserRepository implements UsersRepository {
   public items: User[] = [];
+
+  findByIdUserAndCheckIfAdmin(id: string): Promise<UserWithRoles | null> {
+    throw new Error("Method not implemented.");
+  }
 
   async findById(id: string): Promise<User | null> {
     const user = this.items.find((user) => user.id === id);

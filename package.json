@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest"
+    "test": "vitest",
+    "seed": "npx prisma db seed"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.5.5",

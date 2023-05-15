@@ -1,8 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma, User } from "@prisma/client";
-import { UsersRepository } from "../in-memory-user-repository";
+import { UserWithRoles, UsersRepository } from "../user-repository";
 
 export class PrismaUsersRepository implements UsersRepository {
+  findByIdUserAndCheckIfAdmin(id: string): Promise<UserWithRoles | null> {
+    throw new Error("Method not implemented.");
+  }
   findById(id: string): Promise<User | null> {
     throw new Error("Method not implemented.");
   }
