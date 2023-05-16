@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    session: ({ session, user, token }) => {
+    session: async ({ session, user, token }) => {
       session.user.id = token.id;
 
       return session;

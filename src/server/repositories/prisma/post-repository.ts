@@ -4,9 +4,7 @@ import { PostRepository } from "../post-repository";
 
 export class PrismaPostRepository implements PostRepository {
   async create(data: Prisma.PostCreateInput): Promise<Post> {
-    const authorId = data.author.connect?.id;
-
-    if (!authorId) {
+    if (!data.author || !data.author.connect || !data.author.connect.id) {
       throw new Error("Author id not provided");
     }
 
@@ -14,7 +12,7 @@ export class PrismaPostRepository implements PostRepository {
       data: {
         ...data,
         author: {
-          connect: { id: authorId },
+          connect: data.author.connect, // Utiliza a opção connect do objeto author
         },
       },
     });

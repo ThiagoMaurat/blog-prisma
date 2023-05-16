@@ -47,7 +47,6 @@ model User {
   roles         Role[]
   authoredPost  Post[]
   UserRole      UserRole[]
-  UserPost      UserPost[]
   Account       Account[]
   Session       Session[]
 
@@ -68,12 +67,11 @@ enum RoleType {
 }
 
 model Role {
-  id          String           @id @default(uuid())
-  name        RoleType         @unique
-  users       UserRole[]
-  permissions RolePermission[]
-  User        User?            @relation(fields: [userId], references: [id])
-  userId      String?
+  id     String     @id @default(uuid())
+  name   RoleType   @unique
+  users  UserRole[]
+  User   User?      @relation(fields: [userId], references: [id])
+  userId String?
 }
 
 model UserRole {
@@ -84,34 +82,11 @@ model UserRole {
   role   Role   @relation(fields: [roleId], references: [id])
 }
 
-model Permission {
-  id    String           @id @default(uuid())
-  name  String           @unique
-  roles RolePermission[]
-}
-
-model RolePermission {
-  id           String     @id @default(uuid())
-  roleId       String
-  permissionId String
-  role         Role       @relation(fields: [roleId], references: [id])
-  permission   Permission @relation(fields: [permissionId], references: [id])
-}
-
 model Post {
-  id          String     @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   content     String
   publishedAt DateTime?
   authorId    String
-  author      User       @relation(fields: [authorId], references: [id])
-  UserPost    UserPost[]
-}
-
-model UserPost {
-  id     String @id @default(uuid())
-  userId String
-  postId String
-  user   User   @relation(fields: [userId], references: [id])
-  post   Post   @relation(fields: [postId], references: [id])
+  author      User      @relation(fields: [authorId], references: [id])
 }

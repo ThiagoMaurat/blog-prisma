@@ -1,8 +1,8 @@
 import { User, Post } from "@prisma/client";
-import { PostRepository } from "@/server/repositories/in-memory-post-repository";
-import { UsersRepository } from "@/server/repositories/in-memory-user-repository";
 import { randomUUID } from "crypto";
 import { UserDoesNotExistsError } from "@/server/errors/user-does-not-exist";
+import { PostRepository } from "@/server/repositories/post-repository";
+import { UsersRepository } from "@/server/repositories/user-repository";
 
 interface PostUseCaseRequest {
   title: string;
@@ -15,10 +15,7 @@ interface PostUseCaseResponse {
 }
 
 export class PostUseCase {
-  constructor(
-    private postRepository: PostRepository,
-    private userRepository: UsersRepository
-  ) {}
+  constructor(private postRepository: PostRepository) {}
 
   async execute({
     authorId,
@@ -27,22 +24,16 @@ export class PostUseCase {
   }: PostUseCaseRequest): Promise<PostUseCaseResponse> {
     // create post
 
-    const findUser = await this.userRepository.findById(authorId);
-
-    if (!findUser) {
-      throw new UserDoesNotExistsError();
-    }
-
     const post = await this.postRepository.create({
-      id: randomUUID(),
-      publishedAt: new Date(),
       author: {
         connect: {
           id: authorId,
         },
       },
-      title: title,
-      content: content,
+      id: randomUUID(),
+      content,
+      title,
+      publishedAt: new Date(),
     });
 
     if (!post) {
