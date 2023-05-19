@@ -12,7 +12,7 @@ export class PrismaPostRepository implements PostRepository {
       data: {
         ...data,
         author: {
-          connect: data.author.connect, // Utiliza a opção connect do objeto author
+          connect: data.author.connect,
         },
       },
     });
@@ -25,10 +25,18 @@ export class PrismaPostRepository implements PostRepository {
   }
 
   async find(id: string): Promise<Post | null> {
-    throw new Error("Method not implemented.");
+    const post = await prisma.post.findFirst({
+      where: {
+        id,
+      },
+    });
+
+    return post;
   }
 
   async findAll(): Promise<Post[]> {
-    throw new Error("Method not implemented.");
+    const post = await prisma.post.findMany();
+
+    return post;
   }
 }

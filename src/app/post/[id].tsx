@@ -4,13 +4,10 @@ import { GetStaticProps } from "next";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Image from "next/image";
 import React from "react";
-import { PostData } from "../../@types/DataPost";
-import { Props } from "../../@types/ServerSide";
 import { CustomSectionTitlePostPage } from "../../components/CustomSectionTitlePostPage";
 import { Footer } from "../../components/Footer";
 import { Header } from "../../components/Header";
 import { Limiter } from "../../components/Limiter";
-import { supabase } from "../../lib/initSupabase";
 
 export default function Posts({ data }: Props) {
   if (data) {

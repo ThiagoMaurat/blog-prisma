@@ -2,6 +2,7 @@ import { z } from "zod";
 import { NextResponse } from "next/server";
 import { makePostUseCase } from "@/server/factories/make-post-use-case";
 import { UserDoesNotExistsError } from "@/server/errors/user-does-not-exist";
+import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 
 export async function POST(req: Request, res: Response) {
   const registerBodySchema = z.object({
@@ -12,6 +13,7 @@ export async function POST(req: Request, res: Response) {
 
   const postUseCase = makePostUseCase();
   const request = await req.json();
+
   try {
     const { authorId, content, title } = registerBodySchema.parse(request);
 
@@ -32,6 +34,15 @@ export async function POST(req: Request, res: Response) {
       return NextResponse.json(
         {
           message: "User does not exist",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (error instanceof UserIsNotAdminError) {
+      return NextResponse.json(
+        {
+          message: "User is not admin",
         },
         { status: 400 }
       );

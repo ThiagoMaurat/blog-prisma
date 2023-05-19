@@ -1,8 +1,8 @@
-import { User, Post } from "@prisma/client";
+import { Post } from "@prisma/client";
 import { randomUUID } from "crypto";
-import { UserDoesNotExistsError } from "@/server/errors/user-does-not-exist";
 import { PostRepository } from "@/server/repositories/post-repository";
 import { UsersRepository } from "@/server/repositories/user-repository";
+import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 
 interface PostUseCaseRequest {
   title: string;
@@ -15,7 +15,10 @@ interface PostUseCaseResponse {
 }
 
 export class PostUseCase {
-  constructor(private postRepository: PostRepository) {}
+  constructor(
+    private postRepository: PostRepository,
+    private userRepository: UsersRepository
+  ) {}
 
   async execute({
     authorId,
@@ -24,10 +27,18 @@ export class PostUseCase {
   }: PostUseCaseRequest): Promise<PostUseCaseResponse> {
     // create post
 
+    const isUserAdmin = await this.userRepository.findByIdUserAndCheckIfAdmin(
+      authorId
+    );
+
+    if (!isUserAdmin) {
+      throw new UserIsNotAdminError();
+    }
+
     const post = await this.postRepository.create({
       author: {
         connect: {
-          id: authorId,
+          id: isUserAdmin.id,
         },
       },
       id: randomUUID(),

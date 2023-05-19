@@ -3,9 +3,27 @@ import { Prisma, User } from "@prisma/client";
 import { UserWithRoles, UsersRepository } from "../user-repository";
 
 export class PrismaUsersRepository implements UsersRepository {
-  findByIdUserAndCheckIfAdmin(id: string): Promise<UserWithRoles | null> {
-    throw new Error("Method not implemented.");
+  async findByIdUserAndCheckIfAdmin(id: string): Promise<UserWithRoles | null> {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+      include: {
+        roles: {
+          where: {
+            name: "admin",
+          },
+        },
+      },
+    });
+
+    if (!user) {
+      new Error("User is not a admin");
+    }
+
+    return user;
   }
+
   findById(id: string): Promise<User | null> {
     throw new Error("Method not implemented.");
   }
