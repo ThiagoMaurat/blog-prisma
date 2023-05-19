@@ -1,18 +1,14 @@
 import { type GetServerSidePropsContext } from "next";
-import {
-  getServerSession,
-  type NextAuthOptions,
-  type DefaultSession,
-} from "next-auth";
+import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { makeAuthenticateUseCase } from "./factories/make-authenticate-use-case";
-import { compare } from "bcryptjs";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 import { AuthenticateUseCase } from "./use-cases/Authenticate/Authenticate";
+import { apiBaseUrl } from "next-auth/client/_utils";
+import axios from "axios";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -66,21 +62,28 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const prismaUsersRepository = new PrismaUsersRepository();
-        const authenticateUseCase = new AuthenticateUseCase(
-          prismaUsersRepository
-        );
-
-        const { user } = await authenticateUseCase.execute({
-          email: credentials.email,
-          password: credentials.password,
-        });
-
-        if (!user) {
-          throw new Error("Invalid credentials");
+        try {
+          const { data } = await axios.post(
+            "http://localhost:3000/api/auth/login",
+            {
+              email: credentials.email,
+              password: credentials.password,
+            }
+          );
+          console.log(data);
+          if (data) {
+            return data.user;
+          }
+        } catch (error) {
+          console.log(error);
+          return null;
         }
 
-        return user;
+        // if (!user) {
+        //   throw new Error("Invalid credentials");
+        // }
+
+        // return user;
       },
     }),
   ],
