@@ -21,12 +21,21 @@ export async function POST(req: Request, res: Response) {
       password,
     });
 
-    return NextResponse.json(
-      {
-        user,
-      },
-      { status: 200 }
-    );
+    if (user) {
+      return NextResponse.json(
+        {
+          user: {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            createdAt: user.created_at,
+            roles: user.roles,
+            image: user.image,
+          },
+        },
+        { status: 200 }
+      );
+    }
   } catch (error) {
     if (error instanceof UserDoesNotExistsError) {
       return NextResponse.json(
@@ -39,7 +48,7 @@ export async function POST(req: Request, res: Response) {
 
     return NextResponse.json(
       {
-        message: "Error creating post",
+        message: "Error on login",
       },
       { status: 500 }
     );

@@ -1,5 +1,5 @@
 import { compare } from "bcryptjs";
-import { User } from "@prisma/client";
+import { Role, User } from "@prisma/client";
 import { InvalidCredentialsError } from "@/server/errors/invalid-credentials-error";
 import { UsersRepository } from "@/server/repositories/user-repository";
 
@@ -9,7 +9,11 @@ interface AuthenticateUseCaseRequest {
 }
 
 interface AuthenticateUserCaseResponse {
-  user: User;
+  user:
+    | (User & {
+        roles: Role[];
+      })
+    | null;
 }
 
 export class AuthenticateUseCase {

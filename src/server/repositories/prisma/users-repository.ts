@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma, User } from "@prisma/client";
-import { UserWithRoles, UsersRepository } from "../user-repository";
+import { Prisma, Role, User } from "@prisma/client";
+import { UsersRepository } from "../user-repository";
 import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 
 export class PrismaUsersRepository implements UsersRepository {
@@ -31,10 +31,18 @@ export class PrismaUsersRepository implements UsersRepository {
     throw new Error("Method not implemented.");
   }
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByEmail(email: string): Promise<
+    | (User & {
+        roles: Role[];
+      })
+    | null
+  > {
     const user = await prisma.user.findUnique({
       where: {
         email: email,
+      },
+      include: {
+        roles: true,
       },
     });
 

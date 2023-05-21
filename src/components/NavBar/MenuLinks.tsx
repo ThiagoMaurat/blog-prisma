@@ -57,6 +57,8 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
               Blog
             </p>
           </Link>
+
+          {}
         </div>
 
         <div className="flex flex-row gap-2 justify-center">
