@@ -12,6 +12,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { UserRole } from "@prisma/client";
 import { randomUUID } from "crypto";
+import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -88,7 +89,6 @@ export const authOptions: NextAuthOptions = {
     // only for external providers like github
     // it wont affect the credentials providers
     async signIn({ profile, user, account }) {
-      console.log(account, user, profile);
       if (profile && account) {
         const existingUser = await prisma.user.findUnique({
           where: {
@@ -138,11 +138,16 @@ export const authOptions: NextAuthOptions = {
 
       return Promise.resolve(true);
     },
-    session: async ({ session, user, token }) => {
-      session.user.id = token.id;
+    session: async ({ session }) => {
+      const prisma = new PrismaUsersRepository();
+      const userInfo = await prisma.findByEmail(session.user.email);
+
+      session.user = userInfo;
+
       return session;
     },
     jwt: ({ token, user, account }) => {
+      console.log(token, user);
       if (account) {
         token.acessToken = account.access_token;
         token.id = user.id;
