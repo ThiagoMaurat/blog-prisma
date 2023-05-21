@@ -1,11 +1,17 @@
 import { type GetServerSidePropsContext } from "next";
-import { getServerSession, type NextAuthOptions } from "next-auth";
+import {
+  DefaultSession,
+  getServerSession,
+  type NextAuthOptions,
+} from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
+import { UserRole } from "@prisma/client";
+import { randomUUID } from "crypto";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -13,20 +19,17 @@ import axios from "axios";
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
-// declare module "next-auth" {
-//   interface Session extends DefaultSession {
-//     user: {
-//       id: string;
-//       // ...other properties
-//       // role: UserRole;
-//     } & DefaultSession["user"];
-//   }
-
-//   // interface User {
-//   //   // ...other properties
-//   //   // role: UserRole;
-//   // }
-// }
+declare module "next-auth" {
+  interface Session extends DefaultSession {
+    user: {
+      id: string;
+      role: UserRole;
+    } & DefaultSession["user"];
+  }
+  interface User {
+    role: UserRole;
+  }
+}
 
 /**
  * Options for NextAuth.js used to configure adapters, providers, callbacks, etc.
@@ -82,11 +85,62 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   callbacks: {
+    // only for external providers like github
+    // it wont affect the credentials providers
+    async signIn({ profile, user, account }) {
+      console.log(account, user, profile);
+      if (profile && account) {
+        const existingUser = await prisma.user.findUnique({
+          where: {
+            email: profile.email,
+          },
+        });
+
+        if (existingUser) {
+          return Promise.resolve(true);
+        } else {
+          await prisma.user.create({
+            data: {
+              name: user.name,
+              email: user.email,
+              image: user.image,
+              roles: {
+                connect: [{ name: "reader" }],
+              },
+              UserRole: {
+                create: {
+                  role: {
+                    connect: {
+                      name: "reader",
+                    },
+                  },
+                },
+              },
+              Account: {
+                create: {
+                  provider: account.provider,
+                  providerAccountId: account.providerAccountId,
+                  type: account.type,
+                  access_token: account.access_token,
+                  expires_at: account.expires_at,
+                  id: randomUUID(),
+                  id_token: account.id_token,
+                  refresh_token: account.refresh_token,
+                  scope: account.scope,
+                  session_state: account.session_state,
+                  token_type: account.token_type,
+                },
+              },
+            },
+          });
+        }
+      }
+
+      return Promise.resolve(true);
+    },
     session: async ({ session, user, token }) => {
       session.user.id = token.id;
-      return {
-        ...session,
-      };
+      return session;
     },
     jwt: ({ token, user, account }) => {
       if (account) {
