@@ -27,6 +27,7 @@ module.exports = {
         p: ["Montserrat", "sans-serif"],
         h1: ["Bebas Neue", "sans-serif"],
         button: ["Montserrat", "sans-serif"],
+        label: ["Montserrat", "sans-serif"],
       },
       html: {
         margin: "0",

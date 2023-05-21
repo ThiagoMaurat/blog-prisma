@@ -1,12 +1,4 @@
 import React from "react";
-import {
-  FormControl,
-  FormErrorMessage,
-  FormHelperText,
-  FormLabel,
-  InputProps,
-  useColorMode,
-} from "@chakra-ui/react";
 import { Control, Controller, FieldError } from "react-hook-form";
 import FieldInput from "./index";
 
@@ -15,10 +7,9 @@ type FieldInputRegisterProps = {
   label?: string;
   error?: FieldError;
   helperText?: string | React.ReactNode;
-  inputProps?: InputProps;
   control: Control<any>;
   defaultValue?: any;
-} & InputProps;
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 export const FieldInputController: React.FC<FieldInputRegisterProps> = ({
   name,
@@ -29,23 +20,12 @@ export const FieldInputController: React.FC<FieldInputRegisterProps> = ({
   control,
   ...inputProps
 }) => {
-  const { colorMode } = useColorMode();
-
   return (
-    <FormControl isInvalid={!!error}>
+    <div className="flex flex-col gap-2">
       {!!label && (
-        <FormLabel
-          fontStyle="normal"
-          fontWeight="600"
-          fontSize="16px"
-          lineHeight="20px"
-          textAlign="left"
-          letterSpacing="0.04em"
-          color={colorMode === "dark" ? "#fff" : "#000"}
-          htmlFor={name}
-        >
+        <label className="font-semibold text-left text-base" htmlFor={name}>
           {label}
-        </FormLabel>
+        </label>
       )}
 
       <Controller
@@ -57,9 +37,9 @@ export const FieldInputController: React.FC<FieldInputRegisterProps> = ({
         )}
       />
 
-      {helperText && !error && <FormHelperText>{helperText}</FormHelperText>}
+      {helperText && !error && <p>{helperText}</p>}
 
-      {!!error && <FormErrorMessage>{error.message}</FormErrorMessage>}
-    </FormControl>
+      {!!error && <p className="text-red-500 text-xs">{error.message}</p>}
+    </div>
   );
 };

@@ -1,18 +1,12 @@
 import React from "react";
-import { Input, InputProps } from "@chakra-ui/react";
 
 const FieldInput: React.ForwardRefRenderFunction<
   HTMLInputElement,
-  InputProps
+  React.InputHTMLAttributes<HTMLInputElement>
 > = (props, ref) => {
   return (
-    <Input
-      background={"#E1F5FE"}
-      border="0px"
-      borderRadius="8px"
-      autoComplete="off"
-      h="40px"
-      w="100%"
+    <input
+      className="bg-[#E1F5FE] px-3 rounded-lg h-10 w-full focus:outline-blue-500"
       ref={ref}
       {...props}
     />
