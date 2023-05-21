@@ -1,16 +1,14 @@
-import { Box, FlexProps, SimpleGridProps } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 type LimiterProps = {
   children: ReactNode;
-} & FlexProps &
-  SimpleGridProps;
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export const Limiter = (props: LimiterProps) => {
   const { children, ...rest } = props;
   return (
-    <Box px="1rem" maxW="1200px" w="full" mx="auto" {...rest}>
+    <div {...rest} className="p-4 max-w-[1200px] w-full mx-auto">
       {children}
-    </Box>
+    </div>
   );
 };

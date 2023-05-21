@@ -1,13 +1,16 @@
-import { Button, ButtonProps } from "@chakra-ui/react";
 import React, { forwardRef, ForwardRefRenderFunction } from "react";
-
-type ButtonThemeProps = {} & ButtonProps;
 
 const ButtonChakra: ForwardRefRenderFunction<
   HTMLButtonElement,
-  ButtonThemeProps
+  React.ButtonHTMLAttributes<HTMLButtonElement>
 > = (props, ref) => {
-  return <Button _hover={{ background: 'blue.300' }} color={'white'} backgroundColor="blue.500" borderRadius={'3xl'} {...props} ref={ref} />;
+  return (
+    <button
+      className="hover:bg-blue-300 text-white rounded-s-md bg-blue-300"
+      {...props}
+      ref={ref}
+    />
+  );
 };
 
 export const ButtonTheme = forwardRef(ButtonChakra);

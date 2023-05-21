@@ -1,6 +1,6 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
-import { ChakraProvider, ThemeProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { theme } from "../../styles/theme";
 
 interface Props {

@@ -1,7 +1,5 @@
-import { Box, Button, Flex, HStack, useColorMode } from "@chakra-ui/react";
 import Link from "next/link";
 import { useRouter } from "next/compat/router";
-import styles from "./styles.module.css";
 import { useCallback } from "react";
 import ToggleButtonDarkMode from "../ToogleButtonDarkMode";
 import { signOut, useSession } from "next-auth/react";
@@ -13,7 +11,6 @@ type MenuLinksProps = {
 };
 
 export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
-  const { colorMode } = useColorMode();
   const router = useRouter();
   const { data } = useSession();
 
@@ -30,66 +27,50 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
   );
 
   return (
-    <Box
-      display={{ base: isOpen ? "block" : "none", md: "block" }}
-      flexBasis={{ base: "100%", md: "auto" }}
-      w="55%"
+    <div
+      className={`block md:${
+        isOpen ? "block" : "hidden"
+      } w-[55%] md:basis-full basis-auto`}
     >
-      <Flex
-        gap={6}
-        align={"center"}
-        justify={["center", "space-between"]}
-        direction={["column", "column", "row", "row"]}
-        pt={[8, 8, 0, 0]}
-        color={colorMode === "dark" ? "whiteAlpha.900" : "gray.900"}
-      >
-        <Flex gap={8} align={"center"} flexDir={{ base: "column", md: "row" }}>
-          <Link
-            href={"/"}
-            style={
-              CheckRouterMatchesLabel("Home")
-                ? {
-                    borderBottom: "1px solid #35A5F5",
-                    borderBottomWidth: "3px",
-                    color: "gray.900",
-                    fontWeight: "600",
-                  }
-                : undefined
-            }
-            className={styles.linkMenu}
-          >
-            Home
+      <div className="flex gap-6 justify-between sm:justify-center md:flex-col flex-row md:pt-8">
+        <div className="flex gap-8 items-center md:flex-col">
+          <Link href={"/"}>
+            <p
+              className={`${
+                CheckRouterMatchesLabel("Home")
+                  ? "bottom-1 font-bold border-b-2 text-gray-300"
+                  : "hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all"
+              }`}
+            >
+              Home
+            </p>
           </Link>
 
-          <Link
-            href={"/blog"}
-            style={
-              CheckRouterMatchesLabel("Blog")
-                ? {
-                    borderBottom: "1px solid #35A5F5",
-                    borderBottomWidth: "3px",
-                    color: "gray.300",
-                    fontWeight: "600",
-                  }
-                : undefined
-            }
-            className={styles.linkMenu}
-          >
-            Blog
+          <Link href={"/blog"}>
+            <p
+              className={`${
+                CheckRouterMatchesLabel("Home")
+                  ? "bottom-1 font-bold border-b-2 text-gray-300"
+                  : "hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all"
+              }`}
+            >
+              Blog
+            </p>
           </Link>
-        </Flex>
-        <HStack gap={2} justify={"center"}>
+        </div>
+
+        <div className="flex flex-row gap-2 justify-center">
           <ToggleButtonDarkMode />
           {data?.user?.name && (
             <MdLogout
               size={24}
-              color={colorMode === "dark" ? "whiteAlpha.900" : "gray.900"}
+              color={"#FFFF"}
               onClick={() => signOut({ callbackUrl: "/login" })}
               cursor={"pointer"}
             />
           )}
-        </HStack>
-      </Flex>
-    </Box>
+        </div>
+      </div>
+    </div>
   );
 };
