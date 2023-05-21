@@ -1,14 +1,7 @@
 "use client";
 import { useState } from "react";
 import { signIn } from "next-auth/react";
-import {
-  Button,
-  Flex,
-  Heading,
-  Text,
-  VStack,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, useToast } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import { DefaultButton } from "@/components/DefaultButton";
@@ -78,14 +71,11 @@ export default function Page() {
     <Limiter>
       <Header />
 
-      <Flex
-        flexDir={{ base: "column", md: "row" }}
-        gap={4}
-        justifyContent={"space-evenly"}
-        minH={"calc(100vh - 95px)"}
-        alignItems={"center"}
+      <div
+        className="h-full sm:p-4 flex gap-4 md:flex-col justify-evenly items-center"
+        style={{ minHeight: "calc(100vh - 95px)" }}
       >
-        <Flex display={{ base: "none", md: "flex" }}>
+        <div className="flex md:hidden">
           <Image
             src={"/login.png"}
             width={300}
@@ -93,21 +83,17 @@ export default function Page() {
             style={{ borderRadius: "1rem" }}
             alt="login-image"
           />
-        </Flex>
+        </div>
 
-        <Flex
-          as="form"
+        <form
+          className="max-w-[360px] w-full flex flex-col gap-4"
           onSubmit={handleSubmit(onSubmit)}
-          maxW="360px"
-          w="100%"
-          flexDir={"column"}
-          gap={4}
         >
-          <VStack gap={4}>
-            <Heading>Welcome back!</Heading>
+          <div className="gap-4 flex flex-col">
+            <h2 className="text-2xl font-bold">Welcome back!</h2>
 
-            <Text>Lets build something great!</Text>
-          </VStack>
+            <p className="">Lets build something great!</p>
+          </div>
 
           <Button
             rightIcon={<BsGithub />}
@@ -141,8 +127,8 @@ export default function Page() {
             type="submit"
             label={"Enviar"}
           />
-        </Flex>
-      </Flex>
+        </form>
+      </div>
     </Limiter>
   );
 }

@@ -7,7 +7,7 @@ type LimiterProps = {
 export const Limiter = (props: LimiterProps) => {
   const { children, ...rest } = props;
   return (
-    <div {...rest} className="p-4 max-w-[1200px] w-full mx-auto">
+    <div {...rest} className="max-w-[1200px] w-full mx-auto">
       {children}
     </div>
   );
