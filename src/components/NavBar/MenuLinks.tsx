@@ -64,7 +64,6 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
           {data?.user?.name && (
             <MdLogout
               size={24}
-              color={"#FFFF"}
               onClick={() => signOut({ callbackUrl: "/login" })}
               cursor={"pointer"}
             />

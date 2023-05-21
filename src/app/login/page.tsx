@@ -95,14 +95,14 @@ export default function Page() {
             <p className="">Lets build something great!</p>
           </div>
 
-          <Button
+          <DefaultButton
             rightIcon={<BsGithub />}
             isLoading={isLoading}
             type="button"
             onClick={loginWithGitHub}
-          >
-            Git Hub
-          </Button>
+            label={"Git Hub"}
+            variant="primary"
+          />
 
           <FieldInputController
             placeholder="Enter Email"
