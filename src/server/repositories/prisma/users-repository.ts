@@ -1,24 +1,27 @@
 import { prisma } from "@/lib/prisma";
 import { Prisma, User } from "@prisma/client";
 import { UserWithRoles, UsersRepository } from "../user-repository";
+import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 
 export class PrismaUsersRepository implements UsersRepository {
-  async findByIdUserAndCheckIfAdmin(id: string): Promise<UserWithRoles | null> {
-    const user = await prisma.user.findUnique({
+  async findByIdUserAndCheckIfAdmin(id: string) {
+    const user = await prisma.user.findFirst({
       where: {
         id: id,
-      },
-      include: {
-        roles: {
-          where: {
-            name: "admin",
+        UserRole: {
+          some: {
+            role: {
+              name: {
+                equals: "admin",
+              },
+            },
           },
         },
       },
     });
 
     if (!user) {
-      new Error("User is not a admin");
+      throw new UserIsNotAdminError();
     }
 
     return user;
@@ -38,7 +41,7 @@ export class PrismaUsersRepository implements UsersRepository {
     return user;
   }
 
-  async create(data: Prisma.UserCreateInput) {
+  async createUser(data: Prisma.UserCreateInput) {
     const user = await prisma.user.create({
       data: {
         ...data,

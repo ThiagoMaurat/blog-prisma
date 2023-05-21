@@ -21,7 +21,7 @@ export class AuthenticateUseCase {
   }: AuthenticateUseCaseRequest): Promise<AuthenticateUserCaseResponse> {
     const user = await this.userRepository.findByEmail(email);
 
-    if (!user) {
+    if (!user?.password) {
       throw new InvalidCredentialsError();
     }
 

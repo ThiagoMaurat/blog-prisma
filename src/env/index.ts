@@ -5,6 +5,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   GITHUB_ID: z.string(),
   GITHUB_SECRET: z.string(),
+  NEXT_JSON_WEB_TOKEN: z.string(),
   NEXTAUTH_SECRET:
     process.env.NODE_ENV === "production"
       ? z.string().min(1)

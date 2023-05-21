@@ -5,9 +5,6 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
-import { AuthenticateUseCase } from "./use-cases/Authenticate/Authenticate";
-import { apiBaseUrl } from "next-auth/client/_utils";
 import axios from "axios";
 
 /**
@@ -70,7 +67,7 @@ export const authOptions: NextAuthOptions = {
               password: credentials.password,
             }
           );
-          console.log(data);
+
           if (data) {
             return data.user;
           }
@@ -78,12 +75,6 @@ export const authOptions: NextAuthOptions = {
           console.log(error);
           return null;
         }
-
-        // if (!user) {
-        //   throw new Error("Invalid credentials");
-        // }
-
-        // return user;
       },
     }),
   ],
@@ -93,13 +84,20 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: async ({ session, user, token }) => {
       session.user.id = token.id;
-
-      return session;
+      return {
+        ...session,
+      };
     },
     jwt: ({ token, user, account }) => {
       if (account) {
         token.acessToken = account.access_token;
         token.id = user.id;
+      }
+
+      if (user) {
+        return {
+          ...token,
+        };
       }
 
       return token;
