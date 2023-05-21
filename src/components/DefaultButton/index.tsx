@@ -1,53 +1,33 @@
-import { Button, ButtonProps } from "@chakra-ui/react";
 import { FC, useMemo } from "react";
-import React from "react";
 
 type Variants = "primary" | "secondary" | "ghost";
 
-interface DefaultButtonProps extends Omit<ButtonProps, Variants> {
+interface DefaultButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, Variants> {
   label: string;
   variant?: Variants;
+  isLoading?: boolean;
 }
 
 export const DefaultButton: FC<DefaultButtonProps> = (
   props: DefaultButtonProps
 ) => {
-  const { label, variant = "secondary", ...rest } = props;
+  const { label, variant = "secondary", isLoading, ...rest } = props;
 
-  const stylesByVariant = useMemo((): Record<Variants, ButtonProps> => {
+  const stylesByVariant = useMemo(() => {
     return {
-      primary: {},
-      secondary: {
-        backgroundColor: "#445FF4",
-        color: "#FFF",
-        _hover: {
-          background: "#405ae9",
-        },
-        fontSize: "16px",
-        fontWeight: 700,
-        borderRadius: "8px",
-        height: "40px",
-        lineHeight: "20px",
-        border: "none",
-        width: "100%",
-      },
-      ghost: {
-        backgroundColor: "inherit",
-        borderRadius: "8px",
-        height: "42px",
-        border: "1px solid #FFFFFF",
-        color: "#FFFF",
-        lineHeight: "20px",
-        _hover: {
-          background: "inherit",
-        },
-      },
+      primary: "",
+      secondary: `btn ${
+        isLoading && "loading"
+      } normal-case bg-blue-600 text-white hover:bg-blue-700 text-lg font-bold rounded-md h-10`,
+      ghost:
+        "bg-transparent border border-white text-white hover:bg-white hover:text-black text-lg font-bold rounded-md h-10",
     };
-  }, []);
+  }, [isLoading]);
 
   return (
-    <Button {...stylesByVariant[variant]} {...rest}>
+    <button className={stylesByVariant[variant]} {...rest}>
       {label}
-    </Button>
+    </button>
   );
 };
