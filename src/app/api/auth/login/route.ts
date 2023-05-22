@@ -21,21 +21,12 @@ export async function POST(req: Request, res: Response) {
       password,
     });
 
-    if (user) {
-      return NextResponse.json(
-        {
-          user: {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            createdAt: user.created_at,
-            roles: user.roles,
-            image: user.image,
-          },
-        },
-        { status: 200 }
-      );
-    }
+    return NextResponse.json(
+      {
+        user: user,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     if (error instanceof UserDoesNotExistsError) {
       return NextResponse.json(

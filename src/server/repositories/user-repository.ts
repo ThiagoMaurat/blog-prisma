@@ -3,7 +3,7 @@ import { Prisma, Role, User, UserRole } from "@prisma/client";
 export interface UsersRepository {
   findByEmail(email: string): Promise<
     | (User & {
-        roles: Role[];
+        UserRole: UserRole[];
       })
     | null
   >;

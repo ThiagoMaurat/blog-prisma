@@ -104,14 +104,12 @@ export const authOptions: NextAuthOptions = {
               name: user.name,
               email: user.email,
               image: user.image,
-              roles: {
-                connect: [{ name: "reader" }],
-              },
               UserRole: {
                 create: {
                   role: {
-                    connect: {
-                      name: "reader",
+                    connectOrCreate: {
+                      where: { name: "admin" },
+                      create: { name: "admin" },
                     },
                   },
                 },

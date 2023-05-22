@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { Prisma, Role, User } from "@prisma/client";
 import { UsersRepository } from "../user-repository";
 import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
+import { randomUUID } from "crypto";
 
 export class PrismaUsersRepository implements UsersRepository {
   async findByIdUserAndCheckIfAdmin(id: string) {
@@ -31,18 +32,17 @@ export class PrismaUsersRepository implements UsersRepository {
     throw new Error("Method not implemented.");
   }
 
-  async findByEmail(email: string): Promise<
-    | (User & {
-        roles: Role[];
-      })
-    | null
-  > {
+  async findByEmail(email: string) {
     const user = await prisma.user.findUnique({
       where: {
         email: email,
       },
       include: {
-        roles: true,
+        UserRole: {
+          include: {
+            role: true,
+          },
+        },
       },
     });
 
@@ -53,18 +53,19 @@ export class PrismaUsersRepository implements UsersRepository {
     const user = await prisma.user.create({
       data: {
         ...data,
-        roles: {
-          connect: [{ name: "reader" }],
-        },
         UserRole: {
           create: {
             role: {
-              connect: {
-                name: "reader",
+              connectOrCreate: {
+                where: { name: "admin" },
+                create: { name: "admin" },
               },
             },
           },
         },
+      },
+      include: {
+        UserRole: true,
       },
     });
 
