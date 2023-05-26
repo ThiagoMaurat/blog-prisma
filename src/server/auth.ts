@@ -20,10 +20,15 @@ import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
  *
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
+
 declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      email: string;
+      created_at: string;
+      image: string;
+      name: string;
       role: UserRole;
     } & DefaultSession["user"];
   }
@@ -65,7 +70,7 @@ export const authOptions: NextAuthOptions = {
 
         try {
           const { data } = await axios.post(
-            "http://localhost:3000/api/auth/login",
+            `${env.NEXTAUTH_URL}/api/auth/login`,
             {
               email: credentials.email,
               password: credentials.password,
@@ -136,21 +141,28 @@ export const authOptions: NextAuthOptions = {
 
       return Promise.resolve(true);
     },
-    session: async ({ session }) => {
+    async session({ session, token }) {
       const prisma = new PrismaUsersRepository();
       const userInfo = await prisma.findByEmail(session.user.email);
 
-      session.user = userInfo;
-
-      return session;
-    },
-    jwt: ({ token, user, account }) => {
-      console.log(token, user);
-      if (account) {
-        token.acessToken = account.access_token;
-        token.id = user.id;
+      if (!userInfo) {
+        return session;
       }
 
+      const user = {
+        id: userInfo.id,
+        name: userInfo.name,
+        email: userInfo.email,
+        image: userInfo.image,
+        created_at: userInfo.created_at,
+        userRole: userInfo.UserRole,
+      };
+
+      session.user = user;
+
+      return { ...session, token };
+    },
+    jwt: ({ token, user, account }) => {
       if (user) {
         return {
           ...token,
