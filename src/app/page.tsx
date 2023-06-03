@@ -1,18 +1,11 @@
 "use client";
-import { authOptions } from "@/server/auth";
-import { getServerSession } from "next-auth";
-import { getSession, signOut } from "next-auth/react";
-
+import { useSession } from "next-auth/react";
 export default function Hello() {
-  const teste = async () => {
-    const session = await getSession();
-    console.log(session);
-    return session;
-  };
+  const { data } = useSession();
   return (
     <>
       {/* <button onClick={() => signOut()}>Sair</button> */}
-      <pre>{JSON.stringify(teste(), null, 2)}</pre>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </>
   );
 }

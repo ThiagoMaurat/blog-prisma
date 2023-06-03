@@ -8,13 +8,17 @@ interface AuthenticateUseCaseRequest {
   password: string;
 }
 
-interface AuthenticateUserCaseResponse {
-  user:
-    | (User & {
-        UserRole: UserRole[];
-      })
-    | null;
-}
+type AuthenticateUserCase = Omit<
+  | (User & {
+      UserRole: UserRole[];
+    })
+  | null,
+  "password"
+>;
+
+type AuthenticateUserCaseResponse = {
+  user: AuthenticateUserCase;
+};
 
 export class AuthenticateUseCase {
   constructor(private userRepository: UsersRepository) {}
@@ -36,7 +40,14 @@ export class AuthenticateUseCase {
     }
 
     return {
-      user,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        image: user.image,
+        created_at: user.created_at,
+      },
     };
   }
 }

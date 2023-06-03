@@ -10,7 +10,7 @@ import { prisma } from "@/lib/prisma";
 import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
-import { UserRole } from "@prisma/client";
+import { Role, UserRole } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 
@@ -21,19 +21,38 @@ import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 
+interface IUser {
+  id: string;
+  email: string | null;
+  created_at: Date | null;
+  image: string | null;
+  name: string | null;
+  userRole: (UserRole & {
+    role: Role;
+  })[];
+}
+
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      id: string;
-      email: string;
-      created_at: string;
-      image: string;
-      name: string;
-      role: UserRole;
-    } & DefaultSession["user"];
-  }
-  interface User {
+  interface User extends DefaultSession {
+    id: string;
+    email: string;
+    created_at: string;
+    image: string;
+    name: string;
     role: UserRole;
+  }
+  interface JWT {
+    name: string;
+    email: string;
+    picture: string;
+    sub: string;
+    iat: number;
+    exp: number;
+    jti: string;
+  }
+  interface Session {
+    user: User;
+    token: JWT;
   }
 }
 

@@ -8,6 +8,5 @@ export interface UsersRepository {
     | null
   >;
   createUser(data: Prisma.UserCreateInput): Promise<User>;
-  findById(id: string): Promise<User | null>;
   findByIdUserAndCheckIfAdmin(id: string): Promise<any | null>;
 }

@@ -1,8 +1,7 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma, Role, User } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { UsersRepository } from "../user-repository";
 import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
-import { randomUUID } from "crypto";
 
 export class PrismaUsersRepository implements UsersRepository {
   async findByIdUserAndCheckIfAdmin(id: string) {
@@ -26,10 +25,6 @@ export class PrismaUsersRepository implements UsersRepository {
     }
 
     return user;
-  }
-
-  findById(id: string): Promise<User | null> {
-    throw new Error("Method not implemented.");
   }
 
   async findByEmail(email: string) {
