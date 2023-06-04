@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { MenuLinks } from "./MenuLinks";
 import { MenuToggle } from "./MenuToggle";
