@@ -1,3 +1,4 @@
+"use client";
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { format } from "date-fns";
 import { GetStaticProps } from "next";

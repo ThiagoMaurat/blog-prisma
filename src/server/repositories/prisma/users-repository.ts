@@ -52,8 +52,8 @@ export class PrismaUsersRepository implements UsersRepository {
           create: {
             role: {
               connectOrCreate: {
-                where: { name: "admin" },
-                create: { name: "admin" },
+                where: { name: "reader" },
+                create: { name: "reader" },
               },
             },
           },

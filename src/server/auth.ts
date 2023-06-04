@@ -42,17 +42,29 @@ declare module "next-auth" {
     role: UserRole;
   }
   interface JWT {
-    name: string;
-    email: string;
-    picture: string;
-    sub: string;
-    iat: number;
-    exp: number;
-    jti: string;
+    user: IUser;
+    token: {
+      sub: string;
+      iat: number;
+      exp: number;
+      jti: string;
+    };
   }
   interface Session {
-    user: User;
-    token: JWT;
+    user: IUser;
+    expires: string;
+  }
+}
+
+declare module "next-auth/jwt" {
+  interface JWT {
+    user: IUser;
+    token: {
+      sub: string;
+      iat: number;
+      exp: number;
+      jti: string;
+    };
   }
 }
 
@@ -161,31 +173,39 @@ export const authOptions: NextAuthOptions = {
       return Promise.resolve(true);
     },
     async session({ session, token }) {
-      const prisma = new PrismaUsersRepository();
-      const userInfo = await prisma.findByEmail(session.user.email);
-
-      if (!userInfo) {
-        return session;
-      }
-
-      const user = {
-        id: userInfo.id,
-        name: userInfo.name,
-        email: userInfo.email,
-        image: userInfo.image,
-        created_at: userInfo.created_at,
-        userRole: userInfo.UserRole,
-      };
-
-      session.user = user;
-
-      return { ...session, token };
+      session.user = token.user;
+      return { ...session };
     },
-    jwt: ({ token, user, account }) => {
-      if (user) {
-        return {
-          ...token,
+    jwt: async ({ token, user, account, profile, session, trigger }) => {
+      const prisma = new PrismaUsersRepository();
+
+      if (token.email) {
+        const userInfo = await prisma.findByEmail(token.email);
+
+        if (!userInfo) {
+          return session;
+        }
+
+        const userDB = {
+          id: userInfo.id,
+          name: userInfo.name,
+          email: userInfo.email,
+          image: userInfo.image,
+          created_at: userInfo.created_at,
+          userRole: userInfo.UserRole,
         };
+
+        if (userDB) {
+          return {
+            user: userDB,
+            token: {
+              sub: token.sub,
+              iat: token.iat,
+              exp: token.exp,
+              jti: token.jti,
+            },
+          };
+        }
       }
 
       return token;
