@@ -4,6 +4,7 @@ import { useCallback } from "react";
 import ToggleButtonDarkMode from "../ToogleButtonDarkMode";
 import { signOut, useSession } from "next-auth/react";
 import { MdLogout } from "react-icons/md";
+import CreatePostModal from "./CreatePostModal";
 
 type MenuLinksProps = {
   isOpen: boolean;
@@ -58,7 +59,7 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
             </p>
           </Link>
 
-          {}
+          {data?.user.userRole[0].role.name === "admin" && <CreatePostModal />}
         </div>
 
         <div className="flex flex-row gap-2 justify-center">
