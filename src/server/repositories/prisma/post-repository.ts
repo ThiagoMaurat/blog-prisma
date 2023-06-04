@@ -34,8 +34,15 @@ export class PrismaPostRepository implements PostRepository {
     return post;
   }
 
-  async findAll(): Promise<Post[]> {
+  async findAll(page?: number, limit?: number): Promise<Post[]> {
+    const pageSizeFindAll = limit || 99999999;
+    const pageFindAll = page || 9999999;
+
+    const offset = (pageFindAll - 1) * pageSizeFindAll;
+
     const posts = await prisma.post.findMany({
+      skip: offset,
+      take: limit,
       select: {
         id: true,
         title: true,

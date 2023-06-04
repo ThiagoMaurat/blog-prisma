@@ -54,7 +54,7 @@ export class PostUseCase {
     return { post };
   }
 
-  async listAll(): Promise<Post[]> {
-    return this.postRepository.findAll();
+  async listAll(page?: number, limit?: number): Promise<Post[]> {
+    return this.postRepository.findAll(page, limit);
   }
 }
