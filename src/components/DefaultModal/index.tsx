@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
 import ReactModal, { Props as ReactModalProps } from "react-modal";
+import ModalHeader from "./ModalHeader";
 
 type Size = "sm" | "md" | "lg" | "xl" | "2xl" | "xsm";
 
@@ -8,6 +9,7 @@ export type ModalWelcomeWhatsGroupProps = {
   onClose: () => void;
   size?: Size;
   children?: ReactNode;
+  title?: string;
 } & ReactModalProps;
 
 const getWidthBySize = (size: Size) => {
@@ -32,7 +34,14 @@ const getWidthBySize = (size: Size) => {
   */
 
 export const Modal = (props: ModalWelcomeWhatsGroupProps) => {
-  const { isOpen, onClose, size = "sm", children, ...reactModalProps } = props;
+  const {
+    isOpen,
+    title,
+    onClose,
+    size = "sm",
+    children,
+    ...reactModalProps
+  } = props;
 
   return (
     <ReactModal
@@ -67,6 +76,7 @@ export const Modal = (props: ModalWelcomeWhatsGroupProps) => {
       }}
       {...reactModalProps}
     >
+      {title && <ModalHeader title={props.title} onIconClick={onClose} />}
       {children}
     </ReactModal>
   );

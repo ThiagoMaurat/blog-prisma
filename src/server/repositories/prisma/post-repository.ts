@@ -18,7 +18,7 @@ export class PrismaPostRepository implements PostRepository {
     });
 
     if (!createPost) {
-      throw new Error("Error creating post");
+      throw new Error("Couldnt create post");
     }
 
     return createPost;

@@ -48,6 +48,15 @@ export async function POST(req: Request, res: Response) {
       );
     }
 
+    if (error instanceof z.ZodError) {
+      return NextResponse.json(
+        {
+          message: "Error on payload validation",
+        },
+        { status: 500 }
+      );
+    }
+
     return NextResponse.json(
       {
         message: "Error creating post",

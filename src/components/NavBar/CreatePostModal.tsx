@@ -1,8 +1,44 @@
 "use client";
+import { useForm } from "react-hook-form";
 import { Modal } from "../DefaultModal";
 import { useState } from "react";
+import { FieldInputController } from "../FieldInput/FieldInputController";
+import { FieldTextAreaController } from "../FieldTextArea/FieldTextAreaController";
+import { DefaultButton } from "../DefaultButton";
+import api from "@/lib/axios";
+import { useSession } from "next-auth/react";
+
+interface PostForm {
+  title: string;
+  content: string;
+}
+
 const CreatePostModal = ({}) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const { data: session } = useSession();
+
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<PostForm>({
+    defaultValues: {
+      title: "",
+      content: "",
+    },
+  });
+
+  const submit = async (formState: PostForm) => {
+    try {
+      await api.post("/api/admin/posts", {
+        title: formState.title,
+        content: formState.content,
+        authorId: session?.user.id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div id="portal">
@@ -17,8 +53,27 @@ const CreatePostModal = ({}) => {
         appElement={document.getElementById("portal") as HTMLElement}
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
+        title="Criar Post"
       >
-        <div>Criar Post</div>
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit(submit)}>
+          <FieldInputController
+            placeholder="Título"
+            label="Título"
+            control={control}
+            name="title"
+            error={errors.title}
+          />
+
+          <FieldTextAreaController
+            placeholder="Conteúdo"
+            label="Conteúdo"
+            control={control}
+            name="content"
+            error={errors.content}
+          />
+
+          <DefaultButton label="Enviar" type="submit" />
+        </form>
       </Modal>
     </div>
   );
