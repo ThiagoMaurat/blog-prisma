@@ -53,4 +53,8 @@ export class PostUseCase {
 
     return { post };
   }
+
+  async listAll(): Promise<Post[]> {
+    return this.postRepository.findAll();
+  }
 }
