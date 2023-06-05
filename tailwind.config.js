@@ -11,17 +11,10 @@ module.exports = {
   theme: {
     extend: {
       screens: {
-        xl: { max: "80em" },
-        // => @media (max-width: 1279px) { ... }
-
-        lg: { max: "62em" },
-        // => @media (max-width: 1023px) { ... }
-
-        md: { max: "48em" },
-        // => @media (max-width: 767px) { ... }
-
-        sm: { max: "30em" },
-        // => @media (max-width: 639px) { ... }
+        sm: '30em',  // 480px
+        md: '48em',  // 768px
+        lg: '62em',  // 992px
+        xl: '80em',  // 1280px
       },
       fontFamily: {
         p: ["Montserrat", "sans-serif"],

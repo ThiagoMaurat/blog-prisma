@@ -1,161 +1,123 @@
-import {
-  Box,
-  Grid,
-  GridItem,
-  Heading,
-  HStack,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Text,
-  VStack,
-} from "@chakra-ui/react";
 import { FaPen } from "react-icons/fa";
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { NavIndices } from "./NavIndicces";
 import { BsFacebook, BsGithub, BsTwitter } from "react-icons/bs";
 import { MdArrowForward } from "react-icons/md";
+import clsx from "clsx";
 
-export const Footer = () => {
+interface FooterProps {
+  className?: string;
+}
+
+export const Footer = ({ className }: FooterProps) => {
+  const footerClassName = clsx(
+    "w-full",
+    "grid",
+    "gap-12",
+    "px-4",
+    "md:grid-cols-2",
+    "lg:grid-cols-4",
+    className
+  );
+
   const { push } = useRouter();
 
   const [newsletterInput, setNewsletterInput] = useState("");
 
   return (
-    <>
-      <Grid
-        gridGap={"3rem"}
-        pt="6rem"
-        px="1rem"
-        maxW={"1200px"}
-        gridColumnGap="2.5rem"
-        gridTemplateColumns={{
-          base: "1fr",
-          md: "1fr 1fr",
-          lg: "1fr 1fr 1fr 1fr",
-        }}
-      >
-        <GridItem display={"flex"} flexDir="column" gap="2rem">
-          <Heading
-            fontWeight={"bold"}
-            fontSize="1.7rem"
-            color={"gray.900"}
-            cursor="pointer"
-            onClick={() => push("/")}
-          >
-            Thiago🚀Dev
-          </Heading>
-          <Text
-            fontWeight={"500"}
-            fontSize="1rem"
-            color={"gray.700"}
-            whiteSpace={"break-spaces"}
-          >
-            {`Olá amigos desenvolvedores!! Fique à vontade para deixar seus comentários e sugestões sobre o conteúdo do nosso blog.`}
-          </Text>
-        </GridItem>
-
-        <GridItem
-          display={"flex"}
-          flexDir="column"
-          alignItems={{ base: "unset", lg: "center" }}
+    <footer className={footerClassName}>
+      <div className="flex flex-col gap-4">
+        <h1
+          className="font-bold text-2xl text-gray-900 cursor-pointer"
+          onClick={() => push("/")}
         >
-          <Heading fontWeight={"bold"} fontSize="1.7rem" color={"gray.900"}>
-            Início
-          </Heading>
+          Thiago🚀Dev
+        </h1>
 
-          <VStack mt="2rem" align={"flex-start"} justify="flex-start">
-            <NavIndices isExternal={false} href="" text="Topic #1" />
-            <NavIndices isExternal={false} href="" text="Topic #2" />
-            <NavIndices isExternal={false} href="" text="Topic #3" />
-          </VStack>
-        </GridItem>
+        <p className="font-medium text-lg text-gray-700 break-words">
+          Olá amigos desenvolvedores!! Fique à vontade para deixar seus
+          comentários e sugestões sobre o conteúdo do nosso blog.
+        </p>
+      </div>
 
-        <GridItem display={"flex"} flexDir="column" gap="1rem">
-          <Heading fontWeight={"bold"} fontSize="1.7rem" color={"gray.900"}>
-            NewsLetter
-          </Heading>
+      <div className="flex flex-col md:items-center gap-4">
+        <h1 className="font-bold text-2xl text-gray-900">Início</h1>
 
-          <Text
-            fontWeight={"500"}
-            mt="1rem"
-            fontSize="1rem"
-            color={"gray.700"}
-            whiteSpace={"break-spaces"}
-          >
-            {`Inscreva-se em nossa newsletter! Fique por dentro das últimas novidades do mundo dev.`}
-          </Text>
+        <div>
+          <NavIndices isExternal={false} href="" text="Topic #1" />
+          <NavIndices isExternal={false} href="" text="Topic #2" />
+          <NavIndices isExternal={false} href="" text="Topic #3" />
+        </div>
+      </div>
 
-          <InputGroup>
-            <Input
-              placeholder="E-mail"
-              borderRadius={"full"}
-              type="input"
-              _placeholder={{ color: "gray.400" }}
-              value={newsletterInput}
-              onChange={(e) => setNewsletterInput(e.target.value)}
-            />
+      <div className="flex flex-col gap-4">
+        <h1 className="font-bold text-2xl text-gray-900">NewsLetter</h1>
+        <p className="font-medium text-lg text-gray-700 break-words">
+          Inscreva-se em nossa newsletter! Fique por dentro das últimas
+          novidades do mundo dev.
+        </p>
 
-            <InputRightElement>
-              <IconButton
-                mr="0.5rem"
-                backgroundColor={"inherit"}
-                _hover={{ backgroundColor: "inherit" }}
-                _active={{ backgroundColor: "inherit" }}
-                aria-label="Enviar"
-                icon={<MdArrowForward />}
-                onClick={() => console.log("asd")}
-              />
-            </InputRightElement>
-          </InputGroup>
-        </GridItem>
+        <div className="flex items-center">
+          <input
+            className="rounded-full focus:outline-none border border-gray-300 py-2 px-4 placeholder-gray-400"
+            type="input"
+            placeholder="E-mail"
+            value={newsletterInput}
+            onChange={(e) => setNewsletterInput(e.target.value)}
+          />
 
-        <GridItem display={"flex"} flexDir="column" gap="2rem">
-          <Heading fontWeight={"bold"} fontSize="1.7rem" color={"gray.900"}>
-            Contato
-          </Heading>
+          <div className="ml-1">
+            <button
+              className="p-1 bg-transparent"
+              onClick={() => console.log("asd")}
+            >
+              <MdArrowForward size={24} />
+            </button>
+          </div>
+        </div>
+      </div>
 
-          <VStack align={"flex-start"} spacing="4px">
-            <NavIndices
-              href="https://github.com/ThiagoMaurat"
-              LeftIcon={BsGithub}
-              text="Git-hub"
-              isExternal={true}
-            />
+      <div className="flex flex-col gap-2 md:items-center">
+        <h1 className="font-bold text-2xl text-gray-900">Contato</h1>
+        <div className="flex gap-2 flex-col items-start">
+          <NavIndices
+            href="https://github.com/ThiagoMaurat"
+            LeftIcon={BsGithub}
+            text="GitHub"
+            isExternal={true}
+          />
 
-            <NavIndices
-              href="mailto:thiagomaurat@hotmail.com"
-              LeftIcon={FaPen}
-              text="E-mail"
-              isExternal
-            />
+          <NavIndices
+            href="mailto:thiagomaurat@hotmail.com"
+            LeftIcon={FaPen}
+            text="E-mail"
+            isExternal
+          />
 
-            <NavIndices
-              href="https://www.facebook.com/thiago.maurat"
-              LeftIcon={BsFacebook}
-              text="Facebook"
-              isExternal
-            />
+          <NavIndices
+            href="https://www.facebook.com/thiago.maurat"
+            LeftIcon={BsFacebook}
+            text="Facebook"
+            isExternal
+          />
 
-            <NavIndices
-              href="https://twitter.com/Thiago_Maurat"
-              LeftIcon={BsTwitter}
-              text="Twitter"
-              isExternal
-            />
-          </VStack>
-        </GridItem>
-      </Grid>
+          <NavIndices
+            href="https://twitter.com/Thiago_Maurat"
+            LeftIcon={BsTwitter}
+            text="Twitter"
+            isExternal
+          />
+        </div>
+      </div>
+    </footer>
 
-      <HStack my="2rem" justifyContent={"center"}>
-        <Text
-          fontWeight={"500"}
-          fontSize="1rem"
-          color={"gray.700"}
-        >{`© ${new Date().getFullYear()} Todos os direitos reservados. Thiago Maurat.`}</Text>
-      </HStack>
-    </>
+    // <HStack my="2rem" justifyContent={"center"}>
+    //   <Text
+    //     fontWeight={"500"}
+    //     fontSize="1rem"
+    //     color={"gray.700"}
+    //   >{`© ${new Date().getFullYear()} Todos os direitos reservados. Thiago Maurat.`}</Text>
+    // </HStack>
   );
 };
