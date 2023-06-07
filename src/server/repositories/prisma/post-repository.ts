@@ -49,7 +49,7 @@ export class PrismaPostRepository implements PostRepository {
 
     const posts = await prisma.post.findMany({
       skip: offset,
-      take: limit,
+      take: limit ? pageSizeFindAll : undefined,
       select: {
         id: true,
         title: true,

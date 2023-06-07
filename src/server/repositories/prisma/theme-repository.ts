@@ -29,13 +29,13 @@ export class PrismaThemeRepository implements ThemeRepository {
 
   async findAll(page?: number, limit?: number): Promise<Themes[]> {
     const pageSizeFindAll = limit || 99999999;
-    const pageFindAll = page || 9999999;
+    const pageFindAll = page || 1;
 
     const offset = (pageFindAll - 1) * pageSizeFindAll;
 
     const themes = await prisma.themes.findMany({
       skip: offset,
-      take: limit,
+      take: limit ? pageSizeFindAll : undefined,
       select: {
         id: true,
         themes: true,

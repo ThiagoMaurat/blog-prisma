@@ -24,7 +24,7 @@ export class ThemeUseCase {
     return { theme };
   }
 
-  async listAll(page?: number, limit?: number) {
+  async findAll(page?: number, limit?: number) {
     return this.themeRepository.findAll(page, limit);
   }
 }
