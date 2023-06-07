@@ -91,7 +91,7 @@ model Post {
   title       String
   description String
   content     String
-  publishedAt DateTime?
+  publishedAt DateTime?    @default(now())
   thumbnail   String
   authorId    String
   themesId    String
@@ -105,4 +105,6 @@ model PostThemes {
   themesId String
   post     Post   @relation(fields: [postId], references: [id])
   themes   Themes @relation(fields: [themesId], references: [id])
+
+  @@map("posts_themes")
 }

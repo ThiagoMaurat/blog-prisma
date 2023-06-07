@@ -4,23 +4,9 @@ import { PostRepository } from "../post-repository";
 
 export class PrismaPostRepository implements PostRepository {
   async create(data: Prisma.PostCreateInput): Promise<Post> {
-    if (!data?.author?.connect?.id) {
-      throw new Error("Author id not provided");
-    }
-
-    if (!data?.themes?.connect) {
-      throw new Error("Theme id not provided");
-    }
-
     const createPost = await prisma.post.create({
       data: {
         ...data,
-        author: {
-          connect: data.author.connect,
-        },
-        themes: {
-          connect: data.themes.connect,
-        },
       },
     });
 

@@ -10,37 +10,39 @@ import { format } from "date-fns";
 import FirstCard from "../components/FirstCard";
 import { debounce, first, last, orderBy, tail } from "lodash";
 import { Footer } from "../components/Footer";
-import { env } from "@/env";
+import { makeFetch } from "@/lib/makeFetch";
+import { Post, Themes } from "@prisma/client";
 
 export default async function BlogPage() {
-  const res = await fetch(`${env.NEXTAUTH_URL}`);
-  const data = await res.json();
+  const posts = await makeFetch<Post[]>("/api/posts/all");
 
-  const [loadedPosts, setLoadedPosts] = useState(6);
-  const [search, setSearch] = useState("");
-  const [query, setQuery] = useState("");
+  const themes = await makeFetch<Themes[]>("/api/themes/all");
 
-  const visiblePosts = data.slice(0, loadedPosts);
+  // const [loadedPosts, setLoadedPosts] = useState(6);
+  // const [search, setSearch] = useState("");
+  // const [query, setQuery] = useState("");
 
-  const loadMorePosts = useCallback(() => {
-    setLoadedPosts((prev) => prev + 6);
-  }, []);
+  // const visiblePosts = posts.slice(0, loadedPosts);
 
-  const debouncedSearch = React.useMemo(
-    () =>
-      debounce((val) => {
-        setQuery(val);
-      }, 1500),
-    [setQuery]
-  );
+  // const loadMorePosts = useCallback(() => {
+  //   setLoadedPosts((prev) => prev + 6);
+  // }, []);
 
-  const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setSearch(e.target.value);
-      debouncedSearch(e.target.value);
-    },
-    [debouncedSearch]
-  );
+  // const debouncedSearch = React.useMemo(
+  //   () =>
+  //     debounce((val) => {
+  //       setQuery(val);
+  //     }, 1500),
+  //   [setQuery]
+  // );
+
+  // const handleChange = useCallback(
+  //   (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     setSearch(e.target.value);
+  //     debouncedSearch(e.target.value);
+  //   },
+  //   [debouncedSearch]
+  // );
 
   return (
     <Limiter>
@@ -64,29 +66,28 @@ export default async function BlogPage() {
       >
         <FieldSearch
           name="fieldsearch"
-          onChange={handleChange}
-          value={search}
+          // onChange={handleChange}
+          // value={search}
         />
       </Flex>
 
-      {/* <Flex gap={"0.5rem"} justifyContent="center">
-        {!data.allThemes.error &&
-          data?.allThemes?.data?.map((themes, index) => {
-            return (
-              <ButtonTheme key={`themesButton-${index}`}>
-                {themes.theme}
-              </ButtonTheme>
-            );
-          })}
-      </Flex> */}
+      <Flex gap={"0.5rem"} justifyContent="center">
+        {themes.map((themes, index) => {
+          return (
+            <ButtonTheme key={`themesButton-${index}`}>
+              {themes.name}
+            </ButtonTheme>
+          );
+        })}
+      </Flex>
 
       <Flex my="2rem" display={{ base: "none", lg: "flex" }}>
-        {[first(data.posts)].map((lastItem) => {
+        {[first(posts)].map((lastItem) => {
           return (
             <FirstCard
               key={"1"}
-              thumbnail={lastItem.thumbnail.thumbnail_url}
-              theme={lastItem.theme.theme}
+              thumbnail={lastItem?.thumbnail ?? ""}
+              theme={lastItem.}
               title={lastItem.title ?? ""}
               description={lastItem.description ?? ""}
               author={lastItem.author ?? "Thiago Maurat"}

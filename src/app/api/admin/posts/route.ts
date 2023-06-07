@@ -10,7 +10,7 @@ export async function POST(req: Request, res: Response) {
     content: z.string().min(20).nonempty(),
     authorId: z.string().min(1).nonempty(),
     thumbnail: z.string().url().nonempty(),
-    themeId: z.string().min(1).nonempty(),
+    themeId: z.any(),
     description: z.string().min(20).nonempty(),
   });
 

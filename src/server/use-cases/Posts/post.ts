@@ -1,8 +1,6 @@
 import { Post } from "@prisma/client";
-import { randomUUID } from "crypto";
 import { PostRepository } from "@/server/repositories/post-repository";
 import { UsersRepository } from "@/server/repositories/user-repository";
-import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 
 interface PostUseCaseRequest {
   title: string;
@@ -33,27 +31,34 @@ export class PostUseCase {
   }: PostUseCaseRequest): Promise<PostUseCaseResponse> {
     // create post
 
-    const isUserAdmin = await this.userRepository.findByIdUserAndCheckIfAdmin(
-      authorId
-    );
+    // const isUserAdmin = await this.userRepository.findByIdUserAndCheckIfAdmin(
+    //   authorId
+    // );
 
-    if (!isUserAdmin) {
-      throw new UserIsNotAdminError();
-    }
+    // if (!isUserAdmin) {
+    //   throw new UserIsNotAdminError();
+    // }
 
     const post = await this.postRepository.create({
       author: {
         connect: {
-          id: isUserAdmin.id,
+          id: authorId,
         },
       },
-      id: randomUUID(),
       content,
       title,
-      publishedAt: new Date(),
       thumbnail,
-      themesId: themeId,
       description,
+      themesId: themeId,
+      themes: {
+        create: {
+          themes: {
+            connect: {
+              id: themeId,
+            },
+          },
+        },
+      },
     });
 
     if (!post) {
