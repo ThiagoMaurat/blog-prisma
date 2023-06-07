@@ -4,8 +4,12 @@ import { PostRepository } from "../post-repository";
 
 export class PrismaPostRepository implements PostRepository {
   async create(data: Prisma.PostCreateInput): Promise<Post> {
-    if (!data.author || !data.author.connect || !data.author.connect.id) {
+    if (!data?.author?.connect?.id) {
       throw new Error("Author id not provided");
+    }
+
+    if (!data?.themes?.connect) {
+      throw new Error("Theme id not provided");
     }
 
     const createPost = await prisma.post.create({
@@ -13,6 +17,9 @@ export class PrismaPostRepository implements PostRepository {
         ...data,
         author: {
           connect: data.author.connect,
+        },
+        themes: {
+          connect: data.themes.connect,
         },
       },
     });
@@ -34,7 +41,7 @@ export class PrismaPostRepository implements PostRepository {
     return post;
   }
 
-  async findAll(page?: number, limit?: number): Promise<Post[]> {
+  async findAll(page?: number, limit?: number) {
     const pageSizeFindAll = limit || 99999999;
     const pageFindAll = page || 9999999;
 
@@ -48,7 +55,12 @@ export class PrismaPostRepository implements PostRepository {
         title: true,
         content: true,
         publishedAt: true,
-        authorId: true,
+        author: {
+          select: {
+            name: true,
+            image: true,
+          },
+        },
       },
       orderBy: {
         publishedAt: "desc",

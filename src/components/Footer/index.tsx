@@ -1,5 +1,5 @@
 import { FaPen } from "react-icons/fa";
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { NavIndices } from "./NavIndicces";
 import { BsFacebook, BsGithub, BsTwitter } from "react-icons/bs";
@@ -23,8 +23,6 @@ export const Footer = ({ className }: FooterProps) => {
 
   const { push } = useRouter();
 
-  const [newsletterInput, setNewsletterInput] = useState("");
-
   return (
     <footer className={footerClassName}>
       <div className="flex flex-col gap-4">
@@ -44,7 +42,7 @@ export const Footer = ({ className }: FooterProps) => {
       <div className="flex flex-col md:items-center gap-4">
         <h1 className="font-bold text-2xl text-gray-900">Início</h1>
 
-        <div>
+        <div className="flex gap-2 flex-col">
           <NavIndices isExternal={false} href="" text="Topic #1" />
           <NavIndices isExternal={false} href="" text="Topic #2" />
           <NavIndices isExternal={false} href="" text="Topic #3" />
@@ -63,8 +61,8 @@ export const Footer = ({ className }: FooterProps) => {
             className="rounded-full focus:outline-none border border-gray-300 py-2 px-4 placeholder-gray-400"
             type="input"
             placeholder="E-mail"
-            value={newsletterInput}
-            onChange={(e) => setNewsletterInput(e.target.value)}
+            // value={newsletterInput}
+            // onChange={(e) => setNewsletterInput(e.target.value)}
           />
 
           <div className="ml-1">
@@ -85,7 +83,7 @@ export const Footer = ({ className }: FooterProps) => {
             href="https://github.com/ThiagoMaurat"
             LeftIcon={BsGithub}
             text="GitHub"
-            isExternal={true}
+            isExternal
           />
 
           <NavIndices

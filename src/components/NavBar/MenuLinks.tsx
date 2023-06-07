@@ -29,12 +29,12 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
 
   return (
     <div
-      className={`block md:${
+      className={` ${
         isOpen ? "block" : "hidden"
-      } w-[55%] md:basis-full basis-auto`}
+      } sm:block w-[55%] basis-full sm:basis-auto`}
     >
-      <div className="flex gap-6 justify-between sm:justify-center md:flex-col flex-row md:pt-8">
-        <div className="flex gap-8 items-center md:flex-col">
+      <div className="flex sm:items-baseline gap-6 justify-between flex-col sm:flex-row pt-8 sm:pt-0">
+        <div className="h-full flex gap-8 items-center flex-col sm:flex-row">
           <Link href={"/"}>
             <p
               className={`${
@@ -62,7 +62,7 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
           {data?.user.userRole[0].role.name === "admin" && <CreatePostModal />}
         </div>
 
-        <div className="flex flex-row gap-2 justify-center">
+        <div className="flex h-full flex-row gap-2 justify-center">
           <ToggleButtonDarkMode />
           {data?.user?.name && (
             <MdLogout

@@ -80,11 +80,29 @@ model UserRole {
   @@id([userId, roleId])
 }
 
+model Themes {
+  id     String       @id @default(uuid())
+  name   String
+  themes PostThemes[]
+}
+
 model Post {
-  id          String    @id @default(uuid())
+  id          String       @id @default(uuid())
   title       String
+  description String
   content     String
   publishedAt DateTime?
+  thumbnail   String
   authorId    String
-  author      User      @relation(fields: [authorId], references: [id])
+  themesId    String
+  author      User         @relation(fields: [authorId], references: [id])
+  themes      PostThemes[]
+}
+
+model PostThemes {
+  id       String @id @default(uuid())
+  postId   String
+  themesId String
+  post     Post   @relation(fields: [postId], references: [id])
+  themes   Themes @relation(fields: [themesId], references: [id])
 }

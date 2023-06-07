@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HStack, Text, TextProps } from "@chakra-ui/react";
-import { IconType, IconBase } from "react-icons";
+import { IconType } from "react-icons";
 import { useState } from "react";
 
 interface NavIndicesProps extends TextProps {

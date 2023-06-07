@@ -68,10 +68,10 @@ export const FormComponent = ({}) => {
 
   return (
     <div
-      className="h-full sm:p-4 flex gap-4 md:flex-col justify-evenly items-center"
+      className="h-full p-4 sm:p-0 flex gap-4 flex-col md:flex-row justify-evenly items-center"
       style={{ minHeight: "calc(100vh - 95px)" }}
     >
-      <div className="flex md:hidden">
+      <div className="hidden md:flex">
         <Image
           src={"/login.png"}
           width={300}

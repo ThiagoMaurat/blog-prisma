@@ -9,18 +9,25 @@ export async function POST(req: Request, res: Response) {
     title: z.string(),
     content: z.string().min(20).nonempty(),
     authorId: z.string().min(1).nonempty(),
+    thumbnail: z.string().url().nonempty(),
+    themeId: z.string().min(1).nonempty(),
+    description: z.string().min(20).nonempty(),
   });
 
   const postUseCase = makePostUseCase();
   const request = await req.json();
 
   try {
-    const { authorId, content, title } = registerBodySchema.parse(request);
+    const { authorId, content, title, description, themeId, thumbnail } =
+      registerBodySchema.parse(request);
 
     await postUseCase.execute({
       authorId,
       content,
       title,
+      thumbnail,
+      themeId,
+      description,
     });
 
     return NextResponse.json(

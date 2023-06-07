@@ -8,6 +8,9 @@ interface PostUseCaseRequest {
   title: string;
   content: string;
   authorId: string;
+  thumbnail: string;
+  themeId: string;
+  description: string;
 }
 
 interface PostUseCaseResponse {
@@ -24,6 +27,9 @@ export class PostUseCase {
     authorId,
     content,
     title,
+    themeId,
+    thumbnail,
+    description,
   }: PostUseCaseRequest): Promise<PostUseCaseResponse> {
     // create post
 
@@ -45,6 +51,9 @@ export class PostUseCase {
       content,
       title,
       publishedAt: new Date(),
+      thumbnail,
+      themesId: themeId,
+      description,
     });
 
     if (!post) {
@@ -54,7 +63,7 @@ export class PostUseCase {
     return { post };
   }
 
-  async listAll(page?: number, limit?: number): Promise<Post[]> {
+  async listAll(page?: number, limit?: number) {
     return this.postRepository.findAll(page, limit);
   }
 }
