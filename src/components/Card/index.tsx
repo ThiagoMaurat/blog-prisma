@@ -2,10 +2,13 @@ import { Avatar, Flex, HStack, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
+import { Themes } from "@prisma/client";
 
 interface CardProps {
   image: string;
-  theme: string;
+  theme: {
+    themes: Themes;
+  }[];
   title: string;
   description: string;
   author: string;
@@ -34,7 +37,18 @@ export function Card(props: CardProps) {
         </Flex>
 
         <Text fontWeight={"500"} color={"blue.300"} fontSize="1.2rem">
-          {theme}
+          {theme.map((theme, index) => {
+            return (
+              <Text
+                key={`theme-${index}`}
+                fontWeight={"500"}
+                color={"blue.300"}
+                fontSize="1.2rem"
+              >
+                {theme.themes.name}
+              </Text>
+            );
+          })}
         </Text>
 
         <Text fontWeight="bold" color="darkblue.700" fontSize="1.5rem">

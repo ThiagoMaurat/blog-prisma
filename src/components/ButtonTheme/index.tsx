@@ -6,7 +6,7 @@ const ButtonChakra: ForwardRefRenderFunction<
 > = (props, ref) => {
   return (
     <button
-      className="hover:bg-blue-300 text-white rounded-s-md bg-blue-300"
+      className="hover:bg-blue-300 text-white rounded-md bg-blue-300 py-1 px-3"
       {...props}
       ref={ref}
     />

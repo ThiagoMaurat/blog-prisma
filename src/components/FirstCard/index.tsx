@@ -1,3 +1,4 @@
+"use client";
 import {
   Avatar,
   Flex,
@@ -10,19 +11,18 @@ import {
 import Link from "next/link";
 import React from "react";
 import { letterCounter } from "../../helpers/charactersCount";
+import { format, parseISO } from "date-fns";
+import { PostResponse } from "@/@types/PostResponse";
 
-interface FirstCardProps {
-  thumbnail: string;
-  theme: string;
-  title: string;
-  description: string;
-  author: string;
-  date: string;
+type FirstCardProps = {
+  data: PostResponse;
   href: string;
-}
-
+};
 function FirstCard(props: FirstCardProps) {
-  const { author, date, description, href, thumbnail, theme, title } = props;
+  const { data, href } = props;
+
+  const { author, publishedAt, description, thumbnail, themes, title } = data;
+  console.log(publishedAt);
   return (
     <Link href={href}>
       <Grid gridTemplateColumns={"1fr 1fr"} gap="2rem">
@@ -42,9 +42,18 @@ function FirstCard(props: FirstCardProps) {
           flexDirection={"column"}
           gap="1rem"
         >
-          <Text fontWeight={"500"} color={"blue.300"} fontSize="1.2rem">
-            {theme}
-          </Text>
+          {themes.map((theme, index) => {
+            return (
+              <Text
+                key={`theme-${index}`}
+                fontWeight={"500"}
+                color={"blue.300"}
+                fontSize="1.2rem"
+              >
+                {theme.themes.name}
+              </Text>
+            );
+          })}
 
           <Text fontWeight="bold" color="darkblue.700" fontSize="1.5rem">
             {title}
@@ -61,11 +70,14 @@ function FirstCard(props: FirstCardProps) {
             />
             <Flex flexDir={"column"} gap="2px">
               <Text fontWeight="bold" color="darkblue.700" fontSize="0.8rem">
-                {author}
+                {author.name}
               </Text>
-              <Text color={"gray.900"} fontSize="0.7rem">
-                {date}
-              </Text>
+
+              {publishedAt && (
+                <Text color={"gray.900"} fontSize="0.7rem">
+                  {format(parseISO(publishedAt), "dd/MM/yyyy")}
+                </Text>
+              )}
             </Flex>
           </HStack>
         </GridItem>

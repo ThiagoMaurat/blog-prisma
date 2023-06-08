@@ -21,14 +21,14 @@ export const Footer = ({ className }: FooterProps) => {
     className
   );
 
-  const { push } = useRouter();
+  // const { push } = useRouter();
 
   return (
     <footer className={footerClassName}>
       <div className="flex flex-col gap-4">
         <h1
           className="font-bold text-2xl text-gray-900 cursor-pointer"
-          onClick={() => push("/")}
+          // onClick={() => push("/")}
         >
           Thiago🚀Dev
         </h1>
@@ -68,7 +68,7 @@ export const Footer = ({ className }: FooterProps) => {
           <div className="ml-1">
             <button
               className="p-1 bg-transparent"
-              onClick={() => console.log("asd")}
+              // onClick={() => console.log("asd")}
             >
               <MdArrowForward size={24} />
             </button>
@@ -81,28 +81,28 @@ export const Footer = ({ className }: FooterProps) => {
         <div className="flex gap-2 flex-col items-start">
           <NavIndices
             href="https://github.com/ThiagoMaurat"
-            LeftIcon={BsGithub}
+            LeftIcon={"bi:github"}
             text="GitHub"
             isExternal
           />
 
           <NavIndices
             href="mailto:thiagomaurat@hotmail.com"
-            LeftIcon={FaPen}
+            LeftIcon={"ic:outline-mail"}
             text="E-mail"
             isExternal
           />
 
           <NavIndices
             href="https://www.facebook.com/thiago.maurat"
-            LeftIcon={BsFacebook}
+            LeftIcon={"ic:baseline-facebook"}
             text="Facebook"
             isExternal
           />
 
           <NavIndices
             href="https://twitter.com/Thiago_Maurat"
-            LeftIcon={BsTwitter}
+            LeftIcon={"mdi:twitter"}
             text="Twitter"
             isExternal
           />

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useRouter } from "next/compat/router";
-import { useCallback } from "react";
 import ToggleButtonDarkMode from "../ToogleButtonDarkMode";
 import { signOut, useSession } from "next-auth/react";
 import { MdLogout } from "react-icons/md";
@@ -11,21 +10,18 @@ type MenuLinksProps = {
   isLoading?: boolean;
 };
 
-export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
+export function MenuLinks({ isOpen }: MenuLinksProps) {
   const router = useRouter();
   const { data } = useSession();
 
-  const CheckRouterMatchesLabel = useCallback(
-    (label: string) => {
-      if (router?.asPath.includes(label.toLowerCase())) {
-        return true;
-      } else if (router?.asPath === "/" && label === "Home") {
-        return true;
-      }
-      return false;
-    },
-    [router?.asPath]
-  );
+  const CheckRouterMatchesLabel = (label: string) => {
+    if (router?.asPath.includes(label.toLowerCase())) {
+      return true;
+    } else if (router?.asPath === "/" && label === "Home") {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <div
@@ -75,4 +71,4 @@ export const MenuLinks = ({ isOpen, isLoading }: MenuLinksProps) => {
       </div>
     </div>
   );
-};
+}

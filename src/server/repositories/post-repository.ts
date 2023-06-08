@@ -1,9 +1,14 @@
-import { Prisma, Post } from "@prisma/client";
+import { Prisma, Post, Themes } from "@prisma/client";
 
-interface PostDTO {
-  title: string;
+export interface PostDTO {
   content: string;
+  title: string;
+  thumbnail: string;
+  description: string;
   id: string;
+  themes: {
+    themes: Themes;
+  }[];
   author: {
     image: string | null;
     name: string | null;

@@ -1,13 +1,14 @@
+"use client";
 import Link from "next/link";
 import { HStack, Text, TextProps } from "@chakra-ui/react";
-import { IconType } from "react-icons";
 import { useState } from "react";
+import { Icon, IconifyIcon } from "@iconify/react";
 
 interface NavIndicesProps extends TextProps {
   text: string;
   href: string;
   isExternal: boolean;
-  LeftIcon?: IconType;
+  LeftIcon?: string | IconifyIcon;
 }
 
 export const NavIndices = ({
@@ -30,7 +31,10 @@ export const NavIndices = ({
         <HStack>
           <>
             {LeftIcon && (
-              <LeftIcon color={enterElement ? "#35A5F5" : "#2D3748"} />
+              <Icon
+                icon={LeftIcon}
+                color={enterElement ? "#35A5F5" : "#2D3748"}
+              />
             )}
             <Text
               fontWeight={"500"}
@@ -58,7 +62,10 @@ export const NavIndices = ({
         <HStack>
           <>
             {LeftIcon && (
-              <LeftIcon color={enterElement ? "#35A5F5" : "#2D3748"} />
+              <Icon
+                icon={LeftIcon}
+                color={enterElement ? "#35A5F5" : "#2D3748"}
+              />
             )}
             <Text
               fontWeight={"500"}

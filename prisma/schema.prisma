@@ -91,7 +91,7 @@ model Post {
   title       String
   description String
   content     String
-  publishedAt DateTime?    @default(now())
+  publishedAt DateTime     @default(now())
   thumbnail   String
   authorId    String
   themesId    String
