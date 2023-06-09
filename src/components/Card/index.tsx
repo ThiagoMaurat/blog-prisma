@@ -1,79 +1,72 @@
-import { Avatar, Flex, HStack, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { Themes } from "@prisma/client";
+import { PostResponse } from "@/@types/PostResponse";
+import { format, parseISO } from "date-fns";
 
 interface CardProps {
-  image: string;
-  theme: {
-    themes: Themes;
-  }[];
-  title: string;
-  description: string;
-  author: string;
-  date: string;
+  data: PostResponse;
   href: string;
 }
 
 export function Card(props: CardProps) {
-  const { author, date, href, description, image, theme, title } = props;
+  const { data, href } = props;
+
+  const { author, description, publishedAt, themes, thumbnail, title } = data;
   return (
     <Link href={href}>
-      <Flex
-        maxW="360px"
-        w="100%"
-        gap="1rem"
-        cursor={"pointer"}
-        flexDir="column"
-      >
-        <Flex position={"relative"} width={360} height={250}>
+      <div className="max-w-360 overflow-hidden w-full gap-1 cursor-pointer flex flex-col">
+        <div className=" overflow-hidden">
           <Image
-            style={{ borderRadius: "15px" }}
-            src={image}
+            className="object-cover rounded-xl"
+            src={thumbnail}
             alt="image all posts"
-            fill
+            width={360}
+            height={250}
           />
-        </Flex>
+        </div>
 
-        <Text fontWeight={"500"} color={"blue.300"} fontSize="1.2rem">
-          {theme.map((theme, index) => {
+        <div className="font-weight-500 text-blue-300 text-1.2rem">
+          {themes.map((theme, index) => {
             return (
-              <Text
+              <p
                 key={`theme-${index}`}
-                fontWeight={"500"}
-                color={"blue.300"}
-                fontSize="1.2rem"
+                className="font-weight-500 text-blue-300 text-1.2rem"
               >
                 {theme.themes.name}
-              </Text>
+              </p>
             );
           })}
-        </Text>
+        </div>
 
-        <Text fontWeight="bold" color="darkblue.700" fontSize="1.5rem">
+        <p className="font-weight-bold text-darkblue-700 text-1.5rem">
           {title}
-        </Text>
+        </p>
 
-        <Text color={"gray.600"} fontWeight="600" fontSize="0.9rem">
+        <p className="text-gray-600 font-weight-600 text-0.9rem">
           {description}
-        </Text>
+        </p>
 
-        <HStack gap={"0.5rem"}>
-          <Avatar
-            name="Thiago Maurat"
+        <div className="flex gap-3 items-center">
+          <Image
+            width={30}
+            height={30}
+            className="w-8 h-8 rounded-full"
             src="https://avatars.githubusercontent.com/u/76444984?v=4"
+            alt="Thiago Maurat"
           />
-          <Flex flexDir={"column"} gap="2px">
-            <Text fontWeight="bold" color="darkblue.700" fontSize="0.8rem">
-              {author}
-            </Text>
-            <Text color={"gray.900"} fontSize="0.7rem">
-              {date}
-            </Text>
-          </Flex>
-        </HStack>
-      </Flex>
+
+          <div className="flex flex-col gap-2px">
+            <p className="font-weight-bold text-darkblue-700 text-0.8rem">
+              {author.name}
+            </p>
+
+            <p className="text-gray-900 text-0.7rem">
+              {format(parseISO(publishedAt), "dd-MM-yyyy, 'às' HH:mm.")}
+            </p>
+          </div>
+        </div>
+      </div>
     </Link>
   );
 }

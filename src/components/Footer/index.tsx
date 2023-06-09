@@ -15,6 +15,7 @@ export const Footer = ({ className }: FooterProps) => {
     "w-full",
     "grid",
     "gap-12",
+    "py-8",
     "px-4",
     "md:grid-cols-2",
     "lg:grid-cols-4",

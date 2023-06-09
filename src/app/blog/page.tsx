@@ -8,6 +8,7 @@ import { FirstCard } from "@/components/FirstCard";
 import { Footer } from "@/components/Footer";
 import { PostResponse } from "@/@types/PostResponse";
 import { Theme } from "@/@types/ThemesResponse";
+import { Card } from "@/components/Card";
 
 export default async function BlogPage() {
   const { posts } = await makeFetch<{ posts: PostResponse[] }>(
@@ -85,32 +86,15 @@ export default async function BlogPage() {
         </div>
       )}
 
-      {/* <SimpleGrid
-        mx={{ base: "1rem", sm: "0px" }}
-        justifyItems={"center"}
-        gap={"3rem"}
-        columns={{ base: 1, md: 2, xl: 3 }}
-        mb="2rem"
-        mt={{ base: "2rem", lg: "none" }}
-      >
-        {posts?.map((posts, index) => {
-          return (
-            <Card
-              key={`card-posts${index}`}
-              image={posts.thumbnail}
-              theme={posts.themes ?? []}
-              title={posts.title ?? ""}
-              description={posts.description ?? ""}
-              author={posts.author.name ?? ""}
-              date={format(
-                posts?.publishedAt ?? new Date(),
-                "dd-MM-yyyy, 'às' HH:mm."
-              )}
-              href={`/post/${posts.id}`}
-            />
-          );
-        })}
-      </SimpleGrid> */}
+      <div className="mx-1 sm:mx-0 grid py-4 items-center justify-center grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-2rem mt-2rem lg:mt-0">
+        {posts?.map((post, index) => (
+          <Card
+            key={`card-posts${index}`}
+            data={post}
+            href={`/post/${post.id}`}
+          />
+        ))}
+      </div>
 
       {/* {!data.allPosts.error && search.length > 3 && (
         <SimpleGrid
