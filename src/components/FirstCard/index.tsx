@@ -16,12 +16,12 @@ export function FirstCard(props: FirstCardProps) {
 
   return (
     <Link href={href}>
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-2 gap-8 overflow-hidden hover:scale-105 transition-all duration-300">
         <div>
           <Image
             width={550}
             height={370}
-            className="rounded-2xl h-40vh w-full"
+            className="object-cover  rounded-2xl h-40vh w-full"
             alt="last-post-thumbnail"
             src={thumbnail}
           />
