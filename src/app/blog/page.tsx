@@ -1,14 +1,13 @@
 import { debounce, first, last, orderBy, tail } from "lodash";
 import { makeFetch } from "@/lib/makeFetch";
-import { Themes } from "@prisma/client";
 import { Limiter } from "@/components/Limiter";
 import { Header } from "@/components/Header";
 import { FieldSearch } from "@/components/FieldSearch/inde";
 import { ButtonTheme } from "@/components/ButtonTheme";
-import FirstCard from "@/components/FirstCard";
+import { FirstCard } from "@/components/FirstCard";
 import { Footer } from "@/components/Footer";
 import { PostResponse } from "@/@types/PostResponse";
-import { Theme, ThemeResponse } from "@/@types/ThemesResponse";
+import { Theme } from "@/@types/ThemesResponse";
 
 export default async function BlogPage() {
   const { posts } = await makeFetch<{ posts: PostResponse[] }>(

@@ -1,4 +1,9 @@
-import { Theme } from "./ThemesResponse";
+interface Themes {
+  themes: {
+    id: number;
+    name: string;
+  };
+}
 
 export interface PostResponse {
   content: string;
@@ -6,7 +11,7 @@ export interface PostResponse {
   thumbnail: string;
   description: string;
   id: string;
-  themes: Theme[];
+  themes: Themes[];
   author: {
     image: string | null;
     name: string | null;

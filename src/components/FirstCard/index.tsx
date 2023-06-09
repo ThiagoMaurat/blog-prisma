@@ -1,89 +1,73 @@
-"use client";
-import {
-  Avatar,
-  Flex,
-  Grid,
-  GridItem,
-  HStack,
-  Image,
-  Text,
-} from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
 import { letterCounter } from "../../helpers/charactersCount";
 import { format, parseISO } from "date-fns";
 import { PostResponse } from "@/@types/PostResponse";
+import Image from "next/image";
 
 type FirstCardProps = {
   data: PostResponse;
   href: string;
 };
-function FirstCard(props: FirstCardProps) {
+export function FirstCard(props: FirstCardProps) {
   const { data, href } = props;
 
   const { author, publishedAt, description, thumbnail, themes, title } = data;
-  console.log(publishedAt);
+
   return (
     <Link href={href}>
-      <Grid gridTemplateColumns={"1fr 1fr"} gap="2rem">
-        <GridItem>
+      <div className="grid grid-cols-2 gap-8">
+        <div>
           <Image
-            borderRadius={"3xl"}
-            h="40vh"
+            width={550}
+            height={370}
+            className="rounded-2xl h-40vh w-full"
             alt="last-post-thumbnail"
             src={thumbnail}
-            objectFit="cover"
           />
-        </GridItem>
+        </div>
 
-        <GridItem
-          py="15px"
-          display={"flex"}
-          flexDirection={"column"}
-          gap="1rem"
-        >
+        <div className="py-4 flex flex-col gap-4">
           {themes.map((theme, index) => {
             return (
-              <Text
+              <p
                 key={`theme-${index}`}
-                fontWeight={"500"}
-                color={"blue.300"}
-                fontSize="1.2rem"
+                className="font-medium text-blue-300 text-lg"
               >
                 {theme.themes.name}
-              </Text>
+              </p>
             );
           })}
 
-          <Text fontWeight="bold" color="darkblue.700" fontSize="1.5rem">
-            {title}
-          </Text>
+          <h2 className="font-bold text-darkblue-700 text-2xl">{title}</h2>
 
-          <Text color={"gray.600"} fontWeight="600" fontSize="0.9rem">
+          <p className="text-gray-600 font-semibold text-sm">
             {letterCounter(description, 300)}
-          </Text>
+          </p>
 
-          <HStack gap={"0.5rem"}>
-            <Avatar
-              name="Thiago Maurat"
+          <div className="flex items-center gap-2">
+            <Image
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-full"
               src="https://avatars.githubusercontent.com/u/76444984?v=4"
+              alt="Thiago Maurat"
             />
-            <Flex flexDir={"column"} gap="2px">
-              <Text fontWeight="bold" color="darkblue.700" fontSize="0.8rem">
+
+            <div className="flex flex-col gap-1">
+              <p className="font-bold text-darkblue-700 text-sm">
                 {author.name}
-              </Text>
+              </p>
 
               {publishedAt && (
-                <Text color={"gray.900"} fontSize="0.7rem">
+                <p className="text-gray-900 text-xs">
                   {format(parseISO(publishedAt), "dd/MM/yyyy")}
-                </Text>
+                </p>
               )}
-            </Flex>
-          </HStack>
-        </GridItem>
-      </Grid>
+            </div>
+          </div>
+        </div>
+      </div>
     </Link>
   );
 }
-
-export default FirstCard;
