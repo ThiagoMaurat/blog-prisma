@@ -1,29 +1,31 @@
-import { debounce, first, last, orderBy, tail } from "lodash";
+import { first } from "lodash";
 import { makeFetch } from "@/lib/makeFetch";
 import { Limiter } from "@/components/Limiter";
 import { Header } from "@/components/Header";
 import { FieldSearch } from "@/components/FieldSearch/inde";
-import { ButtonTheme } from "@/components/ButtonTheme";
 import { FirstCard } from "@/components/FirstCard";
 import { Footer } from "@/components/Footer";
 import { PostResponse } from "@/@types/PostResponse";
-import { Theme } from "@/@types/ThemesResponse";
 import { Card } from "@/components/Card";
+import { DefaultButton } from "@/components/DefaultButton";
+import { BsSend } from "react-icons/bs";
+import { IoArrowForwardSharp, IoSend } from "react-icons/io5";
 
 export default async function BlogPage() {
-  const { posts } = await makeFetch<{ posts: PostResponse[] }>(
-    "/api/posts/all",
-    {
+  const getPosts = async (search?: string) => {
+    const posts = await makeFetch<{ posts: PostResponse[] }>(`/api/post/all`, {
       cache: "no-store",
-    }
-  );
+    });
 
-  const { themes } = await makeFetch<{ themes: Theme[] }>("/api/themes/all", {
-    cache: "no-cache",
-  });
+    return posts;
+  };
 
+  const { posts } = await getPosts();
   const firstPost = first(posts);
-  console.log(posts);
+
+  const fetchPostBySearch = async (search: string) => {
+    "use server";
+  };
   // const [loadedPosts, setLoadedPosts] = useState(6);
   // const [search, setSearch] = useState("");
   // const [query, setQuery] = useState("");
@@ -66,16 +68,6 @@ export default async function BlogPage() {
         />
       </div>
 
-      <div className="flex gap-2 justify-center">
-        {themes?.map((themes, index) => {
-          return (
-            <ButtonTheme key={`themesButton-${index}`}>
-              {themes.name}
-            </ButtonTheme>
-          );
-        })}
-      </div>
-
       {firstPost && (
         <div className="my-8 hidden lg:flex">
           <FirstCard
@@ -95,38 +87,6 @@ export default async function BlogPage() {
           />
         ))}
       </div>
-
-      {/* {!data.allPosts.error && search.length > 3 && (
-        <SimpleGrid
-          mx={{ base: "1rem", sm: "0px" }}
-          justifyItems={"center"}
-          gap={"3rem"}
-          columns={{ base: 1, md: 2, xl: 3 }}
-          mb="2rem"
-          mt={{ base: "2rem", lg: "none" }}
-        >
-          {searchData &&
-            searchData?.map((posts, index) => {
-              return (
-                <Card
-                  key={`card-posts${index}`}
-                  image={posts.thumbnail.thumbnail_url}
-                  theme={posts.theme.theme}
-                  title={posts.title ?? "Front-End Developer Blog"}
-                  description={
-                    posts.description ?? "Saiba mais sobre a matéria."
-                  }
-                  author={posts.author ?? "Thiago Maurat"}
-                  date={format(
-                    new Date(posts.created_at),
-                    "dd-MM-yyyy, 'às' HH:mm."
-                  )}
-                  href={`/post/${posts.id}`}
-                />
-              );
-            })}
-        </SimpleGrid>
-      )} */}
 
       {/* {loadedPosts < orderedData.length && !(search.length > 3) && (
         <HStack justifyContent={"center"} mt="3rem">

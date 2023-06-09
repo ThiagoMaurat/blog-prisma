@@ -11,26 +11,29 @@ export async function GET(req: Request, res: Response) {
 
   const pageParams = queryParams.get("page");
   const limitParams = queryParams.get("limit");
+  const searchParams = queryParams.get("search");
 
   const paginationSchema = z.object({
-    page: z.coerce.number().optional(),
-    limit: z.coerce.number().optional(),
+    page: z.coerce.number().optional().nullable(),
+    limit: z.coerce.number().optional().nullable(),
+    search: z.string().optional().nullable(),
   });
 
   try {
-    const { limit, page } = await paginationSchema.parseAsync({
+    const { limit, page, search } = await paginationSchema.parseAsync({
       page: pageParams,
       limit: limitParams,
+      search: searchParams,
     });
 
-    const allPosts = await postUseCase.listAll(page, limit);
+    const allPosts = await postUseCase.findAll(page, limit, search);
 
     return NextResponse.json({ posts: allPosts }, { status: 200 });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
         {
-          message: "Error on query params",
+          message: error,
         },
         { status: 400 }
       );

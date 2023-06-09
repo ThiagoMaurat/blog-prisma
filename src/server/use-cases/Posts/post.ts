@@ -68,7 +68,11 @@ export class PostUseCase {
     return { post };
   }
 
-  async listAll(page?: number, limit?: number) {
-    return this.postRepository.findAll(page, limit);
+  async findAll(
+    page?: number | null,
+    limit?: number | null,
+    search?: string | null
+  ) {
+    return this.postRepository.findAll(page, limit, search);
   }
 }

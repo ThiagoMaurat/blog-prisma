@@ -18,5 +18,9 @@ export interface PostDTO {
 export interface PostRepository {
   create(data: Prisma.PostCreateInput): Promise<Post>;
   find(id: string): Promise<Post | null>;
-  findAll(page?: number, limit?: number): Promise<PostDTO[]>;
+  findAll(
+    page?: number | null,
+    limit?: number | null,
+    search?: string | null
+  ): Promise<PostDTO[]>;
 }

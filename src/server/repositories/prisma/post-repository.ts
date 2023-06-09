@@ -27,7 +27,11 @@ export class PrismaPostRepository implements PostRepository {
     return post;
   }
 
-  async findAll(page?: number, limit?: number) {
+  async findAll(
+    page?: number | null,
+    limit?: number | null,
+    search?: string | null
+  ) {
     const pageSizeFindAll = limit ?? 0;
     const pageFindAll = page ?? 9999999;
 
@@ -36,6 +40,15 @@ export class PrismaPostRepository implements PostRepository {
     const posts = await prisma.post.findMany({
       skip: page && limit ? offset : undefined,
       take: limit ? limit : undefined,
+      ...(search
+        ? {
+            where: {
+              title: {
+                contains: search,
+              },
+            },
+          }
+        : {}),
       select: {
         id: true,
         title: true,
