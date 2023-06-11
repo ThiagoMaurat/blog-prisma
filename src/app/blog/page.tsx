@@ -6,6 +6,7 @@ import { PostResponse } from "@/@types/PostResponse";
 import { Card } from "@/components/Card";
 import { makeFetch } from "@/helpers/makeFetch";
 import SearchComponent from "./SearchComponent";
+import { ButtonTheme } from "@/components/ButtonTheme";
 
 interface BlogPageProps {
   searchParams: {
@@ -49,11 +50,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         ))}
       </div>
 
-      {/* {loadedPosts < orderedData.length && !(search.length > 3) && (
-        <HStack justifyContent={"center"} mt="3rem">
-          <ButtonTheme onClick={loadMorePosts}>Carregar mais</ButtonTheme>
-        </HStack>
-      )} */}
+      <div className="flex justify-center mt-10">
+        <ButtonTheme>Carregar mais</ButtonTheme>
+      </div>
 
       <Footer />
     </Limiter>
