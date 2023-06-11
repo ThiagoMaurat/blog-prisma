@@ -2,6 +2,7 @@
 import { FieldSearch } from "@/components/FieldSearch/inde";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
 export default function SearchComponent() {
   const [search, setSearch] = useState("");
@@ -40,14 +41,16 @@ export default function SearchComponent() {
         <div className="bg-[url(/blog.svg)] bg-no-repeat bg-center bg-cover h-[140px] md:h-[200px]" />
       </div>
 
-      <div className="items-center flex w-full justify-center relative bottom-8">
+      <div className="items-center gap-3 flex w-full justify-center relative bottom-8">
         <FieldSearch
           name="search"
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
 
-        <button type="submit">asd</button>
+        <button type="submit">
+          <BsFillArrowRightCircleFill className="text-2xl fill-white" />
+        </button>
       </div>
     </form>
   );

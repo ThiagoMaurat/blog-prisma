@@ -1,8 +1,5 @@
-import { FaPen } from "react-icons/fa";
 import React from "react";
-import { useRouter } from "next/navigation";
 import { NavIndices } from "./NavIndicces";
-import { BsFacebook, BsGithub, BsTwitter } from "react-icons/bs";
 import { MdArrowForward } from "react-icons/md";
 import clsx from "clsx";
 

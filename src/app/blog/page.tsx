@@ -1,4 +1,3 @@
-import { first } from "lodash";
 import { Limiter } from "@/components/Limiter";
 import { Header } from "@/components/Header";
 import { FirstCard } from "@/components/FirstCard";
@@ -33,7 +32,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       {posts?.[0] && (
         <div className="my-8 hidden lg:flex">
           <FirstCard
-            key={`posts${first(posts)?.id}`}
+            key={`posts${posts?.[0]?.id}`}
             href={`/post/${posts?.[0]?.id}`}
             data={posts?.[0]}
           />

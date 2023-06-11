@@ -44,6 +44,7 @@ export class PrismaPostRepository implements PostRepository {
         ? {
             where: {
               title: {
+                mode: "insensitive",
                 contains: search,
               },
             },
