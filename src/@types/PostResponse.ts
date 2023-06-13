@@ -5,7 +5,7 @@ interface Themes {
   };
 }
 
-export interface PostResponse {
+export interface Post {
   content: string;
   title: string;
   thumbnail: string;
@@ -17,4 +17,13 @@ export interface PostResponse {
     name: string | null;
   };
   publishedAt: string;
+}
+
+export interface PostResponse {
+  posts: {
+    total: number;
+    page: number;
+    limit: number;
+    posts: Post[];
+  };
 }

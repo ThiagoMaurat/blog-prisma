@@ -37,6 +37,17 @@ export class PrismaPostRepository implements PostRepository {
 
     const offset = (pageFindAll - 1) * pageSizeFindAll;
 
+    const totalPosts = await prisma.post.count({
+      where: search
+        ? {
+            title: {
+              mode: "insensitive",
+              contains: search,
+            },
+          }
+        : {},
+    });
+
     const posts = await prisma.post.findMany({
       skip: page && limit ? offset : undefined,
       take: limit ? limit : undefined,
@@ -74,6 +85,11 @@ export class PrismaPostRepository implements PostRepository {
       },
     });
 
-    return posts;
+    return {
+      total: totalPosts,
+      page,
+      limit,
+      posts,
+    };
   }
 }

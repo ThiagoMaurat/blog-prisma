@@ -2,15 +2,17 @@ import Link from "next/link";
 import React from "react";
 import { letterCounter } from "../../helpers/charactersCount";
 import { format, parseISO } from "date-fns";
-import { PostResponse } from "@/@types/PostResponse";
+import { Post } from "@/@types/PostResponse";
 import Image from "next/image";
 
 type FirstCardProps = {
-  data: PostResponse;
+  data: Post;
   href: string;
 };
 export function FirstCard(props: FirstCardProps) {
   const { data, href } = props;
+
+  if (!data) return null;
 
   const { author, publishedAt, description, thumbnail, themes, title } = data;
 
@@ -28,7 +30,7 @@ export function FirstCard(props: FirstCardProps) {
         </div>
 
         <div className="py-4 flex flex-col gap-4">
-          {themes.map((theme, index) => {
+          {themes?.map((theme, index) => {
             return (
               <p
                 key={`theme-${index}`}
@@ -41,9 +43,11 @@ export function FirstCard(props: FirstCardProps) {
 
           <h2 className="font-bold text-darkblue-700 text-2xl">{title}</h2>
 
-          <p className="text-gray-600 font-semibold text-sm">
-            {letterCounter(description, 300)}
-          </p>
+          {description && (
+            <p className="text-gray-600 font-semibold text-sm">
+              {letterCounter(description, 300)}
+            </p>
+          )}
 
           <div className="flex items-center gap-2">
             <Image
@@ -56,7 +60,7 @@ export function FirstCard(props: FirstCardProps) {
 
             <div className="flex flex-col gap-1">
               <p className="font-bold text-darkblue-700 text-sm">
-                {author.name}
+                {author?.name}
               </p>
 
               {publishedAt && (

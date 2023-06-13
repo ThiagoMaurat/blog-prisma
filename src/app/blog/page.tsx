@@ -2,27 +2,25 @@ import { Limiter } from "@/components/Limiter";
 import { Header } from "@/components/Header";
 import { FirstCard } from "@/components/FirstCard";
 import { Footer } from "@/components/Footer";
-import { PostResponse } from "@/@types/PostResponse";
 import { Card } from "@/components/Card";
-import { makeFetch } from "@/helpers/makeFetch";
 import SearchComponent from "./SearchComponent";
-import { ButtonTheme } from "@/components/ButtonTheme";
+import { getPosts } from "@/helpers/getPosts";
+import ShowMore from "./ShowMore";
 
 interface BlogPageProps {
   searchParams: {
     search: string;
+    page: number;
+    limit: number;
   };
 }
 
 export default async function BlogPage({ searchParams }: BlogPageProps) {
-  const { posts } = await makeFetch<{ posts: PostResponse[] }>(
-    `/api/posts/all${
-      searchParams.search ? `?search=${searchParams.search}` : ""
-    }`,
-    {
-      cache: "no-store",
-    }
-  );
+  const { posts, total } = await getPosts({
+    search: searchParams.search,
+    page: searchParams.page || 1,
+    limit: searchParams.limit || 9,
+  });
 
   return (
     <Limiter>
@@ -30,7 +28,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
       <SearchComponent />
 
-      {posts?.[0] && (
+      {posts && (
         <div className="my-8 hidden lg:flex">
           <FirstCard
             key={`posts${posts?.[0]?.id}`}
@@ -50,9 +48,12 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         ))}
       </div>
 
-      <div className="flex justify-center mt-10">
-        <ButtonTheme>Carregar mais</ButtonTheme>
-      </div>
+      <ShowMore
+        limit={searchParams.limit || 9}
+        page={searchParams.page || 1}
+        total={total}
+        search={searchParams.search}
+      />
 
       <Footer />
     </Limiter>

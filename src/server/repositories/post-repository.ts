@@ -1,20 +1,5 @@
-import { Prisma, Post, Themes } from "@prisma/client";
+import { Prisma, Post } from "@prisma/client";
 
-export interface PostDTO {
-  content: string;
-  title: string;
-  thumbnail: string;
-  description: string;
-  id: string;
-  themes: {
-    themes: Themes;
-  }[];
-  author: {
-    image: string | null;
-    name: string | null;
-  };
-  publishedAt: Date | null;
-}
 export interface PostRepository {
   create(data: Prisma.PostCreateInput): Promise<Post>;
   find(id: string): Promise<Post | null>;
@@ -22,5 +7,5 @@ export interface PostRepository {
     page?: number | null,
     limit?: number | null,
     search?: string | null
-  ): Promise<PostDTO[]>;
+  ): Promise<any>;
 }

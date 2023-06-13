@@ -1,12 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { PostResponse } from "@/@types/PostResponse";
 import { format, parseISO } from "date-fns";
 import { letterCounter } from "@/helpers/charactersCount";
+import { Post } from "@/@types/PostResponse";
 
 interface CardProps {
-  data: PostResponse;
+  data: Post;
   href: string;
 }
 
