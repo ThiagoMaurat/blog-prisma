@@ -57,8 +57,8 @@ export function Card(props: CardProps) {
               {author.name}
             </p>
 
-            <p className="text-gray-900 text-0.7rem">
-              {format(parseISO(publishedAt), "dd-MM-yyyy, 'às' HH:mm.")}
+            <p className="text-gray-900 text-sm">
+              {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
             </p>
           </div>
         </div>

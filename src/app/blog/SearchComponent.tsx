@@ -28,8 +28,8 @@ export default function SearchComponent() {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (search.trim() === "") {
-      return alert("Please provide some input");
+    if (search.trim().length < 3) {
+      return;
     }
 
     updateSearchParams(search.toLowerCase());

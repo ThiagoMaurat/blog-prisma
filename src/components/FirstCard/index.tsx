@@ -18,7 +18,7 @@ export function FirstCard(props: FirstCardProps) {
 
   return (
     <Link href={href}>
-      <div className="grid grid-cols-2 gap-8 overflow-hidden hover:scale-105 transition-all duration-300">
+      <div className="grid grid-cols-2 gap-6 overflow-hidden hover:scale-105 transition-all duration-300">
         <div>
           <Image
             width={550}
@@ -64,8 +64,8 @@ export function FirstCard(props: FirstCardProps) {
               </p>
 
               {publishedAt && (
-                <p className="text-gray-900 text-xs">
-                  {format(parseISO(publishedAt), "dd/MM/yyyy")}
+                <p className="text-gray-900 text-sm">
+                  {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
                 </p>
               )}
             </div>
