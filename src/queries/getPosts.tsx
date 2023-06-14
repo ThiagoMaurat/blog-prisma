@@ -1,5 +1,5 @@
 import { PostResponse } from "@/@types/PostResponse";
-import { makeFetch } from "./makeFetch";
+import { makeFetch } from "../helpers/makeFetch";
 
 interface getPostsProps {
   search?: string;
@@ -7,10 +7,13 @@ interface getPostsProps {
   limit?: number;
 }
 
-export const getPosts = async (params: getPostsProps) => {
+export const getPosts = async (params?: getPostsProps) => {
   const searchParam = params?.search ? `&search=${params.search}` : "";
 
-  const paginationParams = `?page=${params.page}&limit=${params.limit}`;
+  const paginationParams =
+    params?.page || params?.limit
+      ? `?page=${params.page}&limit=${params.limit}`
+      : "";
 
   const fetchUrl = `/api/posts/all${paginationParams}${searchParam}`;
 

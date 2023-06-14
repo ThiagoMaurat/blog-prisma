@@ -10,7 +10,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest",
     "seed": "npx prisma db seed"
   },
   "dependencies": {

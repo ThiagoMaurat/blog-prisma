@@ -16,10 +16,7 @@ interface PostUseCaseResponse {
 }
 
 export class PostUseCase {
-  constructor(
-    private postRepository: PostRepository,
-    private userRepository: UsersRepository
-  ) {}
+  constructor(private postRepository: PostRepository) {}
 
   async execute({
     authorId,
@@ -29,16 +26,6 @@ export class PostUseCase {
     thumbnail,
     description,
   }: PostUseCaseRequest): Promise<PostUseCaseResponse> {
-    // create post
-
-    // const isUserAdmin = await this.userRepository.findByIdUserAndCheckIfAdmin(
-    //   authorId
-    // );
-
-    // if (!isUserAdmin) {
-    //   throw new UserIsNotAdminError();
-    // }
-
     const post = await this.postRepository.create({
       author: {
         connect: {
@@ -74,5 +61,9 @@ export class PostUseCase {
     search?: string | null
   ) {
     return this.postRepository.findAll(page, limit, search);
+  }
+
+  async findById(id: string) {
+    return this.postRepository.find(id);
   }
 }

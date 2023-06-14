@@ -1,67 +1,58 @@
-import {
-  Avatar,
-  Flex,
-  FlexProps,
-  Heading,
-  HStack,
-  VStack,
-} from "@chakra-ui/react";
-import React from "react";
-import { Text } from "@chakra-ui/react";
+import { Post } from "@/@types/PostResponse";
+import clsx from "clsx";
+import { format, parseISO } from "date-fns";
+import Image from "next/image";
 
-interface CustomSectionTitlePostPage extends FlexProps {
-  theme: string;
-  title: string;
-  date: string;
-  author: string;
+interface CustomSectionTitlePostPage {
+  post: Post;
+  className?: string;
 }
 
 export const CustomSectionTitlePostPage = (
   props: CustomSectionTitlePostPage
 ) => {
-  const { author, date, theme, title, ...rest } = props;
+  const { author, publishedAt, themes, title } = props.post;
+
+  const titleSection = clsx(
+    "flex",
+    "bg-blue-900",
+    "flex-col",
+    "md:flex-row",
+    props.className
+  );
 
   return (
-    <Flex
-      backgroundColor={"#092856"}
-      flexDir={{ base: "column", md: "row" }}
-      {...rest}
-    >
-      <VStack
-        minW={"162px"}
-        align="flex-start"
-        textAlign={{ base: "center", md: "unset" }}
-        overflow="hidden"
-        w="100%"
-        maxW={{ base: "100%", md: "60%" }}
-      >
-        <Text fontWeight={"500"} color={"blue.300"} fontSize="1.2rem" w="100%">
-          {theme}
-        </Text>
+    <div className={titleSection}>
+      <div className="flex text-center md:text-left flex-col min-w-[162px] flex-start overflow-hidden w-full max-w-[100%] md:max-w-[60%]">
+        {themes.map((theme, index) => (
+          <p
+            key={`theme-index-${index}`}
+            className="font-semibold text-blue-300 text-lg w-full"
+          >
+            {theme.themes.name}
+          </p>
+        ))}
 
-        <Heading w="100%" fontSize={"3xl"} as={"h1"} color="whiteAlpha.900">
-          {title}
-        </Heading>
-      </VStack>
+        <h1 className="text-white font-bold text-3xl">{title}</h1>
+      </div>
 
-      <HStack
-        gap={"0.5rem"}
-        h="100%"
-        placeSelf={{ base: "center", md: "flex-start" }}
-      >
-        <Avatar
-          name="Thiago Maurat"
+      <div className="flex items-center gap-2 justify-center md:justify-normal">
+        <Image
+          className="w-10 h-10 rounded-full"
+          width={50}
+          height={50}
           src="https://avatars.githubusercontent.com/u/76444984?v=4"
+          alt="Avatar"
         />
-        <Flex flexDir={"column"} gap="2px">
-          <Text fontWeight="bold" color="whiteAlpha.800" fontSize="0.8rem">
-            {author}
-          </Text>
-          <Text color="whiteAlpha.800" fontSize="0.7rem">
-            {date}
-          </Text>
-        </Flex>
-      </HStack>
-    </Flex>
+
+        <div className="flex flex-col gap-1">
+          <p className="font-bold text-white text-sm">{author.name}</p>
+
+          <p className="text-white text-xs">
+            {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
+          </p>
+        </div>
+      </div>
+    </div>
   );
 };

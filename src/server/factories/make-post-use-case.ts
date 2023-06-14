@@ -4,11 +4,7 @@ import { PostUseCase } from "../use-cases/Posts/post";
 
 export function makePostUseCase() {
   const prismaPostRepository = new PrismaPostRepository();
-  const prismaUsersRepository = new PrismaUsersRepository();
-  const makePostUseCase = new PostUseCase(
-    prismaPostRepository,
-    prismaUsersRepository
-  );
+  const makePostUseCase = new PostUseCase(prismaPostRepository);
 
   return makePostUseCase;
 }

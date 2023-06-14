@@ -4,8 +4,8 @@ import { FirstCard } from "@/components/FirstCard";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/Card";
 import SearchComponent from "./SearchComponent";
-import { getPosts } from "@/helpers/getPosts";
 import ShowMore from "./ShowMore";
+import { getPosts } from "@/queries/getPosts";
 
 interface BlogPageProps {
   searchParams: {
