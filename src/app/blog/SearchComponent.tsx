@@ -41,7 +41,7 @@ export default function SearchComponent() {
         <div className="bg-[url(/blog.svg)] bg-no-repeat bg-center bg-cover h-[140px] md:h-[200px]" />
       </div>
 
-      <div className="items-center gap-3 flex w-full justify-center relative bottom-8">
+      <div className="items-center gap-3 max-w-[360px] mx-auto px-3 flex w-full justify-center relative bottom-8">
         <FieldSearch
           name="search"
           onChange={(e) => setSearch(e.target.value)}

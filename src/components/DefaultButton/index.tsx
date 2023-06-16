@@ -1,5 +1,5 @@
 import { FC, useMemo } from "react";
-
+import clsx from "clsx";
 type Variants = "primary" | "secondary" | "ghost";
 
 interface DefaultButtonProps
@@ -8,25 +8,64 @@ interface DefaultButtonProps
   variant?: Variants;
   isLoading?: boolean;
   rightIcon?: React.ReactNode;
+  className?: string;
 }
 
 export const DefaultButton: FC<DefaultButtonProps> = (
   props: DefaultButtonProps
 ) => {
-  const { label, variant = "secondary", rightIcon, isLoading, ...rest } = props;
+  const {
+    label,
+    className,
+    variant = "secondary",
+    rightIcon,
+    isLoading,
+    ...rest
+  } = props;
 
   const stylesByVariant = useMemo(() => {
     return {
-      primary: `btn ${
-        isLoading && "loading"
-      } normal-case hover:btn-bg-gray-300 btn-text-lg btn-font-bold btn-rounded-md btn-h-10 flex gap-2 justify-center btn-bg-gray-400`,
-      secondary: `btn ${
-        isLoading && "loading"
-      } normal-case bg-blue-600 text-white hover:bg-blue-700 btn-text-lg font-bold rounded-md h-10`,
-      ghost:
-        "bg-transparent border border-white text-white hover:bg-white hover:text-black text-lg font-bold rounded-md h-10",
+      primary: clsx(
+        "normal-case",
+        "hover:bg-slate-400",
+        "text-lg",
+        "font-bold",
+        "rounded-md",
+        "text-white",
+        "h-10",
+        "flex",
+        "items-center",
+        "gap-2",
+        "justify-center",
+        "bg-slate-500",
+        props.className
+      ),
+      secondary: clsx(
+        "normal-case",
+        "bg-blue-600",
+        "text-white",
+        "hover:bg-blue-700",
+        "text-lg",
+        "font-bold",
+        "rounded-md",
+        "h-10",
+        props.className
+      ),
+      ghost: clsx(
+        "bg-transparent",
+        "border",
+        "border-white",
+        "text-white",
+        "hover:bg-white",
+        "hover:text-black",
+        "text-lg",
+        "font-bold",
+        "rounded-md",
+        "h-10",
+        props.className
+      ),
     };
-  }, [isLoading]);
+  }, [props.className]);
 
   return (
     <button className={stylesByVariant[variant]} {...rest}>

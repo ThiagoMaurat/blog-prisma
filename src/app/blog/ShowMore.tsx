@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Pagination from "@/components/Pagination";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface ShowMoreProps {
   search: string;
@@ -31,7 +31,7 @@ const ShowMore = (props: ShowMoreProps) => {
   };
 
   const getPageQueryParams = () => {
-    const searchParams = new URLSearchParams(window.location.search);
+    const searchParams = new URLSearchParams(window?.location?.search);
 
     const page = searchParams.get("page");
 

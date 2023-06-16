@@ -1,7 +1,6 @@
 "use client";
 import { DefaultButton } from "@/components/DefaultButton";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
-import { useToast } from "@chakra-ui/react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -18,7 +17,7 @@ interface FormLogin {
 
 export const FormComponent = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
+  // const toast = useToast();
   const { push } = useRouter();
 
   async function loginWithGitHub() {
@@ -40,13 +39,13 @@ export const FormComponent = ({}) => {
     });
 
     if (response?.error) {
-      return toast({
-        title: "Erro",
-        description: "Erro ao logar.",
-        status: "error",
-        duration: 3000,
-        isClosable: true,
-      });
+      // return toast({
+      //   title: "Erro",
+      //   description: "Erro ao logar.",
+      //   status: "error",
+      //   duration: 3000,
+      //   isClosable: true,
+      // });
     }
 
     if (response?.ok) {

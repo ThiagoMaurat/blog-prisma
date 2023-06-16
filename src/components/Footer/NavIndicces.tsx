@@ -1,10 +1,8 @@
 "use client";
 import Link from "next/link";
-import { HStack, Text, TextProps } from "@chakra-ui/react";
-import { useState } from "react";
 import { Icon, IconifyIcon } from "@iconify/react";
 
-interface NavIndicesProps extends TextProps {
+interface NavIndicesProps {
   text: string;
   href: string;
   isExternal: boolean;
@@ -17,68 +15,33 @@ export const NavIndices = ({
   href,
   LeftIcon,
 }: NavIndicesProps) => {
-  const [enterElement, setEnterElement] = useState(false);
-
   if (isExternal) {
     return (
       <a
-        onMouseLeave={() => setEnterElement(false)}
-        onMouseEnter={() => setEnterElement(true)}
         href={href}
         target="_blank"
+        className="hover:text-gray-500 text-slate-600"
         rel="noopener noreferrer"
       >
-        <HStack>
+        <div className="flex gap-2 items-center">
           <>
-            {LeftIcon && (
-              <Icon
-                icon={LeftIcon}
-                color={enterElement ? "#35A5F5" : "#2D3748"}
-              />
-            )}
-            <Text
-              fontWeight={"500"}
-              color={"gray.700"}
-              fontSize="1rem"
-              _hover={
-                enterElement ? { color: "#35A5F5" } : { color: "#2D3748" }
-              }
-            >
-              {text}
-            </Text>
+            {LeftIcon && <Icon icon={LeftIcon} />}
+            <p className="font-bold">{text}</p>
           </>
-        </HStack>
+        </div>
       </a>
     );
   }
 
   if (!isExternal) {
     return (
-      <Link
-        href={href}
-        onMouseLeave={() => setEnterElement(false)}
-        onMouseEnter={() => setEnterElement(true)}
-      >
-        <HStack>
+      <Link href={href} className="hover:text-gray-500 text-slate-600">
+        <div className="flex gap-2 items-center">
           <>
-            {LeftIcon && (
-              <Icon
-                icon={LeftIcon}
-                color={enterElement ? "#35A5F5" : "#2D3748"}
-              />
-            )}
-            <Text
-              fontWeight={"500"}
-              color={"gray.700"}
-              fontSize="1rem"
-              _hover={
-                enterElement ? { color: "#35A5F5" } : { color: "#2D3748" }
-              }
-            >
-              {text}
-            </Text>
+            {LeftIcon && <Icon icon={LeftIcon} />}
+            <p className="font-bold">{text}</p>
           </>
-        </HStack>
+        </div>
       </Link>
     );
   }

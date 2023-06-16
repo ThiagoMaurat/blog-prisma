@@ -37,12 +37,13 @@ export function Card(props: CardProps) {
             );
           })}
         </div>
-        <p className="font-weight-bold text-darkblue-700 text-1.5rem">
-          {title}
-        </p>
-        <p className="text-gray-600 font-weight-600 text-0.9rem">
+
+        <p className="font-medium text-darkblue-700 text-1.5rem">{title}</p>
+
+        <p className="text-gray-600 truncate font-weight-600 text-0.9rem">
           {letterCounter(description, 80)}
         </p>
+
         <div className="flex gap-3 items-center">
           <Image
             width={30}
@@ -53,7 +54,7 @@ export function Card(props: CardProps) {
           />
 
           <div className="flex flex-col gap-2px">
-            <p className="font-weight-bold text-darkblue-700 text-0.8rem">
+            <p className="font-medium text-darkblue-700 text-0.8rem">
               {author.name}
             </p>
 

@@ -1,16 +1,8 @@
-"use client";
-import {
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputProps,
-  Stack,
-  useColorMode,
-} from "@chakra-ui/react";
 import React, { ForwardRefRenderFunction } from "react";
 import { BsSearch } from "react-icons/bs";
 
-interface FieldSearchComponentProps extends InputProps {
+interface FieldSearchComponentProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   name: string;
 }
 
@@ -18,33 +10,23 @@ const FieldSearchComponent: ForwardRefRenderFunction<
   HTMLInputElement,
   FieldSearchComponentProps
 > = (props, ref) => {
-  const { colorMode } = useColorMode();
-
   return (
-    <Stack w="300px">
-      <InputGroup>
-        <InputLeftElement
-          h={"100%"}
-          position={"absolute"}
-          left="1.6%"
-          pointerEvents="none"
-          fontSize="1.2em"
+    <div className="w-full">
+      <div className="relative">
+        <div
+          className="h-full absolute ml-3 flex items-center text-2xl"
+          style={{ pointerEvents: "none" }}
         >
-          <BsSearch color="black" />
-        </InputLeftElement>
-        <Input
-          pl="55px !important"
-          borderRadius={"24px"}
-          h="45px"
-          w="100%"
-          backgroundColor={"#FFFF"}
-          color={colorMode === "light" ? "gray.900" : "gray.900"}
+          <BsSearch className="text-black text-xl" />
+        </div>
+        <input
+          className="pl-14 py-3 border rounded-full focus:outline-gray-500 w-full bg-white text-gray-900"
           placeholder="Search (mínimo 3 caracteres)"
           ref={ref}
           {...props}
         />
-      </InputGroup>
-    </Stack>
+      </div>
+    </div>
   );
 };
 

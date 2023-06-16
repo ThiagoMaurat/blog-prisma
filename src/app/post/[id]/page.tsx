@@ -7,7 +7,7 @@ import { getPostsById } from "@/queries/getPostsById";
 import { CustomSectionTitlePostPage } from "@/components/CustomSectionTitlePostPage";
 
 interface PostsProps {
-  params?: {
+  params: {
     id: string;
   };
 }
@@ -25,7 +25,7 @@ export default async function Posts({ params }: PostsProps) {
 
       <CustomSectionTitlePostPage
         post={post}
-        className="min-h-[30vh] h-auto rounded-3xl flex md:justify-evenly md:items-center pt-4 md:pt-12 pb-16 px-8 mx-auto gap-8"
+        className="min-h-[30vh] h-auto rounded-3xl flex md:justify-evenly md:items-center pt-4 md:pt-12 pb-16 px-8 mx-auto gap-8 justify-around"
       />
 
       <div className="w-700 h-500 flex mt-[-4rem] justify-center w-full">
