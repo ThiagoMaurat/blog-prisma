@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const {fontFamily} = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: [
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -15,10 +18,7 @@ module.exports = {
         xl: '80em',  // 1280px
       },
       fontFamily: {
-        p: ["Montserrat", "sans-serif"],
-        h1: ["Bebas Neue", "sans-serif"],
-        button: ["Montserrat", "sans-serif"],
-        label: ["Montserrat", "sans-serif"],
+        primary: ["var(--font-montserrat)", fontFamily.sans],
       },
       html: {
         margin: "0",
