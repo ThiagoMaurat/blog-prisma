@@ -4,6 +4,8 @@ import ToggleButtonDarkMode from "../ToogleButtonDarkMode";
 import { signOut, useSession } from "next-auth/react";
 import { MdLogout } from "react-icons/md";
 import CreatePostModal from "./CreatePostModal";
+import { Popover } from "../DropDownMenu";
+import Avatar from "../Avatar";
 
 type MenuLinksProps = {
   isOpen: boolean;
@@ -56,6 +58,12 @@ export function MenuLinks({ isOpen }: MenuLinksProps) {
           </Link>
 
           {data?.user.userRole[0].role.name === "admin" && <CreatePostModal />}
+
+          {data?.user && (
+            <Popover openButtonChildren={<Avatar user={data?.user} />}>
+              Here
+            </Popover>
+          )}
         </div>
 
         <div className="flex h-full flex-row gap-2 justify-center">
