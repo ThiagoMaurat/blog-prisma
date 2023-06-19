@@ -13,7 +13,6 @@ export const Footer = ({ className }: FooterProps) => {
     "grid",
     "gap-12",
     "py-8",
-    "px-4",
     "md:grid-cols-2",
     "lg:grid-cols-4",
     className
@@ -76,6 +75,7 @@ export const Footer = ({ className }: FooterProps) => {
 
       <div className="flex flex-col gap-2 md:items-center">
         <h2 className="font-bold text-2xl text-gray-900">Contato</h2>
+
         <div className="flex gap-2 flex-col items-start">
           <NavIndices
             href="https://github.com/ThiagoMaurat"

@@ -44,7 +44,7 @@ const CreatePostModal = ({}) => {
     <div id="portal">
       <p
         onClick={() => setModalOpen(true)}
-        className="cursor-pointer hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all"
+        className="cursor-pointer font-medium hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all"
       >
         Criar Post
       </p>

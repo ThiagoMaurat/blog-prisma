@@ -36,7 +36,7 @@ export function MenuLinks({ isOpen }: MenuLinksProps) {
               className={`${
                 CheckRouterMatchesLabel("Home")
                   ? "bottom-1 font-bold border-b-2 text-gray-300"
-                  : "hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all"
+                  : "hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all font-medium"
               }`}
             >
               Home
@@ -48,7 +48,7 @@ export function MenuLinks({ isOpen }: MenuLinksProps) {
               className={`${
                 CheckRouterMatchesLabel("Home")
                   ? "bottom-1 font-bold border-b-2 text-gray-300"
-                  : "hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all"
+                  : "hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all font-medium"
               }`}
             >
               Blog

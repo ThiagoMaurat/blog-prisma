@@ -5,7 +5,8 @@ import { Header } from "@/components/Header";
 import { Limiter } from "@/components/Limiter";
 import { getPostsById } from "@/queries/getPostsById";
 import { CustomSectionTitlePostPage } from "@/components/CustomSectionTitlePostPage";
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 interface PostsProps {
   params: {
     id: string;
@@ -38,12 +39,14 @@ export default async function Posts({ params }: PostsProps) {
         />
       </div>
 
-      {/* <Box
-         px={"2rem"}
-         mt="2rem"
-         mx="0 auto"
-         dangerouslySetInnerHTML={{ __html: data.content }}
-       ></Box> */}
+      <main className="py-8">
+        <ReactMarkdown
+          className="font-normal text-xl from-neutral-800 markdown w-full break-words "
+          remarkPlugins={[remarkGfm]}
+        >
+          {post.content}
+        </ReactMarkdown>
+      </main>
 
       <Footer />
     </Limiter>
