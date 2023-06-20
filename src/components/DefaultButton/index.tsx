@@ -48,6 +48,7 @@ export const DefaultButton: FC<DefaultButtonProps> = (
         "text-lg",
         "font-bold",
         "rounded-md",
+        "px-3",
         "h-10",
         props.className
       ),

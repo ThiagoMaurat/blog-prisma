@@ -1,20 +1,20 @@
 import Link from "next/link";
 import { useRouter } from "next/compat/router";
-import ToggleButtonDarkMode from "../ToogleButtonDarkMode";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { MdLogout } from "react-icons/md";
 import CreatePostModal from "./CreatePostModal";
 import { Popover } from "../DropDownMenu";
 import Avatar from "../Avatar";
+import { Session } from "next-auth";
+import { DefaultButton } from "../DefaultButton";
 
 type MenuLinksProps = {
   isOpen: boolean;
-  isLoading?: boolean;
+  user: Session["user"] | null;
 };
 
-export function MenuLinks({ isOpen }: MenuLinksProps) {
+export function MenuLinks({ isOpen, user }: MenuLinksProps) {
   const router = useRouter();
-  const { data } = useSession();
 
   const CheckRouterMatchesLabel = (label: string) => {
     if (router?.asPath.includes(label.toLowerCase())) {
@@ -27,11 +27,11 @@ export function MenuLinks({ isOpen }: MenuLinksProps) {
 
   return (
     <div
-      className={` ${
+      className={`${
         isOpen ? "block" : "hidden"
       } sm:block w-[55%] basis-full sm:basis-auto`}
     >
-      <div className="flex sm:items-baseline gap-6 justify-between flex-col sm:flex-row pt-8 sm:pt-0">
+      <div className="flex h-full sm:items-center gap-6 justify-between flex-col sm:flex-row pt-8 sm:pt-0">
         <div className="h-full flex gap-8 items-center flex-col sm:flex-row">
           <Link href={"/"}>
             <p
@@ -57,25 +57,33 @@ export function MenuLinks({ isOpen }: MenuLinksProps) {
             </p>
           </Link>
 
-          {data?.user.userRole[0].role.name === "admin" && <CreatePostModal />}
-
-          {data?.user && (
-            <Popover openButtonChildren={<Avatar user={data?.user} />}>
-              Here
-            </Popover>
-          )}
+          {user?.userRole?.[0]?.role?.name === "admin" && <CreatePostModal />}
         </div>
 
-        <div className="flex h-full flex-row gap-2 justify-center">
-          <ToggleButtonDarkMode />
-          {data?.user?.name && (
-            <MdLogout
-              size={24}
-              onClick={() => signOut({ callbackUrl: "/login" })}
-              cursor={"pointer"}
-            />
-          )}
-        </div>
+        {user && (
+          <Popover openButtonChildren={<Avatar user={user} />}>
+            <div className="w-full h-full flex flex-col gap-2">
+              <p className=" font-medium truncate">{user?.name}</p>
+              <p className=" truncate">{user?.email}</p>
+
+              <div className="border-b" />
+
+              <div
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="flex justify-center gap-2 cursor-pointer"
+              >
+                <span>Log out</span>
+                <MdLogout size={24} cursor={"pointer"} />
+              </div>
+            </div>
+          </Popover>
+        )}
+
+        {!user && (
+          <Link href={"/login"}>
+            <DefaultButton label={"Entrar"} className="text-md" />
+          </Link>
+        )}
       </div>
     </div>
   );
