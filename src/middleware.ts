@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
   const session = await getToken({ req });
   const url = req.url;
-
   // admin pages
 
   const isAdmin = session?.user?.userRole?.[0]?.role?.name === "admin";

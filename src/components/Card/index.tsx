@@ -38,10 +38,10 @@ export function Card(props: CardProps) {
           })}
         </div>
 
-        <p className="font-medium text-darkblue-700 text-1.5rem">{title}</p>
+        <p className="font-semibold text-darkblue-700 text-1.5rem">{title}</p>
 
         <p className="text-gray-600 truncate font-weight-600 text-0.9rem">
-          {letterCounter(description, 80)}
+          {description}
         </p>
 
         <div className="flex gap-3 items-center">

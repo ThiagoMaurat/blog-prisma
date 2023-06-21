@@ -7,11 +7,11 @@ import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 export async function POST(req: Request, res: Response) {
   const registerBodySchema = z.object({
     title: z.string(),
-    content: z.string().min(20).nonempty(),
+    content: z.string().min(10).nonempty(),
     authorId: z.string().min(1).nonempty(),
     thumbnail: z.string().url().nonempty(),
     themeId: z.any(),
-    description: z.string().min(20).nonempty(),
+    description: z.string().min(10).nonempty(),
   });
 
   const postUseCase = makePostUseCase();
@@ -66,7 +66,7 @@ export async function POST(req: Request, res: Response) {
 
     return NextResponse.json(
       {
-        message: "Error creating post",
+        message: error,
       },
       { status: 500 }
     );

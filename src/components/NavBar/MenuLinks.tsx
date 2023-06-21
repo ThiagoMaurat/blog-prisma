@@ -1,12 +1,8 @@
 import Link from "next/link";
 import { useRouter } from "next/compat/router";
-import { signOut } from "next-auth/react";
-import { MdLogout } from "react-icons/md";
 import CreatePostModal from "./CreatePostModal";
-import { Popover } from "../DropDownMenu";
-import Avatar from "../Avatar";
+import PopoverNavBar from "./Popover";
 import { Session } from "next-auth";
-import { DefaultButton } from "../DefaultButton";
 
 type MenuLinksProps = {
   isOpen: boolean;
@@ -60,30 +56,7 @@ export function MenuLinks({ isOpen, user }: MenuLinksProps) {
           {user?.userRole?.[0]?.role?.name === "admin" && <CreatePostModal />}
         </div>
 
-        {user && (
-          <Popover openButtonChildren={<Avatar user={user} />}>
-            <div className="w-full h-full flex flex-col gap-2">
-              <p className=" font-medium truncate">{user?.name}</p>
-              <p className=" truncate">{user?.email}</p>
-
-              <div className="border-b" />
-
-              <div
-                onClick={() => signOut({ callbackUrl: "/login" })}
-                className="flex justify-center gap-2 cursor-pointer"
-              >
-                <span>Log out</span>
-                <MdLogout size={24} cursor={"pointer"} />
-              </div>
-            </div>
-          </Popover>
-        )}
-
-        {!user && (
-          <Link href={"/login"}>
-            <DefaultButton label={"Entrar"} className="text-md" />
-          </Link>
-        )}
+        <PopoverNavBar user={user} />
       </div>
     </div>
   );
