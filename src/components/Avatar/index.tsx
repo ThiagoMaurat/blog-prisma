@@ -14,7 +14,7 @@ export default function Avatar(props: AvatarProps) {
   const { className, user } = props;
 
   const avatarStyle = clsx(
-    "w-10",
+    "w-11",
     "h-10",
     "bg-cover",
     "rounded-full",
