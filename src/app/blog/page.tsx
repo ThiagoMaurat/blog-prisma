@@ -11,7 +11,6 @@ interface BlogPageProps {
   searchParams: {
     search: string;
     page: number;
-    limit: number;
   };
 }
 
@@ -19,7 +18,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
   const { posts, total } = await getPosts({
     search: searchParams.search,
     page: searchParams.page || 1,
-    limit: searchParams.limit || 9,
+    limit: 9,
   });
 
   return (
@@ -49,7 +48,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       </div>
 
       <ShowMore
-        limit={searchParams.limit || 9}
+        limit={9}
         page={searchParams.page || 1}
         total={total}
         search={searchParams.search}
