@@ -25,7 +25,7 @@ export function MenuLinks({ isOpen, user }: MenuLinksProps) {
     <div
       className={`${
         isOpen ? "block" : "hidden"
-      } sm:block w-[55%] basis-full sm:basis-auto`}
+      } md:block w-[55%] basis-full sm:basis-auto`}
     >
       <div className="flex h-full sm:items-center gap-6 justify-between flex-col sm:flex-row pt-8 sm:pt-0">
         <div className="h-full flex gap-8 items-center flex-col sm:flex-row">

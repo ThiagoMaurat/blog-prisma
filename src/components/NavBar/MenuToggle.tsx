@@ -8,7 +8,7 @@ type MenuToggleProps = {
 
 export const MenuToggle = ({ toggle, isOpen }: MenuToggleProps) => {
   return (
-    <div className="block sm:hidden items-center self-center" onClick={toggle}>
+    <div className="block md:hidden items-center self-center" onClick={toggle}>
       {isOpen ? (
         <IoClose fontSize={"1.5rem"} cursor={"pointer"} color={"#333456"} />
       ) : (
