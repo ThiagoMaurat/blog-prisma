@@ -85,6 +85,13 @@ export const Footer = ({ className }: FooterProps) => {
           />
 
           <NavIndices
+            href="https://www.linkedin.com/in/thiago-maurat-477a041b9/"
+            LeftIcon={"mdi:linkedin"}
+            text="Linkedin"
+            isExternal
+          />
+
+          <NavIndices
             href="mailto:thiagomaurat@hotmail.com"
             LeftIcon={"ic:outline-mail"}
             text="E-mail"
@@ -107,13 +114,5 @@ export const Footer = ({ className }: FooterProps) => {
         </div>
       </div>
     </footer>
-
-    // <HStack my="2rem" justifyContent={"center"}>
-    //   <Text
-    //     fontWeight={"500"}
-    //     fontSize="1rem"
-    //     color={"gray.700"}
-    //   >{`© ${new Date().getFullYear()} Todos os direitos reservados. Thiago Maurat.`}</Text>
-    // </HStack>
   );
 };

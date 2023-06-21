@@ -39,7 +39,7 @@ export default async function Posts({ params }: PostsProps) {
         />
       </div>
 
-      <main className="py-8">
+      <main className="py-12 max-w-[900px] w-full mx-auto">
         <ReactMarkdown
           className="font-normal text-xl from-neutral-800 markdown w-full break-words "
           remarkPlugins={[remarkGfm]}
