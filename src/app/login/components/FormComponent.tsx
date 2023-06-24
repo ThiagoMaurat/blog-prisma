@@ -68,7 +68,7 @@ export const FormComponent = ({}) => {
   return (
     <div
       className="h-full p-4 sm:p-0 flex gap-4 flex-col md:flex-row justify-evenly items-center"
-      style={{ minHeight: "calc(100vh - 95px)" }}
+      style={{ minHeight: "calc(100vh - 112px)" }}
     >
       <div className="hidden md:flex">
         <Image

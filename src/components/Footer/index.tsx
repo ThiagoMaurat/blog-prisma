@@ -21,7 +21,7 @@ export const Footer = ({ className }: FooterProps) => {
   // const { push } = useRouter();
 
   return (
-    <footer className={footerClassName}>
+    <footer id="footer" className={footerClassName}>
       <div className="flex flex-col gap-4">
         <h2
           className="font-bold text-2xl text-gray-900 cursor-pointer"

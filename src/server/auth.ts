@@ -176,7 +176,7 @@ export const authOptions: NextAuthOptions = {
       session.user = token.user;
       return { ...session };
     },
-    jwt: async ({ token, user, account, profile, session, trigger }) => {
+    jwt: async ({ token, session }) => {
       const prisma = new PrismaUsersRepository();
 
       if (token.email) {

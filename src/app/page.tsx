@@ -1,14 +1,13 @@
-"use client";
 import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
 import { Limiter } from "@/components/Limiter";
-import { useSession } from "next-auth/react";
-export default function Hello() {
-  const { data } = useSession();
+import FirstSection from "./(site)/FirstSection";
+export default async function Page() {
   return (
     <Limiter>
-      {/* <button onClick={() => signOut()}>Sair</button> */}
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      <Footer className="py-16" />
+      <Header />
+      <FirstSection />
+      <Footer />
     </Limiter>
   );
 }
