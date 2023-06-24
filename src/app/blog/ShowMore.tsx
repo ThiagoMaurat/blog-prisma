@@ -15,8 +15,8 @@ const ShowMore = (props: ShowMoreProps) => {
   const router = useRouter();
 
   const handleNavigation = (page: number) => {
-    const url = `${window.location.pathname}?page=${page.toString()}&search=${
-      props.search
+    const url = `${window.location.pathname}?page=${page.toString()}${
+      props.search ? `&search=${props.search}` : ""
     }`;
     router.push(url);
   };

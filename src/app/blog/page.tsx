@@ -51,7 +51,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         limit={9}
         page={searchParams.page || 1}
         total={total}
-        search={searchParams.search}
+        search={searchParams.search && searchParams.search}
       />
 
       <Footer />
