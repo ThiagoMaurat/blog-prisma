@@ -5,10 +5,10 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { BsGithub } from "react-icons/bs";
 import { schema } from "../schema";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { GithubIcon } from "lucide-react";
 
 interface FormLogin {
   login: string;
@@ -91,7 +91,7 @@ export const FormComponent = ({}) => {
         </div>
 
         <DefaultButton
-          rightIcon={<BsGithub />}
+          rightIcon={<GithubIcon />}
           isLoading={isLoading}
           type="button"
           onClick={loginWithGitHub}

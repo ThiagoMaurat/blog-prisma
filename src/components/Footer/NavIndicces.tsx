@@ -1,12 +1,12 @@
-"use client";
 import Link from "next/link";
-import { Icon, IconifyIcon } from "@iconify/react";
+import { LucideIcon } from "lucide-react";
+import React from "react";
 
 interface NavIndicesProps {
   text: string;
   href: string;
   isExternal: boolean;
-  LeftIcon?: string | IconifyIcon;
+  LeftIcon?: React.ReactNode;
 }
 
 export const NavIndices = ({
@@ -25,7 +25,7 @@ export const NavIndices = ({
       >
         <div className="flex gap-2 items-center">
           <>
-            {LeftIcon && <Icon icon={LeftIcon} />}
+            {LeftIcon && LeftIcon}
             <p className="font-bold">{text}</p>
           </>
         </div>
@@ -38,7 +38,7 @@ export const NavIndices = ({
       <Link href={href} className="hover:text-gray-500 text-slate-600">
         <div className="flex gap-2 items-center">
           <>
-            {LeftIcon && <Icon icon={LeftIcon} />}
+            {LeftIcon && LeftIcon}
             <p className="font-bold">{text}</p>
           </>
         </div>

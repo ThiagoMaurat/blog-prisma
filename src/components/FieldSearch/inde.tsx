@@ -1,5 +1,5 @@
+import { Search } from "lucide-react";
 import React, { ForwardRefRenderFunction } from "react";
-import { BsSearch } from "react-icons/bs";
 
 interface FieldSearchComponentProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -17,7 +17,7 @@ const FieldSearchComponent: ForwardRefRenderFunction<
           className="h-full absolute ml-3 flex items-center text-2xl"
           style={{ pointerEvents: "none" }}
         >
-          <BsSearch className="text-black text-xl" />
+          <Search className="text-black text-xl" />
         </div>
         <input
           className="pl-14 py-3 border rounded-full focus:outline-gray-500 w-full bg-white text-gray-900"

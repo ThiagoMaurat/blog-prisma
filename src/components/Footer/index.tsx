@@ -1,7 +1,14 @@
 import React from "react";
 import { NavIndices } from "./NavIndicces";
-import { MdArrowForward } from "react-icons/md";
 import clsx from "clsx";
+import {
+  ArrowBigRight,
+  FacebookIcon,
+  GithubIcon,
+  LinkedinIcon,
+  Mail,
+  TwitterIcon,
+} from "lucide-react";
 
 interface FooterProps {
   className?: string;
@@ -67,7 +74,7 @@ export const Footer = ({ className }: FooterProps) => {
               className="p-1 bg-transparent"
               // onClick={() => console.log("asd")}
             >
-              <MdArrowForward size={24} />
+              <ArrowBigRight size={24} />
             </button>
           </div>
         </div>
@@ -79,35 +86,35 @@ export const Footer = ({ className }: FooterProps) => {
         <div className="flex gap-2 flex-col items-start">
           <NavIndices
             href="https://github.com/ThiagoMaurat"
-            LeftIcon={"bi:github"}
+            LeftIcon={<GithubIcon />}
             text="GitHub"
             isExternal
           />
 
           <NavIndices
             href="https://www.linkedin.com/in/thiago-maurat-477a041b9/"
-            LeftIcon={"mdi:linkedin"}
+            LeftIcon={<LinkedinIcon />}
             text="Linkedin"
             isExternal
           />
 
           <NavIndices
             href="mailto:thiagomaurat@hotmail.com"
-            LeftIcon={"ic:outline-mail"}
+            LeftIcon={<Mail />}
             text="E-mail"
             isExternal
           />
 
           <NavIndices
             href="https://www.facebook.com/thiago.maurat"
-            LeftIcon={"ic:baseline-facebook"}
+            LeftIcon={<FacebookIcon />}
             text="Facebook"
             isExternal
           />
 
           <NavIndices
             href="https://twitter.com/Thiago_Maurat"
-            LeftIcon={"mdi:twitter"}
+            LeftIcon={<TwitterIcon />}
             text="Twitter"
             isExternal
           />

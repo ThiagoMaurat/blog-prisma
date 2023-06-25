@@ -1,8 +1,8 @@
 "use client";
 import { FieldSearch } from "@/components/FieldSearch/inde";
+import { ArrowBigRightIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { BsFillArrowRightCircleFill } from "react-icons/bs";
 
 export default function SearchComponent() {
   const [search, setSearch] = useState("");
@@ -49,7 +49,7 @@ export default function SearchComponent() {
         />
 
         <button type="submit">
-          <BsFillArrowRightCircleFill className="text-2xl fill-white" />
+          <ArrowBigRightIcon className="text-2xl fill-white" />
         </button>
       </div>
     </form>

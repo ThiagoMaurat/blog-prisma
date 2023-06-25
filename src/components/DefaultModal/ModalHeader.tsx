@@ -1,5 +1,5 @@
+import { DoorClosed } from "lucide-react";
 import { FC } from "react";
-import { IoClose } from "react-icons/io5";
 
 interface ModalHeaderProps {
   title?: string;
@@ -13,7 +13,7 @@ const ModalHeader: FC<ModalHeaderProps> = (props: ModalHeaderProps) => {
     <header className="w-full py-3 flex justify-between">
       <p className="text-xl font-bold">{title}</p>
 
-      <IoClose
+      <DoorClosed
         color="black"
         onClick={onIconClick}
         cursor={"pointer"}

@@ -4,9 +4,9 @@ import React from "react";
 import Avatar from "../Avatar";
 import { Popover } from "../DropDownMenu";
 import { signOut } from "next-auth/react";
-import { MdLogout } from "react-icons/md";
 import Link from "next/link";
 import { DefaultButton } from "../DefaultButton";
+import { LogOut } from "lucide-react";
 
 interface PopoverProps {
   user: Session["user"] | null;
@@ -31,7 +31,7 @@ export default function PopoverNavBar(props: PopoverProps) {
                 className="flex justify-center gap-2 cursor-pointer"
               >
                 <span>Log out</span>
-                <MdLogout size={24} cursor={"pointer"} />
+                <LogOut size={24} cursor={"pointer"} />
               </div>
             </div>
           </Popover>
