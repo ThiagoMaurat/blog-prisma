@@ -31,20 +31,20 @@ export const Footer = ({ className }: FooterProps) => {
     <footer id="footer" className={footerClassName}>
       <div className="flex flex-col gap-4">
         <h2
-          className="font-bold text-2xl text-gray-900 cursor-pointer"
+          className="font-bold text-2xl cursor-pointer"
           // onClick={() => push("/")}
         >
           Thiago🚀Dev
         </h2>
 
-        <p className="font-medium text-lg text-gray-700 break-words">
+        <p className="font-medium text-lg break-words">
           Olá amigos desenvolvedores!! Fique à vontade para deixar seus
           comentários e sugestões sobre o conteúdo do nosso blog.
         </p>
       </div>
 
       <div className="flex flex-col md:items-center gap-4">
-        <h2 className="font-bold text-2xl text-gray-900">Início</h2>
+        <h2 className="font-bold text-2xl">Início</h2>
 
         <div className="flex gap-2 flex-col">
           <NavIndices isExternal={false} href="" text="Topic #1" />
@@ -54,8 +54,8 @@ export const Footer = ({ className }: FooterProps) => {
       </div>
 
       <div className="flex flex-col gap-4">
-        <h2 className="font-bold text-2xl text-gray-900">NewsLetter</h2>
-        <p className="font-medium text-lg text-gray-700 break-words">
+        <h2 className="font-bold text-2xl">NewsLetter</h2>
+        <p className="font-medium text-lg break-words">
           Inscreva-se em nossa newsletter! Fique por dentro das últimas
           novidades do mundo dev.
         </p>
@@ -81,7 +81,7 @@ export const Footer = ({ className }: FooterProps) => {
       </div>
 
       <div className="flex flex-col gap-2 md:items-center">
-        <h2 className="font-bold text-2xl text-gray-900">Contato</h2>
+        <h2 className="font-bold text-2xl">Contato</h2>
 
         <div className="flex gap-2 flex-col items-start">
           <NavIndices

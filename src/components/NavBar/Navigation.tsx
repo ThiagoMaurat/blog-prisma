@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MenuToggle } from "./MenuToggle";
 import { MenuLinks } from "./MenuLinks";
 import { Session } from "next-auth";
+import PopoverNavBar from "./Popover";
 
 type NavigationProps = {
   user: Session["user"] | null;

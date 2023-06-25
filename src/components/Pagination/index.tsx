@@ -41,7 +41,6 @@ export default function Pagination({
   const DivClassName = clsx(
     "flex",
     "w-full",
-    "text-white",
     "items-center",
     "flex-col",
     "space-y-3",
@@ -96,20 +95,16 @@ export default function Pagination({
       </div>
 
       <div>
-        <strong className="text-slate-900">
-          {`${(currentPage - 1) * registersPerPage} - `}
-        </strong>
+        <strong>{`${(currentPage - 1) * registersPerPage} - `}</strong>
 
-        <strong className="text-slate-900">
+        <strong>
           {`${Math.min(
             currentPage * registersPerPage,
             totalCountOfRegisters
           )} de `}
         </strong>
 
-        <strong className="text-slate-900">
-          {totalCountOfRegisters} registros
-        </strong>
+        <strong>{totalCountOfRegisters} registros</strong>
       </div>
     </div>
   );

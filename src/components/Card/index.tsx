@@ -38,9 +38,9 @@ export function Card(props: CardProps) {
           })}
         </div>
 
-        <p className="font-semibold text-darkblue-700 text-1.5rem">{title}</p>
+        <p className="font-bold text-lg">{title}</p>
 
-        <p className="text-gray-600 truncate font-weight-600 text-0.9rem">
+        <p className="text-gray-400 truncate font-weight-600 text-0.9rem">
           {description}
         </p>
 
@@ -54,9 +54,7 @@ export function Card(props: CardProps) {
           />
 
           <div className="flex flex-col gap-2px">
-            <p className="font-medium text-darkblue-700 text-0.8rem">
-              {author.name}
-            </p>
+            <p className="font-medium text-0.8rem">{author.name}</p>
 
             <p className="text-gray-900 text-sm">
               {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}

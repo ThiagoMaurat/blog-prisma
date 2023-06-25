@@ -4,6 +4,7 @@ import { letterCounter } from "../../helpers/charactersCount";
 import { format, parseISO } from "date-fns";
 import { Post } from "@/@types/PostResponse";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 type FirstCardProps = {
   data: Post;
@@ -41,10 +42,10 @@ export function FirstCard(props: FirstCardProps) {
             );
           })}
 
-          <h2 className="font-bold text-darkblue-700 text-2xl">{title}</h2>
+          <h2 className={`font-bold text-2xl`}>{title}</h2>
 
           {description && (
-            <p className="text-gray-600 font-semibold text-sm">
+            <p className="font-semibold text-sm">
               {letterCounter(description, 300)}
             </p>
           )}
@@ -59,12 +60,10 @@ export function FirstCard(props: FirstCardProps) {
             />
 
             <div className="flex flex-col gap-1">
-              <p className="font-bold text-darkblue-700 text-sm">
-                {author?.name}
-              </p>
+              <p className="font-bold text-sm">{author?.name}</p>
 
               {publishedAt && (
-                <p className="text-gray-900 text-sm">
+                <p className="text-sm">
                   {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
                 </p>
               )}

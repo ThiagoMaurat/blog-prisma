@@ -20,7 +20,7 @@ export const NavIndices = ({
       <a
         href={href}
         target="_blank"
-        className="hover:text-gray-500 text-slate-600"
+        className="hover:text-gray-500"
         rel="noopener noreferrer"
       >
         <div className="flex gap-2 items-center">
@@ -35,7 +35,7 @@ export const NavIndices = ({
 
   if (!isExternal) {
     return (
-      <Link href={href} className="hover:text-gray-500 text-slate-600">
+      <Link href={href} className="hover:text-gray-500">
         <div className="flex gap-2 items-center">
           <>
             {LeftIcon && LeftIcon}

@@ -67,7 +67,6 @@ export function MenuLinks({ isOpen, user }: MenuLinksProps) {
 
           {user?.userRole?.[0]?.role?.name === "admin" && <CreatePostModal />}
         </div>
-
         <PopoverNavBar user={user} />
       </div>
     </div>
