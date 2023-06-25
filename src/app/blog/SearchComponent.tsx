@@ -1,6 +1,7 @@
 "use client";
 import { FieldSearch } from "@/components/FieldSearch/inde";
-import { ArrowBigRightIcon } from "lucide-react";
+import { ArrowRightCircle } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
@@ -8,6 +9,8 @@ export default function SearchComponent() {
   const [search, setSearch] = useState("");
 
   const router = useRouter();
+
+  const { resolvedTheme } = useTheme();
 
   const updateSearchParams = (search: string) => {
     const searchParams = new URLSearchParams(window.location.search);
@@ -49,7 +52,9 @@ export default function SearchComponent() {
         />
 
         <button type="submit">
-          <ArrowBigRightIcon className="text-2xl fill-white" />
+          <ArrowRightCircle
+            className={`${resolvedTheme === "light" && "text-white"} text-2xl`}
+          />
         </button>
       </div>
     </form>

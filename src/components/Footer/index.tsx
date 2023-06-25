@@ -2,7 +2,7 @@ import React from "react";
 import { NavIndices } from "./NavIndicces";
 import clsx from "clsx";
 import {
-  ArrowBigRight,
+  ArrowRightCircle,
   FacebookIcon,
   GithubIcon,
   LinkedinIcon,
@@ -74,7 +74,7 @@ export const Footer = ({ className }: FooterProps) => {
               className="p-1 bg-transparent"
               // onClick={() => console.log("asd")}
             >
-              <ArrowBigRight size={24} />
+              <ArrowRightCircle size={24} />
             </button>
           </div>
         </div>
