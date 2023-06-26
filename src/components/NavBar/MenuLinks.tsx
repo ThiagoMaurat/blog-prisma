@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { useRouter } from "next/compat/router";
-import CreatePostModal from "./CreatePostModal";
 import PopoverNavBar from "./Popover";
 import { Session } from "next-auth";
 
@@ -64,8 +63,6 @@ export function MenuLinks({ isOpen, user }: MenuLinksProps) {
               Contato
             </p>
           </Link>
-
-          {user?.userRole?.[0]?.role?.name === "admin" && <CreatePostModal />}
         </div>
         <PopoverNavBar user={user} />
       </div>
