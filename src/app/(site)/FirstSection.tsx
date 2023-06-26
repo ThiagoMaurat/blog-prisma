@@ -1,7 +1,7 @@
 import React from "react";
 import { Lottie } from "./Lootie";
-import { DefaultButton } from "@/components/DefaultButton";
 import Link from "next/link";
+import { Button } from "@/components/Button";
 
 export default function FirstPage() {
   return (
@@ -13,10 +13,10 @@ export default function FirstPage() {
 
         <div className="flex gap-4 justify-center md:justify-normal">
           <Link href={"/blog"}>
-            <DefaultButton label={"Posts"} />
+            <Button label="Posts" variant={"primary"} />
           </Link>
 
-          <DefaultButton label={"Saiba mais"} />
+          <Button label="Saiba mais" variant={"primary"} />
         </div>
       </div>
 

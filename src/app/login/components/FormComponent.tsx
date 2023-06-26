@@ -1,5 +1,4 @@
 "use client";
-import { DefaultButton } from "@/components/DefaultButton";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -9,6 +8,7 @@ import { schema } from "../schema";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GithubIcon } from "lucide-react";
+import { Button } from "@/components/Button";
 
 interface FormLogin {
   login: string;
@@ -90,14 +90,16 @@ export const FormComponent = ({}) => {
           <p className="">Lets build something great!</p>
         </div>
 
-        <DefaultButton
+        <Button
           rightIcon={<GithubIcon />}
+          label={"Git Hub"}
+          variant={"secondary"}
+          onClick={loginWithGitHub}
           isLoading={isLoading}
           type="button"
-          onClick={loginWithGitHub}
-          label={"Git Hub"}
-          variant="primary"
-        />
+        >
+          Git hub
+        </Button>
 
         <FieldInputController
           placeholder="Enter Email"
@@ -117,8 +119,9 @@ export const FormComponent = ({}) => {
           error={errors.password}
         />
 
-        <DefaultButton
+        <Button
           isLoading={isSubmitting}
+          variant={"primary"}
           type="submit"
           label={"Enviar"}
         />

@@ -6,7 +6,7 @@ const FieldInput: React.ForwardRefRenderFunction<
 > = (props, ref) => {
   return (
     <input
-      className="bg-[#E1F5FE] px-3 rounded-lg h-10 w-full focus:outline-blue-500"
+      className="bg-[#E1F5FE] px-3 text-black rounded-lg h-10 w-full focus:outline-blue-500"
       ref={ref}
       {...props}
     />

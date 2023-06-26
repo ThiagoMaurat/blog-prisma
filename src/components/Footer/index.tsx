@@ -62,7 +62,7 @@ export const Footer = ({ className }: FooterProps) => {
 
         <div className="flex items-center">
           <input
-            className="rounded-full focus:outline-none bg-white border border-gray-300 py-2 px-4 placeholder-gray-400"
+            className="rounded-full focus:outline-none border border-gray-300 py-2 px-4 placeholder-gray-400"
             type="input"
             placeholder="E-mail"
             // value={newsletterInput}

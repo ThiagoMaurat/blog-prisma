@@ -4,9 +4,9 @@ import { Modal } from "../DefaultModal";
 import { useState } from "react";
 import { FieldInputController } from "../FieldInput/FieldInputController";
 import { FieldTextAreaController } from "../FieldTextArea/FieldTextAreaController";
-import { DefaultButton } from "../DefaultButton";
 import api from "@/lib/axios";
 import { useSession } from "next-auth/react";
+import { Button } from "../Button";
 
 interface PostForm {
   title: string;
@@ -72,7 +72,7 @@ const CreatePostModal = ({}) => {
             error={errors.content}
           />
 
-          <DefaultButton label="Enviar" type="submit" />
+          <Button label="Enviar" type="submit" />
         </form>
       </Modal>
     </div>

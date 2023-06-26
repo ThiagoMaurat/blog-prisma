@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Avatar from "../Avatar";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
-import { DefaultButton } from "../DefaultButton";
 import { LogOut, Moon, Sun } from "lucide-react";
 import {
   DropdownMenu,
@@ -12,6 +11,7 @@ import {
 } from "../DropDownMenu";
 import { Switch } from "../Switch";
 import { useTheme } from "next-themes";
+import { Button } from "../Button";
 
 interface PopoverProps {
   user: Session["user"] | null;
@@ -74,7 +74,7 @@ export default function PopoverNavBar(props: PopoverProps) {
     <>
       {!user && (
         <Link href={"/login"} className="self-center">
-          <DefaultButton label={"Entrar"} className="text-md" />
+          <Button label={"Entrar"} variant="primary" className="text-md" />
         </Link>
       )}
     </>
