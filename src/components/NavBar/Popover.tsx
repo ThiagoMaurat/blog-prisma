@@ -21,7 +21,6 @@ export default function PopoverNavBar(props: PopoverProps) {
   const { user } = props;
 
   const { setTheme, resolvedTheme } = useTheme();
-  console.log(resolvedTheme);
 
   if (user) {
     return (

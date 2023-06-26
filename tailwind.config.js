@@ -16,6 +16,8 @@ module.exports = {
       },
     },
     extend: {
+      fontSmoothing: 'antialiased',
+      listStyle: '!inside',
       colors: {
         gray: {
           300: "#40ADF4",
