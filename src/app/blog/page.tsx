@@ -6,6 +6,29 @@ import { Card } from "@/components/Card";
 import SearchComponent from "./SearchComponent";
 import ShowMore from "./ShowMore";
 import { getPosts } from "@/queries/getPosts";
+import { Metadata } from "next/types";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Blog de Thiago Maurat para desenvolvimento web full stack",
+  keywords: [
+    "Nextjs",
+    "Front-End",
+    "Portfólio",
+    "Blog",
+    "Back-end",
+    "Desenvolvedor",
+    "React",
+    "JavaScript",
+    "TypeScript",
+  ],
+  authors: [
+    {
+      name: "Thiago Maurat",
+      url: "https://github.com/thiagomaurat",
+    },
+  ],
+};
 
 interface BlogPageProps {
   searchParams: {

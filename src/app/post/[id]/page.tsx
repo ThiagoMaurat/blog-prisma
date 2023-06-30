@@ -13,6 +13,16 @@ interface PostsProps {
   };
 }
 
+export async function generateMetadata({ params }: PostsProps) {
+  const { post } = await getPostsById({
+    id: params.id,
+  });
+
+  return {
+    title: `Post - ${post.title}`,
+    description: `Descrição - ${post.description}`,
+  };
+}
 export default async function Posts({ params }: PostsProps) {
   const { id } = params;
 

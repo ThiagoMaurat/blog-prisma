@@ -1,5 +1,5 @@
 import React from "react";
-import { NavIndices } from "./NavIndicces";
+import { NavIndices } from "./NavIndices";
 import clsx from "clsx";
 import {
   ArrowRightCircle,

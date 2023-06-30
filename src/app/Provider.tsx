@@ -8,10 +8,11 @@ const Provider = ({ children, ...props }: ThemeProviderProps) => {
     <NextThemesProvider
       {...props}
       attribute="class"
-      defaultTheme="light"
+      defaultTheme="dark"
+      storageKey="theme"
       enableSystem
     >
-      <SessionProvider>{children}</SessionProvider>;
+      <SessionProvider>{children}</SessionProvider>
     </NextThemesProvider>
   );
 };

@@ -27,9 +27,10 @@ export const Lottie = () => {
     });
 
     return () => {
-      anim.destroy(); // Limpa a animação quando o componente é desmontado
+      anim.destroy();
     };
   }, [containerRef]);
+
   return (
     <div className="flex justify-center items-center">
       {isLoading && (

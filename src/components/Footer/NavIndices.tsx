@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { LucideIcon } from "lucide-react";
 import React from "react";
 
 interface NavIndicesProps {
