@@ -13,6 +13,7 @@ import axios from "axios";
 import { Role, UserRole } from "@prisma/client";
 import { randomUUID } from "crypto";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
+import { AuthenticateExternalProvider } from "./use-cases/Authenticate/AuthenticateExternalProvider";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -125,49 +126,14 @@ export const authOptions: NextAuthOptions = {
     // only for external providers like github
     // it wont affect the credentials providers
     async signIn({ profile, user, account }) {
-      if (profile && account) {
-        const existingUser = await prisma.user.findUnique({
-          where: {
-            email: profile.email,
-          },
-        });
+      const makeExternalProviderAuth = new AuthenticateExternalProvider();
 
-        if (existingUser) {
-          return Promise.resolve(true);
-        } else {
-          await prisma.user.create({
-            data: {
-              name: user.name,
-              email: user.email,
-              image: user.image,
-              UserRole: {
-                create: {
-                  role: {
-                    connectOrCreate: {
-                      where: { name: "reader" },
-                      create: { name: "reader" },
-                    },
-                  },
-                },
-              },
-              Account: {
-                create: {
-                  provider: account.provider,
-                  providerAccountId: account.providerAccountId,
-                  type: account.type,
-                  access_token: account.access_token,
-                  expires_at: account.expires_at,
-                  id: randomUUID(),
-                  id_token: account.id_token,
-                  refresh_token: account.refresh_token,
-                  scope: account.scope,
-                  session_state: account.session_state,
-                  token_type: account.token_type,
-                },
-              },
-            },
-          });
-        }
+      if (profile?.email && account) {
+        return makeExternalProviderAuth.execute({
+          email: profile.email,
+          accountExternalAuthProvider: account,
+          userExternalAuthProvider: user,
+        });
       }
 
       return Promise.resolve(true);
