@@ -36,7 +36,7 @@ export async function POST(req: Request, res: Response) {
         { status: 400 }
       );
     }
-
+    console.log(error);
     return NextResponse.json(
       {
         message: "Error on login",

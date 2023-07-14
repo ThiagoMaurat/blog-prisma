@@ -18,8 +18,8 @@ export default function TypeScript() {
         y2="24"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#0d61a9"></stop>
-        <stop offset="1" stop-color="#16528c"></stop>
+        <stop offset="0" stopColor="#0d61a9"></stop>
+        <stop offset="1" stopColor="#16528c"></stop>
       </linearGradient>
       <path
         fill="url(#atmafua87GAY-Q3DVUuwga_nCj4PvnCO0tZ_gr1)"

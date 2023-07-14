@@ -18,8 +18,8 @@ export default function CSS() {
         y2="41.109"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0" stop-color="#2aa4f4"></stop>
-        <stop offset="1" stop-color="#007ad9"></stop>
+        <stop offset="0" stopColor="#2aa4f4"></stop>
+        <stop offset="1" stopColor="#007ad9"></stop>
       </linearGradient>
       <path
         fill="url(#TQDriqswrKwPOniLrPT12a_7gdY5qNXaKC0_gr1)"

@@ -11,7 +11,6 @@ import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { Role, UserRole } from "@prisma/client";
-import { randomUUID } from "crypto";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 import { AuthenticateExternalProvider } from "./use-cases/Authenticate/AuthenticateExternalProvider";
 
@@ -100,22 +99,19 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        try {
-          const { data } = await axios.post(
-            `${env.NEXTAUTH_URL}/api/auth/login`,
-            {
-              email: credentials.email,
-              password: credentials.password,
-            }
-          );
-
-          if (data) {
-            return data.user;
+        const { data } = await axios.post(
+          `${env.NEXTAUTH_URL}/api/auth/login`,
+          {
+            email: credentials.email,
+            password: credentials.password,
           }
-        } catch (error) {
-          console.log(error);
-          return null;
+        );
+
+        if (data) {
+          return data.user;
         }
+
+        throw new Error("Invalid credentials");
       },
     }),
   ],

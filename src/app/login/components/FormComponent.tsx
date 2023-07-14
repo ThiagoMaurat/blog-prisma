@@ -9,6 +9,7 @@ import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GithubIcon } from "lucide-react";
 import { Button } from "@/components/Button";
+import { useToast } from "@/components/Toast/use-toast";
 
 interface FormLogin {
   login: string;
@@ -17,7 +18,7 @@ interface FormLogin {
 
 export const FormComponent = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
-  // const toast = useToast();
+  const { toast } = useToast();
   const { push } = useRouter();
 
   async function loginWithGitHub() {
@@ -39,18 +40,16 @@ export const FormComponent = ({}) => {
     });
 
     if (response?.error) {
-      // return toast({
-      //   title: "Erro",
-      //   description: "Erro ao logar.",
-      //   status: "error",
-      //   duration: 3000,
-      //   isClosable: true,
-      // });
+      return toast({
+        title: "Erro",
+        description: "Credenciais inválidas",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
 
-    if (response?.ok) {
-      return push("/");
-    }
+    return push("/");
   };
 
   const {
