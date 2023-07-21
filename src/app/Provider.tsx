@@ -9,7 +9,7 @@ const Provider = ({ children, ...props }: ThemeProviderProps) => {
     <NextThemesProvider
       {...props}
       attribute="class"
-      defaultTheme="dark"
+      defaultTheme="system"
       storageKey="theme"
       enableSystem
     >

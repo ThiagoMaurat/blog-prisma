@@ -4,12 +4,12 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { schema } from "../schema";
-import Image from "next/image";
+import { schema } from "./schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { GithubIcon } from "lucide-react";
 import { Button } from "@/components/Button";
 import { useToast } from "@/components/Toast/use-toast";
+import { Card, CardContent, CardHeader } from "@/components/CardNav/card";
 
 interface FormLogin {
   login: string;
@@ -65,66 +65,54 @@ export const FormComponent = ({}) => {
   });
 
   return (
-    <div
-      className="h-full p-4 sm:p-0 flex gap-4 flex-col md:flex-row justify-evenly items-center"
-      style={{ minHeight: "calc(100vh - 112px)" }}
-    >
-      <div className="hidden md:flex">
-        <Image
-          src={"/login.png"}
-          width={300}
-          height={500}
-          style={{ borderRadius: "1rem" }}
-          alt="login-image"
-        />
-      </div>
-
-      <form
-        className="max-w-[360px] w-full flex flex-col gap-4"
-        onSubmit={handleSubmit(onSubmit)}
-      >
+    <Card className="h-fit my-auto mx-auto md:mx-0 sm:mx- max-w-[420px] w-full">
+      <CardHeader>
         <div className="gap-4 flex flex-col">
           <h2 className="text-2xl font-bold">Welcome back!</h2>
 
           <p className="">Lets build something great!</p>
         </div>
+      </CardHeader>
 
-        <Button
-          rightIcon={<GithubIcon />}
-          label={"Git Hub"}
-          variant={"secondary"}
-          onClick={loginWithGitHub}
-          isLoading={isLoading}
-          type="button"
-        >
-          Git hub
-        </Button>
+      <CardContent>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+          <Button
+            rightIcon={<GithubIcon />}
+            label={"Git Hub"}
+            variant={"secondary"}
+            onClick={loginWithGitHub}
+            isLoading={isLoading}
+            type="button"
+          >
+            Git hub
+          </Button>
 
-        <FieldInputController
-          placeholder="Enter Email"
-          label="E-mail"
-          control={control}
-          name="login"
-          type="email"
-          error={errors.login}
-        />
+          <FieldInputController
+            placeholder="Enter Email"
+            label="E-mail"
+            control={control}
+            name="login"
+            type="email"
+            error={errors.login}
+          />
 
-        <FieldInputController
-          label="Senha"
-          placeholder="Password"
-          control={control}
-          name="password"
-          type="password"
-          error={errors.password}
-        />
+          <FieldInputController
+            label="Senha"
+            placeholder="Password"
+            control={control}
+            name="password"
+            type="password"
+            error={errors.password}
+          />
 
-        <Button
-          isLoading={isSubmitting}
-          variant={"primary"}
-          type="submit"
-          label={"Enviar"}
-        />
-      </form>
-    </div>
+          <Button
+            isLoading={isSubmitting}
+            variant={"primary"}
+            type="submit"
+            label={"Enviar"}
+          />
+        </form>
+      </CardContent>
+    </Card>
   );
 };
