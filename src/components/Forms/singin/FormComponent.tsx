@@ -9,7 +9,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { GithubIcon } from "lucide-react";
 import { Button } from "@/components/Button";
 import { useToast } from "@/components/Toast/use-toast";
-import { Card, CardContent, CardHeader } from "@/components/CardNav/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from "@/components/CardNav/card";
+import Link from "next/link";
 
 interface FormLogin {
   login: string;
@@ -113,6 +119,26 @@ export const FormComponent = ({}) => {
           />
         </form>
       </CardContent>
+
+      <CardFooter className="flex flex-wrap items-center space-x-2">
+        <div className="flex-1 text-sm text-muted-foreground">
+          Não possui uma conta?{" "}
+          <Link
+            aria-label="Sign up"
+            href="/signup"
+            className="text-primary underline-offset-4 transition-colors hover:underline"
+          >
+            Registre aqui
+          </Link>
+        </div>
+        <Link
+          aria-label="Reset password"
+          href="/signin/reset-password"
+          className="text-sm text-primary underline-offset-4 transition-colors hover:underline"
+        >
+          Resetar senha
+        </Link>
+      </CardFooter>
     </Card>
   );
 };

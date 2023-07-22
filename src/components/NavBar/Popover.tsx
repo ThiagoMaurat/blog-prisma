@@ -72,7 +72,7 @@ export default function PopoverNavBar(props: PopoverProps) {
   return (
     <>
       {!user && (
-        <Link href={"/login"} className="self-center">
+        <Link href={"/signin"} className="self-center">
           <Button label={"Entrar"} variant="primary" className="text-md" />
         </Link>
       )}
