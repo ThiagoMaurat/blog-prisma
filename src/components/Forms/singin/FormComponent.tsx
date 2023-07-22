@@ -49,9 +49,7 @@ export const FormComponent = ({}) => {
       return toast({
         title: "Erro",
         description: "Credenciais inválidas",
-        status: "error",
         duration: 3000,
-        isClosable: true,
       });
     }
 

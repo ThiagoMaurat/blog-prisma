@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/CardNav/card";
-import { SignUpForm } from "@/components/forms/signup-form";
+import { SignUpForm } from "@/components/Forms/singup/signup-form";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXTAUTH_URL ?? ""),

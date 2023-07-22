@@ -37,17 +37,18 @@ model VerificationToken {
 }
 
 model User {
-  id            String     @id @default(uuid())
-  name          String?
-  email         String?    @unique
-  password      String?
-  emailVerified DateTime?
-  image         String?
-  created_at    DateTime?  @default(now())
-  authoredPost  Post[]
-  UserRole      UserRole[]
-  Account       Account[]
-  Session       Session[]
+  id                String     @id @default(uuid())
+  name              String?
+  email             String?    @unique
+  password          String?
+  emailVerified     DateTime?
+  image             String?
+  created_at        DateTime?  @default(now())
+  emailCodeVerified String?
+  authoredPost      Post[]
+  UserRole          UserRole[]
+  Account           Account[]
+  Session           Session[]
 
   @@map("users")
 }

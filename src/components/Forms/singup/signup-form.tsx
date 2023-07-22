@@ -5,18 +5,28 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { SignOnType, authSignUpSchema } from "./schema";
 import { Button } from "@/components/Button";
-import { Loader2 } from "lucide-react";
-import { DatePicker } from "../ui/date-picker";
 import { ptBR } from "date-fns/locale";
 import { useRouter } from "next/navigation";
 import { render } from "@react-email/render";
 import { LinearLoginCodeEmail } from "@/email-templates/auth-confirm-email";
 import {
+  random,
   saveRandomNumberOnDB,
   sendEmailConfirmation,
 } from "@/actions/email-verified";
-import { random } from "@/lib/ramdom";
 import { useToast } from "@/components/Toast/use-toast";
+import { FieldInputController } from "@/components/FieldInput/FieldInputController";
+import {
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Form,
+} from "@/components/ui/form";
+import { InputFieldMask } from "@/components/InputMask";
+import { PasswordInput } from "@/components/PasswordInput";
+import { DatePicker } from "@/components/Calendar/date-picker";
 
 export function SignUpForm() {
   const [isPending, startTransition] = React.useTransition();
@@ -101,37 +111,24 @@ export function SignUpForm() {
   }
 
   return (
-    <form {...form}>
+    <Form {...form}>
       <form
         className="grid gap-4"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
-        <FormField
+        <FieldInputController
+          placeholder="Nome"
           control={form.control}
           name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nome</FormLabel>
-              <FormControl>
-                <Input placeholder="Digite seu nome" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Nome"
         />
 
-        <FormField
+        <FieldInputController
           control={form.control}
           name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>E-mail</FormLabel>
-              <FormControl>
-                <Input type="email" placeholder="example@mail.com" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Email"
+          type="email"
+          placeholder="blog@example.com"
         />
 
         <FormField
@@ -233,14 +230,10 @@ export function SignUpForm() {
           )}
         />
 
-        <Button disabled={isPending}>
-          {isPending && (
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" aria-hidden="true" />
-          )}
-          Continue
+        <Button disabled={isPending} isLoading={isPending} label="Continue">
           <span className="sr-only">Continue to email verification page</span>
         </Button>
       </form>
-    </form>
+    </Form>
   );
 }

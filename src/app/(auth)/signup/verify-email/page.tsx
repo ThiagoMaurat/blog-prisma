@@ -7,10 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/CardNav/card";
-import { VerifyEmailForm } from "@/components/forms/verify-email-form";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
 import { redirect } from "next/navigation";
+import { VerifyEmailForm } from "@/components/Forms/verify-email-form/verify-email-form";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXTAUTH_URL ?? ""),
