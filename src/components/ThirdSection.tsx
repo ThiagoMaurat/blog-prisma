@@ -6,12 +6,12 @@ import {
 } from "@/components/Accordion/Accordion";
 import { cn } from "@/lib/utils";
 import React from "react";
-import HTML from "../../../public/Icons/HTML";
-import CSS from "../../../public/Icons/CSS";
-import JavaScript from "../../../public/Icons/JavaScript";
-import ReactLogo from "../../../public/Icons/React";
-import TypeScript from "../../../public/Icons/TypeScript";
-import NodeJs from "../../../public/Icons/Node";
+import HTML from "../../public/Icons/HTML";
+import CSS from "../../public/Icons/CSS";
+import JavaScript from "../../public/Icons/JavaScript";
+import ReactLogo from "../../public/Icons/React";
+import TypeScript from "../../public/Icons/TypeScript";
+import NodeJs from "../../public/Icons/Node";
 import {
   CSSContent,
   HTMLContent,

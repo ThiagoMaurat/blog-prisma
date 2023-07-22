@@ -3,10 +3,10 @@ import { Header } from "@/components/Header";
 import { FirstCard } from "@/components/FirstCard";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/Card";
-import SearchComponent from "./SearchComponent";
-import ShowMore from "./ShowMore";
+import ShowMore from "../../components/ShowMore";
 import { getPosts } from "@/queries/getPosts";
 import { Metadata } from "next/types";
+import SearchComponent from "@/components/SearchComponent";
 
 export const metadata: Metadata = {
   title: "Blog",

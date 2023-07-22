@@ -1,11 +1,11 @@
+import FirstSection from "@/components/FirstSection";
 import { Footer } from "@/components/Footer";
+import FourthSection from "@/components/FourthSection";
 import { Header } from "@/components/Header";
 import { Limiter } from "@/components/Limiter";
-import FirstSection from "./(site)/FirstSection";
-import SecondSection from "./(site)/SecondSection";
-import ThirdSection from "./(site)/ThirdSection";
+import SecondSection from "@/components/SecondSection";
+import ThirdSection from "@/components/ThirdSection";
 import { Metadata } from "next/types";
-import FourthSection from "./(site)/FourthSection";
 
 export const metadata: Metadata = {
   title: "Thiagoa Maurat - Portfólio / Blog",
