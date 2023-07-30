@@ -3,7 +3,12 @@
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SignOnType, SignOnTypeForm, authSignUpSchema } from "./schema";
+import {
+  SignOnType,
+  SignOnTypeForm,
+  authSignUpSchema,
+  authSignUpSchemaForm,
+} from "./schema";
 import { Button } from "@/components/Button";
 import { ptBR } from "date-fns/locale";
 import { useRouter } from "next/navigation";
@@ -34,7 +39,7 @@ export function SignUpForm() {
 
   // react-hook-form
   const form = useForm<SignOnTypeForm>({
-    resolver: zodResolver(authSignUpSchema),
+    resolver: zodResolver(authSignUpSchemaForm),
     shouldFocusError: false,
     defaultValues: {
       email: "",

@@ -46,7 +46,7 @@ export function VerifyEmailForm({ email }: { email: string }) {
           duration: 2000,
         });
 
-        router.push("/dashboard");
+        router.push("/signin");
       }
 
       if (!response.ok) {
@@ -60,23 +60,18 @@ export function VerifyEmailForm({ email }: { email: string }) {
   }
 
   return (
-    <form {...form}>
-      <form
-        className="grid gap-4"
-        onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
-      >
-        <FieldInputController
-          control={form.control}
-          name="code"
-          label="Código de verificação"
-        />
+    <form
+      {...form}
+      className="grid gap-4"
+      onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
+    >
+      <FieldInputController
+        control={form.control}
+        name="code"
+        label="Código de verificação"
+      />
 
-        <Button
-          disabled={isPending}
-          label="Create account"
-          isLoading={isPending}
-        />
-      </form>
+      <Button disabled={isPending} label="Criar conta" isLoading={isPending} />
     </form>
   );
 }

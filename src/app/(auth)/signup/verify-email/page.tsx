@@ -44,17 +44,19 @@ export default async function VerifyEmailPage({
   }
 
   return (
-    <Card>
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl">Verificação de e-mail</CardTitle>
-        <CardDescription>
-          Seu e-mail ainda não foi verificado. Favor, verificar seu e-mail para
-          prosseguir com o cadastro da sua conta.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="grid gap-4">
-        <VerifyEmailForm email={checkUserEmail()!} />
-      </CardContent>
-    </Card>
+    <div className="my-auto">
+      <Card className="max-w-[420px] w-full mx-auto md:mx-0 h-fit">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl">Verificação de e-mail</CardTitle>
+          <CardDescription>
+            Seu e-mail ainda não foi verificado. Favor, verificar seu e-mail
+            para prosseguir com o cadastro da sua conta.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="grid gap-4">
+          <VerifyEmailForm email={checkUserEmail()!} />
+        </CardContent>
+      </Card>
+    </div>
   );
 }

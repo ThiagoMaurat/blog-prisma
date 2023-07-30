@@ -1,8 +1,8 @@
 import { ZodError, z } from "zod";
 import { NextResponse } from "next/server";
-import { ValidateCodeEmail } from "@/server/use-cases/Authenticate/ValidateCodeEmail";
 import { InvalidCredentialsError } from "@/server/errors/invalid-credentials-error";
 import { InvalidUpdateUserEmailError } from "@/server/errors/invalid-update-email-error";
+import { ValidateCodeEmail } from "@/server/use-cases/Authenticate/ValidateCodeEmail";
 
 export async function POST(req: Request, res: Response) {
   const validateCodeEmail = new ValidateCodeEmail();
