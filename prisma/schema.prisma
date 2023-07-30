@@ -45,6 +45,7 @@ model User {
   image             String?
   created_at        DateTime?  @default(now())
   emailCodeVerified String?
+  birthday          DateTime?
   authoredPost      Post[]
   UserRole          UserRole[]
   Account           Account[]

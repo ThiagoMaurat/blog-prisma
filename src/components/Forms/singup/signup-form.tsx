@@ -3,7 +3,7 @@
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { SignOnType, authSignUpSchema } from "./schema";
+import { SignOnType, SignOnTypeForm, authSignUpSchema } from "./schema";
 import { Button } from "@/components/Button";
 import { ptBR } from "date-fns/locale";
 import { useRouter } from "next/navigation";
@@ -24,7 +24,6 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
-import { InputFieldMask } from "@/components/InputMask";
 import { PasswordInput } from "@/components/PasswordInput";
 import { DatePicker } from "@/components/Calendar/date-picker";
 
@@ -34,7 +33,7 @@ export function SignUpForm() {
   const { toast } = useToast();
 
   // react-hook-form
-  const form = useForm<SignOnType>({
+  const form = useForm<SignOnTypeForm>({
     resolver: zodResolver(authSignUpSchema),
     shouldFocusError: false,
     defaultValues: {
@@ -42,11 +41,11 @@ export function SignUpForm() {
       password: "",
       confirmPassword: "",
       name: "",
-      birthdate: undefined,
+      birthday: undefined,
     },
   });
 
-  function onSubmit(data: SignOnType) {
+  function onSubmit(data: SignOnTypeForm) {
     startTransition(async () => {
       try {
         const response = await fetch("/api/auth/signup", {
@@ -56,7 +55,7 @@ export function SignUpForm() {
             email: data.email,
             password: data.password,
             name: data.name,
-            birthdate: data.birthdate,
+            birthdate: data.birthday,
           }),
         });
 
@@ -158,7 +157,7 @@ export function SignUpForm() {
 
         <FormField
           control={form.control}
-          name="birthdate"
+          name="birthday"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Data de Nascimento</FormLabel>
