@@ -11,48 +11,6 @@ export const authSignUpSchema = z
     password: schema.shape.password,
     confirmPassword: schema.shape.password,
     birthdate: z.date({ required_error: "Campo obrigatório" }),
-    cpf: z
-      .string()
-      .min(11, { message: "Campo obrigatório" })
-      .nonempty({ message: "Campo obrigatório" })
-      .transform((val, ctx) => {
-        const formattedVal = val
-          .replaceAll(".", "")
-          .replace("-", "")
-          .replaceAll("_", "")
-          .replaceAll(" ", "")
-          .trim();
-
-        if (formattedVal.length < 11) {
-          ctx.addIssue({
-            code: "custom",
-            message: "Deve possuir 11 caracteres",
-          });
-        }
-
-        return formattedVal;
-      }),
-    phone: z
-      .string()
-      .nonempty({ message: "Campo obrigatório" })
-      .transform((val, ctx) => {
-        const formattedVal = val
-          .replaceAll("(", "")
-          .replaceAll(")", "")
-          .replaceAll("-", "")
-          .replaceAll("_", "")
-          .replaceAll(" ", "")
-          .trim();
-
-        if (formattedVal.length < 11) {
-          ctx.addIssue({
-            code: "custom",
-            message: "Deve ser no formato (DDD)99999-9999",
-          });
-        }
-
-        return formattedVal;
-      }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Senhas não conferem",

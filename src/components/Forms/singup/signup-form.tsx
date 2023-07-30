@@ -42,7 +42,6 @@ export function SignUpForm() {
       password: "",
       confirmPassword: "",
       name: "",
-      cpf: "",
       birthdate: undefined,
     },
   });
@@ -57,9 +56,7 @@ export function SignUpForm() {
             email: data.email,
             password: data.password,
             name: data.name,
-            cpf: data.cpf,
             birthdate: data.birthdate,
-            phone: data.phone,
           }),
         });
 
@@ -113,7 +110,7 @@ export function SignUpForm() {
   return (
     <Form {...form}>
       <form
-        className="grid gap-4"
+        className="grid gap-4 max-w-[500px]"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
       >
         <FieldInputController
@@ -153,42 +150,6 @@ export function SignUpForm() {
               <FormLabel>Confirme sua senha</FormLabel>
               <FormControl>
                 <PasswordInput placeholder="**********" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="cpf"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>CPF</FormLabel>
-              <FormControl>
-                <InputFieldMask
-                  placeholder="000.000.000-00"
-                  mask={"999.999.999-99"}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nome</FormLabel>
-              <FormControl>
-                <InputFieldMask
-                  mask={"(99) 99999-9999"}
-                  placeholder="(DDD) 99999-9999"
-                  {...field}
-                />
               </FormControl>
               <FormMessage />
             </FormItem>

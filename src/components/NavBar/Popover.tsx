@@ -55,7 +55,7 @@ export default function PopoverNavBar(props: PopoverProps) {
                 </div>
 
                 <div
-                  onClick={() => signOut({ callbackUrl: "/login" })}
+                  onClick={() => signOut({ callbackUrl: "/" })}
                   className="flex justify-center gap-2 cursor-pointer"
                 >
                   <span>Log out</span>

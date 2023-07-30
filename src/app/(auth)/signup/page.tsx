@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function SignUpPage() {
   return (
-    <Card>
+    <Card className="max-w-[420px] w-full mx-auto md:mx-0">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl">Cadastro</CardTitle>
       </CardHeader>

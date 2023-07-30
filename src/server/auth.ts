@@ -116,7 +116,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: "/login",
+    signIn: "/signin",
   },
   callbacks: {
     // only for external providers like github

@@ -17,10 +17,14 @@ const PasswordInput = React.forwardRef<
     <div className="relative">
       <FieldInput
         type={showPassword ? "text" : "password"}
-        className={cn("pr-10", className)}
+        className={cn(
+          "bg-[#E1F5FE] px-3 text-black rounded-lg h-10 w-full focus:outline-blue-500",
+          className
+        )}
         ref={ref}
         {...props}
       />
+
       <Button
         type="button"
         variant="ghost"
@@ -30,9 +34,9 @@ const PasswordInput = React.forwardRef<
         disabled={props.value === "" || props.disabled}
       >
         {showPassword ? (
-          <EyeOff className="h-4 w-4" aria-hidden="true" />
+          <EyeOff className="h-4 w-4 text-gray-300" aria-hidden="true" />
         ) : (
-          <Eye className="h-4 w-4" aria-hidden="true" />
+          <Eye className="h-4 w-4 text-gray-300" aria-hidden="true" />
         )}
         <span className="sr-only">
           {showPassword ? "Hide password" : "Show password"}
