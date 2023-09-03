@@ -3,16 +3,11 @@
 import * as React from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {
-  SignOnType,
-  SignOnTypeForm,
-  authSignUpSchema,
-  authSignUpSchemaForm,
-} from "./schema";
+import { SignOnTypeForm, authSignUpSchemaForm } from "./schema";
 import { Button } from "@/components/Button";
 import { ptBR } from "date-fns/locale";
 import { useRouter } from "next/navigation";
-import { render } from "@react-email/render";
+import { render } from "@react-email/components";
 import { LinearLoginCodeEmail } from "@/email-templates/auth-confirm-email";
 import {
   random,

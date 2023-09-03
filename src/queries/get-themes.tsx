@@ -1,13 +1,13 @@
 import { PostResponse } from "@/@types/PostResponse";
 import { makeFetch } from "../helpers/makeFetch";
 
-interface getPostsProps {
+interface GetThemes {
   search?: string;
   page?: number;
   limit?: number;
 }
 
-export const getThemes = async (params?: getPostsProps) => {
+export const getThemes = async (params?: GetThemes) => {
   const searchParam = params?.search ? `&search=${params.search}` : "";
 
   const paginationParams =
@@ -17,11 +17,7 @@ export const getThemes = async (params?: getPostsProps) => {
 
   const fetchUrl = `/api/themes/all${paginationParams}${searchParam}`;
 
-  const themes = await makeFetch<PostResponse>(fetchUrl, {
-    next: {
-      revalidate: 60,
-    },
-  });
+  const themes = await makeFetch<PostResponse>(fetchUrl);
 
   return themes;
 };
