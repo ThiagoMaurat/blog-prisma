@@ -1,5 +1,4 @@
 import { Session } from "next-auth";
-import React, { useState } from "react";
 import Avatar from "../Avatar";
 import { signOut } from "next-auth/react";
 import Link from "next/link";

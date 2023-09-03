@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import { makeThemeUseCase } from "@/server/factories/make-theme-use-case";
-import { getToken } from "next-auth/jwt";
 
 export async function POST(req: Request, res: Response) {
   const registerBodySchema = z.object({

@@ -63,6 +63,20 @@ export function MenuLinks({ isOpen, user }: MenuLinksProps) {
               Contato
             </p>
           </Link>
+
+          {user?.userRole?.[0]?.role?.name === "admin" && (
+            <Link href="/admin">
+              <p
+                className={`${
+                  CheckRouterMatchesLabel("Home")
+                    ? "bottom-1 font-bold border-b-2 text-gray-300"
+                    : "hover:bottom-1 hover:font-bold hover:border-b-2 hover:text-gray-300 hover:transition-all font-medium"
+                }`}
+              >
+                Admin
+              </p>
+            </Link>
+          )}
         </div>
         <PopoverNavBar user={user} />
       </div>

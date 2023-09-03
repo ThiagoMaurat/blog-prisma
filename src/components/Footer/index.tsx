@@ -47,9 +47,9 @@ export const Footer = ({ className }: FooterProps) => {
         <h2 className="font-bold text-2xl">Início</h2>
 
         <div className="flex gap-2 flex-col">
-          <NavIndices isExternal={false} href="" text="Topic #1" />
-          <NavIndices isExternal={false} href="" text="Topic #2" />
-          <NavIndices isExternal={false} href="" text="Topic #3" />
+          <NavIndices isExternal={false} href="/" text="Topic #1" />
+          <NavIndices isExternal={false} href="/" text="Topic #2" />
+          <NavIndices isExternal={false} href="/" text="Topic #3" />
         </div>
       </div>
 
