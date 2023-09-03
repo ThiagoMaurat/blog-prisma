@@ -4,7 +4,7 @@ import { FirstCard } from "@/components/FirstCard";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/Card";
 import ShowMore from "../../components/ShowMore";
-import { getPosts } from "@/queries/getPosts";
+import { getPosts } from "@/queries/get-posts";
 import { Metadata } from "next/types";
 import SearchComponent from "@/components/SearchComponent";
 
