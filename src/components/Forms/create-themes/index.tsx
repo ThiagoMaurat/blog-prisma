@@ -31,12 +31,20 @@ export default function CreateThemeForms() {
       await mutateThemes({
         name: data.name,
       });
+
+      toast({
+        title: "Sucesso",
+        description: "Tema criado com sucesso.",
+        duration: 2000,
+      });
     } catch (error) {
       toast({
         title: "Erro",
         description: "Erro ao criar tema.",
         duration: 2000,
       });
+    } finally {
+      document?.getElementById?.("closeDialog")?.click();
     }
   };
 
