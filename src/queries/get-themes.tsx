@@ -1,4 +1,4 @@
-import { PostResponse } from "@/@types/PostResponse";
+import { ThemeResponse } from "@/@types/ThemesResponse";
 import { makeFetch } from "../helpers/makeFetch";
 
 interface GetThemes {
@@ -17,7 +17,7 @@ export const getThemes = async (params?: GetThemes) => {
 
   const fetchUrl = `/api/themes/all${paginationParams}${searchParam}`;
 
-  const themes = await makeFetch<PostResponse>(fetchUrl, {
+  const themes = await makeFetch<ThemeResponse>(fetchUrl, {
     next: { tags: ["theme"] },
   });
 

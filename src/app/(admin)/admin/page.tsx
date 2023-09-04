@@ -21,10 +21,15 @@ export default async function Admin() {
       <section className="flex flex-col gap-2 my-2 border-2 border-gray-400 p-4 rounded-md">
         <h2>Temas</h2>
         <CreateThemeDialog />
+        <ol style={{ listStyle: "inside" }}>
+          {themes.themes.map((theme) => (
+            <li key={theme.id}>{theme.name}</li>
+          ))}
+        </ol>
       </section>
 
-      <section className="my-2">
-        <div>{JSON.stringify(themes)}</div>
+      <section className="flex flex-col gap-2 my-2 border-2 border-gray-400 p-4 rounded-md">
+        <h2>Posts</h2>
       </section>
     </>
   );

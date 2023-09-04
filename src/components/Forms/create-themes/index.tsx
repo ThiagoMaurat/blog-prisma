@@ -1,12 +1,10 @@
 "use client";
 import React, { useRef } from "react";
-import { mutateThemes } from "@/queries/mutate-theme";
 import FieldInput from "@/components/FieldInput";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/Button";
 import { useToast } from "@/components/Toast/use-toast";
 import { mutateForm } from "./form-server-action";
-import { ZodError } from "zod";
 
 export interface FormLogin {
   name: string;
