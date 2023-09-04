@@ -1,70 +1,61 @@
 "use client";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { schema } from "./schema";
-import { FieldInputController } from "@/components/FieldInput/FieldInputController";
-import { Button } from "@/components/Button";
+import React, { useRef } from "react";
 import { mutateThemes } from "@/queries/mutate-theme";
+import FieldInput from "@/components/FieldInput";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/Button";
 import { useToast } from "@/components/Toast/use-toast";
+import { mutateForm } from "./form-server-action";
+import { ZodError } from "zod";
 
-interface FormLogin {
+export interface FormLogin {
   name: string;
 }
 
 export default function CreateThemeForms() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<FormLogin>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      name: "",
-    },
-  });
+  const ref = useRef<HTMLFormElement>(null);
 
   const { toast } = useToast();
 
-  const onSubmit = async (data: FormLogin) => {
-    try {
-      await mutateThemes({
-        name: data.name,
-      });
-
-      toast({
-        title: "Sucesso",
-        description: "Tema criado com sucesso.",
-        duration: 2000,
-      });
-    } catch (error) {
-      toast({
-        title: "Erro",
-        description: "Erro ao criar tema.",
-        duration: 2000,
-      });
-    } finally {
-      document?.getElementById?.("closeDialog")?.click();
-    }
-  };
-
   return (
-    <form className="grid gap-4" onSubmit={handleSubmit(onSubmit)}>
-      <FieldInputController
-        placeholder="Nome do tema"
-        label="Nome"
-        control={control}
-        name="name"
-        error={errors.name}
-      />
+    <form
+      className="grid gap-4"
+      action={async (formData) => {
+        ref.current?.reset();
+
+        try {
+          const mutate = await mutateForm(formData);
+
+          if (!mutate?.ok) {
+            return toast({
+              title: "Erro",
+              description: "Não foi possível adicionar o tema",
+              duration: 3000,
+            });
+          }
+
+          toast({
+            title: "Sucesso",
+            description: "Adicionado com sucesso",
+            duration: 3000,
+          });
+
+          document?.getElementById?.("closeDialog")?.click();
+        } catch (error) {
+          toast({
+            title: "Erro",
+            description: "Não foi possível adicionar o tema",
+            duration: 3000,
+          });
+        }
+      }}
+    >
+      <Label htmlFor="name">Nome do tema</Label>
+
+      <FieldInput placeholder="Nome do tema" name="name" />
 
       <div className="flex justify-end">
-        <Button
-          isLoading={isSubmitting}
-          className="flex self-end "
-          type="submit"
-          label={"Salvar"}
-        />
+        <Button className="flex self-end" type="submit" label={"Salvar"} />
       </div>
     </form>
   );

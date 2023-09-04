@@ -3,9 +3,7 @@ interface PayloadThemes {
 }
 
 export const mutateThemes = async (params: PayloadThemes) => {
-  const fetchUrl = `/api/admin/themes`;
-
-  const themes = await fetch(fetchUrl, {
+  const mutate = await fetch(`api/admin/themes`, {
     body: JSON.stringify(params),
     method: "POST",
     headers: {
@@ -13,5 +11,5 @@ export const mutateThemes = async (params: PayloadThemes) => {
     },
   });
 
-  return themes;
+  return mutate;
 };

@@ -17,7 +17,9 @@ export const getThemes = async (params?: GetThemes) => {
 
   const fetchUrl = `/api/themes/all${paginationParams}${searchParam}`;
 
-  const themes = await makeFetch<PostResponse>(fetchUrl);
+  const themes = await makeFetch<PostResponse>(fetchUrl, {
+    next: { tags: ["theme"] },
+  });
 
   return themes;
 };

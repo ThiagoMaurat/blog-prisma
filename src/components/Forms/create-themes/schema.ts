@@ -1,5 +1,5 @@
 import { z } from "zod";
 
 export const schema = z.object({
-  name: z.string().min(1, { message: "Campo obrigatório" }),
+  name: z.string().min(2, { message: "Campo obrigatório" }),
 });
