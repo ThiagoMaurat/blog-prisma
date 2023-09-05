@@ -4,7 +4,6 @@ import { authOptions } from "@/server/auth";
 import { redirect } from "next/navigation";
 import { getThemes } from "@/queries/get-themes";
 import CreateThemeDialog from "@/components/CreateThemeDialog";
-import Editor from "@/components/Editor";
 
 export default async function Admin() {
   const data = await getServerSession(authOptions);
@@ -31,7 +30,6 @@ export default async function Admin() {
 
       <section className="flex flex-col gap-2 my-2 border-2 border-gray-400 p-4 rounded-md">
         <h2>Posts</h2>
-        <Editor />
       </section>
     </>
   );
