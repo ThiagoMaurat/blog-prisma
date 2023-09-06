@@ -8,7 +8,7 @@ type MenuLinksProps = {
   user: Session["user"] | null;
 };
 
-export function MenuLinks({ isOpen, user }: MenuLinksProps) {
+export async function MenuLinks({ isOpen, user }: MenuLinksProps) {
   const router = useRouter();
 
   const CheckRouterMatchesLabel = (label: string) => {
@@ -78,7 +78,7 @@ export function MenuLinks({ isOpen, user }: MenuLinksProps) {
             </Link>
           )}
         </div>
-        <PopoverNavBar user={user} />
+        <PopoverNavBar />
       </div>
     </div>
   );

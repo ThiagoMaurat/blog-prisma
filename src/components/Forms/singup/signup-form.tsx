@@ -109,7 +109,7 @@ export function SignUpForm() {
       }
     });
   }
-  console.log(form.formState.errors);
+
   return (
     <Form {...form}>
       <form

@@ -1,6 +1,5 @@
-import { Session } from "next-auth";
 import Avatar from "../Avatar";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { LogOut, Moon, Sun } from "lucide-react";
 import {
@@ -12,27 +11,23 @@ import { Switch } from "../Switch";
 import { useTheme } from "next-themes";
 import { Button } from "../Button";
 
-interface PopoverProps {
-  user: Session["user"] | null;
-}
-
-export default function PopoverNavBar(props: PopoverProps) {
-  const { user } = props;
-
+export default function PopoverNavBar() {
   const { setTheme, resolvedTheme } = useTheme();
 
-  if (user) {
+  const { data } = useSession();
+
+  if (data?.user) {
     return (
       <>
-        {user && (
+        {data?.user && (
           <DropdownMenu>
             <DropdownMenuTrigger className="self-center">
-              <Avatar user={user} />
+              <Avatar user={data?.user} />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="p-2" align="end">
               <div className="w-full h-full flex flex-col gap-4">
-                <p className=" font-medium truncate">{user?.name}</p>
-                <p className=" truncate">{user?.email}</p>
+                <p className=" font-medium truncate">{data?.user?.name}</p>
+                <p className=" truncate">{data?.user?.email}</p>
 
                 <div className="border-b" />
 
@@ -70,7 +65,7 @@ export default function PopoverNavBar(props: PopoverProps) {
 
   return (
     <>
-      {!user && (
+      {!data?.user && (
         <Link href={"/signin"} className="self-center">
           <Button label={"Entrar"} variant="primary" className="text-md" />
         </Link>
