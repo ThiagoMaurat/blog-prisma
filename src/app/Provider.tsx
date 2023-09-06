@@ -10,7 +10,6 @@ const Provider = ({ children, ...props }: ThemeProviderProps) => {
       {...props}
       attribute="class"
       defaultTheme="system"
-      storageKey="theme"
       enableSystem
     >
       <SessionProvider>{children}</SessionProvider>

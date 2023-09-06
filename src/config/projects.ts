@@ -1,0 +1,24 @@
+export type ProjectsSliderProps = {
+  href: string;
+  title: string;
+  pathWhite: string;
+  pathDark: string;
+  description: string;
+};
+
+export const thiagoDevProject: ProjectsSliderProps[] = [
+  {
+    href: "/projects/1",
+    description: "Project 1",
+    title: "Project 1",
+    pathWhite: "/Slider/blog-project/blog-white.png",
+    pathDark: "/Slider/blog-project/blog-dark.png",
+  },
+  {
+    href: "/projects/1",
+    description: "Project 1",
+    title: "Project 1",
+    pathWhite: "/Slider/blog-project/blog-login-white.png",
+    pathDark: "/Slider/blog-project/blog-login-dark.png",
+  },
+];

@@ -8,7 +8,7 @@ type MenuLinksProps = {
   user: Session["user"] | null;
 };
 
-export async function MenuLinks({ isOpen, user }: MenuLinksProps) {
+export function MenuLinks({ isOpen, user }: MenuLinksProps) {
   const router = useRouter();
 
   const CheckRouterMatchesLabel = (label: string) => {

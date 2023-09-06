@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import React from "react";
+import { ProjectSlide } from "./ProjectSlide";
+import { thiagoDevProject } from "@/config/projects";
 
 interface FourthSectionProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -12,7 +14,7 @@ export default function FourthSection(props: FourthSectionProps) {
       {...props}
     >
       <article className="flex gap-7 flex-col md:max-w-[50%] w-full">
-        asdasdasd
+        <ProjectSlide projects={thiagoDevProject} />
       </article>
 
       <aside className="hidden md:block md:max-w-[50%] w-full text-center text-4xl font-semibold">
