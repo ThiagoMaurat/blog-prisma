@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 import { render } from "@react-email/components";
 import { LinearLoginCodeEmail } from "@/email-templates/auth-confirm-email";
 import {
-  random,
   saveRandomNumberOnDB,
   sendEmailConfirmation,
 } from "@/actions/email-verified";
@@ -78,15 +77,20 @@ export function SignUpForm() {
             duration: 2000,
           });
 
-          const ramdom = await random();
+          let randomNumber = Array.from({ length: 10 })
+            .map((_, index) => {
+              return Math.floor(Math.random() * index);
+            })
+            .join()
+            .replaceAll(",", "");
 
           const emailHtml = render(
-            <LinearLoginCodeEmail validationCode={ramdom} />
+            <LinearLoginCodeEmail validationCode={randomNumber} />
           );
 
           try {
             await sendEmailConfirmation(data?.email, emailHtml);
-            await saveRandomNumberOnDB(ramdom, data?.email);
+            await saveRandomNumberOnDB(randomNumber, data?.email);
             router.push(`/signup/verify-email/?email=${data?.email}`);
           } catch (error) {
             toast({
@@ -105,7 +109,7 @@ export function SignUpForm() {
       }
     });
   }
-
+  console.log(form.formState.errors);
   return (
     <Form {...form}>
       <form
@@ -117,6 +121,7 @@ export function SignUpForm() {
           control={form.control}
           name="name"
           label="Nome"
+          error={form.formState.errors.name}
         />
 
         <FieldInputController
@@ -125,6 +130,7 @@ export function SignUpForm() {
           label="Email"
           type="email"
           placeholder="blog@example.com"
+          error={form.formState.errors.email}
         />
 
         <FormField

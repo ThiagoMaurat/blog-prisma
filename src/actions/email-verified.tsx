@@ -2,7 +2,6 @@
 import { SendMailOptions } from "nodemailer";
 import { prisma } from "@/lib/prisma";
 import transporter from "@/lib/node-mailer";
-import { randomUUID } from "node:crypto";
 
 export const sendEmailConfirmation = async (email: string, html: any) => {
   try {
@@ -19,21 +18,17 @@ export const sendEmailConfirmation = async (email: string, html: any) => {
   }
 };
 
-export const saveRandomNumberOnDB = async (romdom: string, email: string) => {
+export const saveRandomNumberOnDB = async (random: string, email: string) => {
   try {
     await prisma.user.update({
       where: {
         email: email,
       },
       data: {
-        emailCodeVerified: String(romdom),
+        emailCodeVerified: String(random),
       },
     });
   } catch (error) {
     throw new Error("Erro ao criar conta");
   }
 };
-
-export async function random() {
-  return randomUUID();
-}

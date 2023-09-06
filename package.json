@@ -68,6 +68,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.3",
     "@types/body-parser": "^1.19.2",
+    "@types/lodash": "^4.14.198",
     "@types/react-input-mask": "^3.0.2",
     "ts-node": "^10.9.1",
     "tsx": "^3.12.8"

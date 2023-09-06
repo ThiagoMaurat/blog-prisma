@@ -23,7 +23,7 @@ const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
 
 export const LinearLoginCodeEmail: React.FC<
   Readonly<LinearLoginCodeEmailProps>
-> = ({ validationCode = "uytras12" }) => (
+> = ({ validationCode = "0000312051" }) => (
   <Html>
     <Head />
     <Preview>Your login code for Linear</Preview>
