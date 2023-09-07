@@ -27,7 +27,7 @@ export const ProjectSlide = (props: ProductsSliderProps) => {
   const [manager, setManager] = useState<SwiperManager>({} as SwiperManager);
 
   return (
-    <div className="w-full">
+    <div className="w-full border rounded">
       <Swiper
         spaceBetween={50}
         slidesPerView={1}

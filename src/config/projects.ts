@@ -6,7 +6,7 @@ export type ProjectsSliderProps = {
   description: string;
 };
 
-export const thiagoDevProject: ProjectsSliderProps[] = [
+export const ThiagoDevProject: ProjectsSliderProps[] = [
   {
     href: "/projects/1",
     description: "Project 1",
