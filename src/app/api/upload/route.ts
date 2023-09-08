@@ -1,17 +1,19 @@
 import { supabase } from "@/lib/supabase";
-import { z } from "zod";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { UserAlreadyExistsError } from "@/server/errors/user-already-exists";
 import { randomUUID } from "node:crypto";
 import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
+import { getToken } from "next-auth/jwt";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: NextRequest, res: Response) {
   try {
-    // const session = await getToken({ req });
+    const session = await getToken({ req });
 
-    // if (session?.user?.userRole?.[0]?.role?.name !== "admin") {
-    //   throw new UserIsNotAdminError();
-    // }
+    if (session?.user?.userRole?.[0]?.role?.name !== "admin") {
+      throw new UserIsNotAdminError();
+    }
+
+    if (!req.body) return;
 
     const reader = req.body?.getReader();
 
@@ -34,7 +36,6 @@ export async function POST(req: Request, res: Response) {
     const { data } = await supabase.storage
       .from("blog-images")
       .getPublicUrl(filename);
-    console.log(data);
 
     return NextResponse.json(
       {
@@ -43,7 +44,6 @@ export async function POST(req: Request, res: Response) {
       { status: 200 }
     );
   } catch (error) {
-    console.log(error);
     if (error instanceof UserAlreadyExistsError) {
       return NextResponse.json(
         {
@@ -64,7 +64,7 @@ export async function POST(req: Request, res: Response) {
 
     return NextResponse.json(
       {
-        message: "dasdasdas",
+        message: JSON.stringify(error),
       },
       { status: 500 }
     );
