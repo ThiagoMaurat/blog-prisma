@@ -3,7 +3,7 @@ import React from "react";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Limiter } from "@/components/Limiter";
-import { getPostsById } from "@/queries/getPostsById";
+import { getPostsById } from "@/queries/get-posts-by-id";
 import { CustomSectionTitlePostPage } from "@/components/CustomSectionTitlePostPage";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";

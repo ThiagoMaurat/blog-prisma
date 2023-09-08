@@ -5,14 +5,14 @@ interface NavIndicesProps {
   text: string;
   href: string;
   isExternal: boolean;
-  LeftIcon?: React.ReactNode;
+  leftIcon?: React.ReactNode;
 }
 
 export const NavIndices = ({
   isExternal,
   text,
   href,
-  LeftIcon,
+  leftIcon,
 }: NavIndicesProps) => {
   if (isExternal) {
     return (
@@ -24,7 +24,7 @@ export const NavIndices = ({
       >
         <div className="flex gap-2 items-center">
           <>
-            {LeftIcon && LeftIcon}
+            {leftIcon && leftIcon}
             <p className="font-bold">{text}</p>
           </>
         </div>
@@ -37,7 +37,7 @@ export const NavIndices = ({
       <Link href={href} className="hover:text-gray-500">
         <div className="flex gap-2 items-center">
           <>
-            {LeftIcon && LeftIcon}
+            {leftIcon && leftIcon}
             <p className="font-bold">{text}</p>
           </>
         </div>

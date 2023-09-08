@@ -9,6 +9,8 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   props,
   ref
 ) => {
+  const { leftIcon, ...rest } = props;
+
   const ButtonClassName = clsx(
     "hover:opacity-80",
     "text-primary",
@@ -24,8 +26,8 @@ const Button: ForwardRefRenderFunction<HTMLButtonElement, ButtonProps> = (
   );
 
   return (
-    <button className={ButtonClassName} {...props} ref={ref}>
-      {props.leftIcon && props.leftIcon}
+    <button className={ButtonClassName} {...rest} ref={ref}>
+      {leftIcon && leftIcon}
       {props.children}
     </button>
   );

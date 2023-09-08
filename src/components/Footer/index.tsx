@@ -86,35 +86,35 @@ export const Footer = ({ className }: FooterProps) => {
         <div className="flex gap-2 flex-col items-start">
           <NavIndices
             href="https://github.com/ThiagoMaurat"
-            LeftIcon={<GithubIcon />}
+            leftIcon={<GithubIcon />}
             text="GitHub"
             isExternal
           />
 
           <NavIndices
             href="https://www.linkedin.com/in/thiago-maurat-477a041b9/"
-            LeftIcon={<LinkedinIcon />}
+            leftIcon={<LinkedinIcon />}
             text="Linkedin"
             isExternal
           />
 
           <NavIndices
             href="mailto:thiagomaurat@hotmail.com"
-            LeftIcon={<Mail />}
+            leftIcon={<Mail />}
             text="E-mail"
             isExternal
           />
 
           <NavIndices
             href="https://www.facebook.com/thiago.maurat"
-            LeftIcon={<FacebookIcon />}
+            leftIcon={<FacebookIcon />}
             text="Facebook"
             isExternal
           />
 
           <NavIndices
             href="https://twitter.com/Thiago_Maurat"
-            LeftIcon={<TwitterIcon />}
+            leftIcon={<TwitterIcon />}
             text="Twitter"
             isExternal
           />
