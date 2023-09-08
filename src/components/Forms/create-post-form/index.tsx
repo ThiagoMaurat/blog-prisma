@@ -2,6 +2,20 @@
 import { ThemeResponse } from "@/@types/ThemesResponse";
 import { Button } from "@/components/Button";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Editor } from "novel";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -15,28 +29,19 @@ interface CreatePostFormInput {
   title: string;
   content: string;
   thumbnail: string;
-  themeId: {
-    label: string;
-    value: string;
-  };
+  themeId: string;
   description: string;
 }
 export function PostForm(props: PostFormProps) {
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors, isSubmitting },
-  } = useForm<CreatePostFormInput>({
+  const { authorId, themes } = props;
+
+  const formCreatePost = useForm<CreatePostFormInput>({
     // resolver: zodResolver(schema),
     defaultValues: {
       title: "",
       content: "",
       thumbnail: "",
-      themeId: {
-        label: "",
-        value: "",
-      },
+      themeId: "",
       description: "",
     },
   });
@@ -47,26 +52,66 @@ export function PostForm(props: PostFormProps) {
   };
 
   return (
-    <form className="flex flex-col gap-2" onSubmit={handleSubmit(submitForm)}>
-      <FieldInputController
-        placeholder="Insira o título"
-        label="Título"
-        control={control}
-        name="title"
-        error={errors.title}
-      />
+    <Form {...formCreatePost}>
+      <form
+        onSubmit={(...args) =>
+          void formCreatePost.handleSubmit(submitForm)(...args)
+        }
+        className="grid gap-4 "
+      >
+        <FieldInputController
+          placeholder="Insira o título"
+          label="Título"
+          control={formCreatePost.control}
+          name="title"
+          error={formCreatePost.formState.errors.title}
+        />
 
-      <FieldInputController
-        placeholder="Insira o link da thumbnail"
-        label="Thumbnail"
-        control={control}
-        name="thumbnail"
-        error={errors.thumbnail}
-      />
+        <FieldInputController
+          placeholder="Insira o link da thumbnail"
+          label="Thumbnail"
+          control={formCreatePost.control}
+          name="thumbnail"
+          error={formCreatePost.formState.errors.thumbnail}
+        />
 
-      <Editor onUpdate={(editor) => setValue("content", editor!.getHTML())} />
+        <FormField
+          control={formCreatePost.control}
+          name="themeId"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="font-bold text-base">
+                Escolhar o tema
+              </FormLabel>
+              <Select onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger
+                    placeholder="Theme"
+                    className="w-full bg-[#E1F5FE]"
+                  >
+                    <SelectValue placeholder="Theme" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {themes.themes.map((theme) => (
+                    <SelectItem key={theme.id} value={theme.id}>
+                      {theme.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+        />
 
-      <Button label="Salvar" type="submit" />
-    </form>
+        <Editor
+          onUpdate={(editor) =>
+            formCreatePost.setValue("content", editor!.getHTML())
+          }
+        />
+
+        <Button label="Salvar" type="submit" className="w-fit" />
+      </form>
+    </Form>
   );
 }
