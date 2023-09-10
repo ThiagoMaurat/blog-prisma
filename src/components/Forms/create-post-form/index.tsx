@@ -80,7 +80,7 @@ export function PostForm(props: PostFormProps) {
       });
     }
   };
-  console.log(formCreatePost.formState.errors, authorId);
+  console.log(formCreatePost.formState.errors);
   return (
     <Form {...formCreatePost}>
       <form
@@ -150,6 +150,12 @@ export function PostForm(props: PostFormProps) {
             formCreatePost.setValue("content", editor!.getHTML())
           }
         />
+
+        {formCreatePost.formState.errors.content && (
+          <p className="text-red-500 text-xs">
+            {formCreatePost.formState.errors.content.message}
+          </p>
+        )}
 
         <Button
           isLoading={formCreatePost.formState.isSubmitting}
