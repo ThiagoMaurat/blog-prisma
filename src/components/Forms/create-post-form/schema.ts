@@ -3,7 +3,6 @@ import { z } from "zod";
 export const postSchema = z.object({
   title: z.string().min(1, { message: "Título obrigatório" }).nonempty(),
   content: z.string().min(10, { message: "Conteúdo obrigatório" }).nonempty(),
-  authorId: z.string().min(1, { message: "Autor obrigatório" }).nonempty(),
   thumbnail: z
     .string()
     .url({ message: "Thumbnail inválida" })

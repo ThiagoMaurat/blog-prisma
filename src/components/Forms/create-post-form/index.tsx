@@ -22,6 +22,7 @@ import { Editor } from "novel";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { postSchema } from "./schema";
+import { useToast } from "@/components/Toast/use-toast";
 
 interface PostFormProps {
   themes: ThemeResponse;
@@ -49,11 +50,37 @@ export function PostForm(props: PostFormProps) {
     },
   });
 
-  const submitForm = (data: CreatePostFormInput) => {
-    console.log(data);
-    // dont forget the authorId on submit
-  };
+  const { toast } = useToast();
 
+  const submitForm = async (data: CreatePostFormInput) => {
+    try {
+      const response = await fetch("/api/admin/posts", {
+        method: "POST",
+        body: JSON.stringify({
+          ...data,
+          authorId,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "Sucesso",
+          description: "Post criado com sucesso.",
+          duration: 2000,
+        });
+        formCreatePost.reset();
+      }
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Erro ao criar post.",
+        duration: 2000,
+      });
+    }
+  };
+  console.log(formCreatePost.formState.errors, authorId);
   return (
     <Form {...formCreatePost}>
       <form
@@ -124,7 +151,12 @@ export function PostForm(props: PostFormProps) {
           }
         />
 
-        <Button label="Salvar" type="submit" className="w-fit" />
+        <Button
+          isLoading={formCreatePost.formState.isSubmitting}
+          label="Salvar"
+          type="submit"
+          className="w-fit"
+        />
       </form>
     </Form>
   );

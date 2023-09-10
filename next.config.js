@@ -6,7 +6,7 @@ const nextConfig = {
     serverActions: true
   },
   images: {
-    domains: ['external-content.duckduckgo.com', 'avatars.githubusercontent.com'],
+    domains: ['external-content.duckduckgo.com', 'raw.githubusercontent.com', 'avatars.githubusercontent.com'],
   },
 }
 
