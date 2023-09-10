@@ -80,7 +80,7 @@ export function PostForm(props: PostFormProps) {
       });
     }
   };
-  console.log(formCreatePost.formState.errors);
+
   return (
     <Form {...formCreatePost}>
       <form
