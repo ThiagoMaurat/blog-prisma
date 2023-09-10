@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-import InputMask, { ReactInputMask, Props } from "react-input-mask";
+import InputMask, { ReactInputMask } from "react-input-mask";
 import { InputHTMLAttributes } from "react";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -17,7 +17,7 @@ const InputFieldMask = React.forwardRef<ReactInputMask, InputProps>(
         type={type}
         className={cn(
           (className =
-            "bg-[#E1F5FE] px-3 text-black rounded-lg h-10 w-full focus:outline-blue-500"),
+            "bg-background border  placeholder:text-muted-foreground ring-offset-background px-3 rounded-lg h-10 w-full"),
           className
         )}
         {...props}

@@ -2,6 +2,7 @@
 import { ThemeResponse } from "@/@types/ThemesResponse";
 import { Button } from "@/components/Button";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
+import { FieldTextAreaController } from "@/components/FieldTextArea/FieldTextAreaController";
 import {
   Form,
   FormControl,
@@ -16,9 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "novel";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { postSchema } from "./schema";
 
 interface PostFormProps {
   themes: ThemeResponse;
@@ -36,7 +39,7 @@ export function PostForm(props: PostFormProps) {
   const { authorId, themes } = props;
 
   const formCreatePost = useForm<CreatePostFormInput>({
-    // resolver: zodResolver(schema),
+    resolver: zodResolver(postSchema),
     defaultValues: {
       title: "",
       content: "",
@@ -75,21 +78,32 @@ export function PostForm(props: PostFormProps) {
           error={formCreatePost.formState.errors.thumbnail}
         />
 
+        <FieldTextAreaController
+          control={formCreatePost.control}
+          name="description"
+          label="Descrição"
+          error={formCreatePost.formState.errors.description}
+          placeholder="Insira a descrição"
+        />
+
         <FormField
           control={formCreatePost.control}
           name="themeId"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="font-bold text-base">
-                Escolhar o tema
+                Escolhe o tema
               </FormLabel>
               <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger
                     placeholder="Theme"
-                    className="w-full bg-[#E1F5FE]"
+                    className="w-full text-black"
                   >
-                    <SelectValue placeholder="Theme" />
+                    <SelectValue
+                      placeholder="Theme"
+                      className="w-full text-black"
+                    />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

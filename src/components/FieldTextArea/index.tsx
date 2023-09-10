@@ -6,7 +6,7 @@ const FieldInput: React.ForwardRefRenderFunction<
 > = (props, ref) => {
   return (
     <textarea
-      className="bg-[#E1F5FE] px-3 py-3 rounded-lg w-full focus:outline-blue-500"
+      className="bg-background border placeholder:text-muted-foreground ring-offset-background px-3 py-3 rounded-lg w-full"
       ref={ref}
       {...props}
     />
