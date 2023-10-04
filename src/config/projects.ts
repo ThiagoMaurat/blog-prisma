@@ -15,9 +15,9 @@ export const ThiagoDevProject: ProjectsSliderProps[] = [
     pathDark: "/Slider/blog-project/blog-dark.png",
   },
   {
-    href: "/projects/1",
-    description: "Project 1",
-    title: "Project 1",
+    href: "/projects/2",
+    description: "Project 2",
+    title: "Project 2",
     pathWhite: "/Slider/blog-project/blog-login-white.png",
     pathDark: "/Slider/blog-project/blog-login-dark.png",
   },

@@ -79,7 +79,7 @@ export function PostForm(props: PostFormProps) {
         duration: 2000,
       });
     }
-  }
+  };
 
   return (
     <Form {...formCreatePost}>

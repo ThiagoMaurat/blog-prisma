@@ -9,10 +9,4 @@ services:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: blog
     ports:
-      - 5432:5432
-    volumes:
-      - ./pgdata:/var/lib/postgresql/data
-
-volumes:
-  dbdata:
-    driver: local
+      - 5440:5432
