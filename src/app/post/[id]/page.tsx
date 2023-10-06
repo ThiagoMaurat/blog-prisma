@@ -22,13 +22,14 @@ export async function generateMetadata({ params }: PostsProps) {
     description: `Descrição - ${post.description}`,
   };
 }
+
 export default async function Posts({ params }: PostsProps) {
   const { id } = params;
 
   const { post } = await getPostsById({
     id: id,
   });
-  console.log(post);
+
   return (
     <Limiter>
       <Header />

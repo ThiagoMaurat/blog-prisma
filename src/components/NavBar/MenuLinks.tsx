@@ -28,7 +28,7 @@ export function MenuLinks({ isOpen, user }: MenuLinksProps) {
     >
       <div className="flex h-full md:items-center gap-6 justify-between flex-col md:flex-row pt-8 md:pt-0">
         <div className="h-full flex gap-8 items-center flex-col md:flex-row">
-          <Link href={"/"}>
+          <Link href={"/"} prefetch={false}>
             <p
               className={`${
                 CheckRouterMatchesLabel("Home")

@@ -63,7 +63,7 @@ export function FirstCard(props: FirstCardProps) {
               <p className="font-bold text-sm">{author?.name}</p>
 
               {publishedAt && (
-                <p className="text-sm">
+                <p className="text-muted-foreground text-sm">
                   {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
                 </p>
               )}

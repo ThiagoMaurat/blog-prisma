@@ -32,7 +32,7 @@ export default function SearchComponent() {
     e.preventDefault();
 
     if (search.trim().length < 3) {
-      return;
+      updateSearchParams("");
     }
 
     updateSearchParams(search.toLowerCase());

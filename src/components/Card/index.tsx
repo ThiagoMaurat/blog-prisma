@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import React from "react";
 import { format, parseISO } from "date-fns";
-import { letterCounter } from "@/helpers/charactersCount";
 import { Post } from "@/@types/PostResponse";
 
 interface CardProps {
@@ -56,7 +55,7 @@ export function Card(props: CardProps) {
           <div className="flex flex-col gap-2px">
             <p className="font-medium text-0.8rem">{author.name}</p>
 
-            <p className="text-gray-900 text-sm">
+            <p className="text-muted-foreground text-sm">
               {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
             </p>
           </div>

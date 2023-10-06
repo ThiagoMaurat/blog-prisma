@@ -7,6 +7,7 @@ import ShowMore from "../../components/ShowMore";
 import { getPosts } from "@/queries/get-posts";
 import { Metadata } from "next/types";
 import SearchComponent from "@/components/SearchComponent";
+import { tail } from "lodash";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -61,7 +62,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       )}
 
       <div className="mx-1 sm:mx-0 grid py-4 items-center justify-center grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mb-2rem mt-2rem lg:mt-0">
-        {posts?.map((post, index) => (
+        {tail(posts)?.map((post, index) => (
           <Card
             key={`card-posts${index}`}
             data={post}
