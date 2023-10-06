@@ -9,6 +9,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { ProjectsSliderProps } from "@/config/projects";
+import { AspectRatio } from "./ui/aspect-ratio";
 
 export type ProductsSliderProps = {
   projects: ProjectsSliderProps[];
@@ -54,16 +55,17 @@ export const ProjectSlide = (props: ProductsSliderProps) => {
         {projects.map((projects, index) => {
           return (
             <SwiperSlide key={`${projects}-${index}`}>
-              <Link href={projects.href}>
-                <Image
-                  className="rounded-lg"
-                  width={600}
-                  height={300}
-                  src={
-                    theme === "dark" ? projects.pathDark : projects.pathWhite
-                  }
-                  alt={projects.description}
-                />
+              <Link href={projects.href} prefetch={false}>
+                <AspectRatio ratio={16 / 9}>
+                  <Image
+                    className="rounded-lg"
+                    fill
+                    src={
+                      theme === "dark" ? projects.pathDark : projects.pathWhite
+                    }
+                    alt={projects.description}
+                  />
+                </AspectRatio>
               </Link>
             </SwiperSlide>
           );

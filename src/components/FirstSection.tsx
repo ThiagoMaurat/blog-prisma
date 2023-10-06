@@ -9,7 +9,7 @@ export default function FirstPage() {
       <article className="max-w-full md:max-w-[50%] w-full gap-4 flex flex-col md:justify-normal text-center md:text-start">
         <h2 className="text-4xl font-bold">Olá!</h2>
         <h1 className="text-4xl">Sou Thiago Maurat</h1>
-        <span className="text-2xl">Desenvolvedor Front-end</span>
+        <span className="text-2xl">Desenvolvedor Full Stack</span>
 
         <div className="flex gap-4 justify-center md:justify-normal">
           <Link prefetch={false} href={"/blog"}>
