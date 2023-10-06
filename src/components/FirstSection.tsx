@@ -12,7 +12,7 @@ export default function FirstPage() {
         <span className="text-2xl">Desenvolvedor Front-end</span>
 
         <div className="flex gap-4 justify-center md:justify-normal">
-          <Link href={"/blog"}>
+          <Link prefetch={false} href={"/blog"}>
             <Button label="Posts" variant={"primary"} />
           </Link>
 

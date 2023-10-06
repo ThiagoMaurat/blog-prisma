@@ -23,11 +23,25 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { postSchema } from "./schema";
 import { useToast } from "@/components/Toast/use-toast";
+import { useTheme } from "next-themes";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 interface PostFormProps {
   themes: ThemeResponse;
   authorId: string;
 }
+
+export type JSONContent = {
+  type?: string;
+  attrs?: Record<string, any>;
+  content?: JSONContent[];
+  marks?: {
+    type: string;
+    attrs?: Record<string, any>;
+    [key: string]: any;
+  }[];
+  text?: string;
+};
 
 interface CreatePostFormInput {
   title: string;
@@ -52,6 +66,8 @@ export function PostForm(props: PostFormProps) {
 
   const { toast } = useToast();
 
+  const { theme } = useTheme();
+
   const submitForm = async (data: CreatePostFormInput) => {
     try {
       const response = await fetch("/api/admin/posts", {
@@ -61,8 +77,6 @@ export function PostForm(props: PostFormProps) {
           authorId,
         }),
       });
-
-      const result = await response.json();
 
       if (response.ok) {
         toast({
@@ -145,10 +159,18 @@ export function PostForm(props: PostFormProps) {
           )}
         />
 
+        <Label className="font-bold text-base">Post</Label>
         <Editor
-          onUpdate={(editor) =>
-            formCreatePost.setValue("content", editor!.getHTML())
-          }
+          onUpdate={(editor) => {
+            formCreatePost.setValue(
+              "content",
+              JSON.stringify(editor!.getJSON())
+            );
+          }}
+          className={`w-full my-8 mx-auto bg-background border-stone-200 sm:rounded-lg sm:border sm:shadow-lg ${
+            theme === "dark" ? "dark-mode" : "light-mode"
+          }`}
+          disableLocalStorage
         />
 
         {formCreatePost.formState.errors.content && (

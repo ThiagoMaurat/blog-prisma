@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Limiter } from "@/components/Limiter";
 import { getPostsById } from "@/queries/get-posts-by-id";
 import { CustomSectionTitlePostPage } from "@/components/CustomSectionTitlePostPage";
+import EditorNovel from "@/components/EditorNovel";
 interface PostsProps {
   params: {
     id: string;
@@ -27,7 +28,7 @@ export default async function Posts({ params }: PostsProps) {
   const { post } = await getPostsById({
     id: id,
   });
-
+  console.log(post);
   return (
     <Limiter>
       <Header />
@@ -47,14 +48,7 @@ export default async function Posts({ params }: PostsProps) {
         />
       </div>
 
-      <main className="py-12 max-w-[900px] w-full mx-auto">
-        <div
-          dangerouslySetInnerHTML={{
-            __html: post.content,
-          }}
-          className="font-normal text-xl from-neutral-800 markdown w-full break-words "
-        />
-      </main>
+      <EditorNovel defaultValue={JSON.parse(post.content)} />
 
       <Footer />
     </Limiter>

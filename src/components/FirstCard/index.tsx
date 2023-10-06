@@ -18,7 +18,7 @@ export function FirstCard(props: FirstCardProps) {
   const { author, publishedAt, description, thumbnail, themes, title } = data;
 
   return (
-    <Link href={href}>
+    <Link href={href} prefetch={false}>
       <div className="grid grid-cols-2 gap-6 overflow-hidden hover:scale-105 transition-all duration-300">
         <div>
           <Image

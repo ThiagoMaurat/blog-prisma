@@ -15,7 +15,7 @@ export function Card(props: CardProps) {
 
   const { author, description, publishedAt, themes, thumbnail, title } = data;
   return (
-    <Link href={href} className="flex justify-center">
+    <Link href={href} prefetch={false} className="flex justify-center">
       <div className="max-w-[360px] hover:scale-105 transition-all duration-300  max-w-360 w-full gap-1 cursor-pointer flex flex-col">
         <Image
           className="object-cover rounded-2xl overflow-hidden"

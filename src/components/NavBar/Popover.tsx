@@ -66,7 +66,7 @@ export default function PopoverNavBar() {
   return (
     <>
       {!data?.user && (
-        <Link href={"/signin"} className="self-center">
+        <Link href={"/signin"} prefetch={false} className="self-center">
           <Button label={"Entrar"} variant="primary" className="text-md" />
         </Link>
       )}
