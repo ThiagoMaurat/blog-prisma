@@ -9,9 +9,10 @@ export const getPostsById = async (params: getPostsByIdProps) => {
   const fetchUrl = `/api/posts/${params.id}`;
 
   const post = await makeFetch<{ post: Post }>(fetchUrl, {
-    next: {
+    /* next: {
       revalidate: 60 * 60 * 24, // 24 hours
-    },
+    }, */
+    cache: "no-cache",
   });
 
   return post;

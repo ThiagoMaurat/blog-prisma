@@ -18,8 +18,8 @@ export async function generateMetadata({ params }: PostsProps) {
   });
 
   return {
-    title: `Post - ${post.title}`,
-    description: `Descrição - ${post.description}`,
+    title: `Post - ${post?.title}`,
+    description: `Descrição - ${post?.description}`,
   };
 }
 
@@ -44,12 +44,12 @@ export default async function Posts({ params }: PostsProps) {
           className="rounded-xl"
           width={700}
           height={500}
-          src={post.thumbnail}
+          src={post?.thumbnail}
           alt="post blog image"
         />
       </div>
 
-      <EditorNovel defaultValue={JSON.parse(post.content)} />
+      <EditorNovel defaultValue={JSON.parse(post?.content)} />
 
       <Footer />
     </Limiter>

@@ -18,9 +18,10 @@ export const getPosts = async (params?: getPostsProps) => {
   const fetchUrl = `/api/posts/all${paginationParams}${searchParam}`;
 
   const posts = await makeFetch<PostResponse>(fetchUrl, {
-    next: {
+    /* next: {
       revalidate: 60 * 60 * 24, // 24 hours
-    },
+    }, */
+    cache: "no-cache",
   });
 
   return posts.posts;
