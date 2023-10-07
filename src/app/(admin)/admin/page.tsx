@@ -23,7 +23,7 @@ export default async function Admin() {
         <h2>Temas</h2>
         <CreateThemeDialog />
         <ol style={{ listStyle: "inside" }}>
-          {themes.themes.map((theme) => (
+          {themes?.themes?.map((theme) => (
             <li key={theme.id}>{theme.name}</li>
           ))}
         </ol>
