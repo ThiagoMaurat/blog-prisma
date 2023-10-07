@@ -49,7 +49,7 @@ export default async function Posts({ params }: PostsProps) {
         />
       </div>
 
-      <EditorNovel defaultValue={JSON.parse(post?.content)} />
+      {/* <EditorNovel defaultValue={JSON.parse(post?.content)} /> */}
 
       <Footer />
     </Limiter>
