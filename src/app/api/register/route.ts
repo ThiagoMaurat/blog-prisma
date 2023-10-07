@@ -16,9 +16,11 @@ export async function POST(req: Request, res: Response) {
     const { email, name, password } = registerBodySchema.parse(request);
 
     await registerUseCase.execute({
-      name: name,
-      email: email,
-      password: password,
+      data: {
+        name: name,
+        email: email,
+        password: password,
+      },
     });
 
     return NextResponse.json(
