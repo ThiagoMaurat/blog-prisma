@@ -60,7 +60,6 @@ export class PrismaPostRepository implements PostRepository {
       where: search
         ? {
             title: {
-              mode: "insensitive",
               contains: search,
             },
           }
@@ -74,7 +73,6 @@ export class PrismaPostRepository implements PostRepository {
         ? {
             where: {
               title: {
-                mode: "insensitive",
                 contains: search,
               },
             },
