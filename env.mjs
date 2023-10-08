@@ -20,7 +20,6 @@ export const env = createEnv({
     SUPABASE_AMON_KEY: z.string().min(1),
     GITHUB_ID: z.string().min(1),
     GITHUB_SECRET: z.string().min(1),
-    URL_SERVER_COMPONENT: z.string().min(1),
   },
 
   /**
@@ -28,9 +27,7 @@ export const env = createEnv({
    * isn't built with invalid env vars. To expose them to the client, prefix them with
    * `NEXT_PUBLIC_`.
    */
-  client: {
-    NEXT_PUBLIC_APP_URL: z.string().url(),
-  },
+  client: {},
 
   /**
    * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
@@ -42,13 +39,12 @@ export const env = createEnv({
     GITHUB_ID: process.env.GITHUB_ID,
     GITHUB_SECRET: process.env.GITHUB_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_AMON_KEY: process.env.SUPABASE_AMON_KEY,
-    URL_SERVER_COMPONENT: process.env.URL_SERVER_COMPONENTS,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
