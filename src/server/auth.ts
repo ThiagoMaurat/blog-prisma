@@ -7,12 +7,12 @@ import {
 import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
-import { env } from "@/env";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 import { Role, UserRole } from "@prisma/client";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 import { AuthenticateExternalProvider } from "./use-cases/Authenticate/AuthenticateExternalProvider";
+import { env } from "@/../env.mjs";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

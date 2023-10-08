@@ -148,9 +148,9 @@ export function PostForm(props: PostFormProps) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {themes.themes.map((theme) => (
-                    <SelectItem key={theme.id} value={theme.id}>
-                      {theme.name}
+                  {themes?.themes?.map((theme) => (
+                    <SelectItem key={theme?.id} value={theme?.id}>
+                      {theme?.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
