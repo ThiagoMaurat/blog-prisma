@@ -23,7 +23,7 @@ export const mutateForm = async (formData: FormData) => {
     }),
   });
 
-  revalidateTag("theme");
+  /*   revalidateTag("theme"); */
 
   if (!mutate.ok) return { ok: false };
 
