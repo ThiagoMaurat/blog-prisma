@@ -49,8 +49,8 @@ export default function NextAuth() {
           y2="5.5493"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#19AAE8" />
-          <stop offset="1" stop-color="#1EA5F1" />
+          <stop stopColor="#19AAE8" />
+          <stop offset="1" stopColor="#1EA5F1" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_156_252"
@@ -60,8 +60,8 @@ export default function NextAuth() {
           y2="9.66197"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#2BE2B8" />
-          <stop offset="1" stop-color="#19B9E3" />
+          <stop stopColor="#2BE2B8" />
+          <stop offset="1" stopColor="#19B9E3" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_156_252"
@@ -71,8 +71,8 @@ export default function NextAuth() {
           y2="16.9859"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#925CDF" />
-          <stop offset="1" stop-color="#CC42E5" />
+          <stop stopColor="#925CDF" />
+          <stop offset="1" stopColor="#CC42E5" />
         </linearGradient>
       </defs>
     </svg>
