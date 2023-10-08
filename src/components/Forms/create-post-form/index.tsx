@@ -27,7 +27,7 @@ import { useTheme } from "next-themes";
 import { Label } from "@radix-ui/react-dropdown-menu";
 
 interface PostFormProps {
-  themes: ThemeResponse;
+  themes?: ThemeResponse;
   authorId: string;
 }
 

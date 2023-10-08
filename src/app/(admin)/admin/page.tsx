@@ -24,7 +24,7 @@ export default async function Admin() {
         <CreateThemeDialog />
         <ol style={{ listStyle: "inside" }}>
           {themes?.themes?.map((theme) => (
-            <li key={theme.id}>{theme.name}</li>
+            <li key={theme?.id}>{theme?.name}</li>
           ))}
         </ol>
       </section>
