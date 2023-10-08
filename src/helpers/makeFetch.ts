@@ -1,5 +1,3 @@
-import { env } from "@/../env.mjs";
-
 export async function makeFetch<T = unknown>(
   url: RequestInfo | URL,
   init?: RequestInit | undefined
