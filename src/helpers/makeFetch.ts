@@ -1,11 +1,10 @@
-import { headers } from "next/headers";
+import { env } from "@/../env.mjs";
 
 export async function makeFetch<T = unknown>(
   url: RequestInfo | URL,
   init?: RequestInit | undefined
 ): Promise<T> {
-  const host = headers().get("host");
-  const data = await fetch(`${host}${url}`, init);
+  const data = await fetch(`${env.URL_SERVER_COMPONENT}${url}`, init);
 
   const result = await data.json();
 
