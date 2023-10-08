@@ -1,8 +1,11 @@
+import { headers } from "next/headers";
+
 export async function makeFetch<T = unknown>(
   url: RequestInfo | URL,
   init?: RequestInit | undefined
 ): Promise<T> {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_VERCEL_URL}${url}`, init);
+  const host = headers().get("host");
+  const data = await fetch(`${host}${url}`, init);
 
   const result = await data.json();
 
