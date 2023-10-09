@@ -25,7 +25,7 @@ interface FormLogin {
 export const FormComponent = ({}) => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const { push } = useRouter();
+  const { push, prefetch } = useRouter();
 
   async function loginWithGitHub() {
     setIsLoading(true);
@@ -53,6 +53,7 @@ export const FormComponent = ({}) => {
       });
     }
 
+    prefetch("/");
     return push("/");
   };
 
