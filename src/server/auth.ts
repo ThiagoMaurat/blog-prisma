@@ -8,7 +8,6 @@ import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
-import axios from "axios";
 import { Role, UserRole } from "@prisma/client";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 import { AuthenticateExternalProvider } from "./use-cases/Authenticate/AuthenticateExternalProvider";
@@ -99,16 +98,24 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const { data } = await axios.post(
-          `${env.NEXTAUTH_URL}/api/auth/login`,
+        const data = await fetch(
+          `https://blog-prisma-gray.vercel.app/api/auth/login`,
           {
-            email: credentials.email,
-            password: credentials.password,
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: credentials.email,
+              password: credentials.password,
+            }),
           }
         );
 
-        if (data) {
-          return data.user;
+        const user = await data.json();
+
+        if (user) {
+          return user.user;
         }
 
         throw new Error("Invalid credentials");
