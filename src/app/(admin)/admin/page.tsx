@@ -2,9 +2,9 @@ import React from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
 import { redirect } from "next/navigation";
+import { getThemes } from "@/queries/get-themes";
 import CreateThemeDialog from "@/components/CreateThemeDialog";
 import { PostForm } from "@/components/Forms/create-post-form";
-import { makeThemeUseCase } from "@/server/factories/make-theme-use-case";
 
 export default async function Admin() {
   const data = await getServerSession(authOptions);
@@ -13,11 +13,7 @@ export default async function Admin() {
     redirect("/");
   }
 
-  const themeUseCase = makeThemeUseCase();
-  const allThemes = await themeUseCase.findAll();
-  const themes = {
-    themes: allThemes,
-  };
+  const themes = await getThemes();
 
   return (
     <main className="max-w-[1000px] w-full mx-auto">

@@ -1,4 +1,5 @@
 "use server";
+import { revalidateTag } from "next/cache";
 import { schema } from "./schema";
 import { cookies } from "next/headers";
 
@@ -22,7 +23,7 @@ export const mutateForm = async (formData: FormData) => {
     }),
   });
 
-  /*   revalidateTag("theme"); */
+  revalidateTag("theme");
 
   if (!mutate.ok) return { ok: false };
 

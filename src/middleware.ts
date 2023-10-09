@@ -8,18 +8,14 @@ export async function middleware(req: NextRequest) {
   // admin pages
   const isAdmin = session?.user?.userRole?.[0]?.role?.name === "admin";
 
-  /*   if (!isAdmin && url.includes("/api/admin")) {
+  if (!isAdmin && url.includes("/api/admin")) {
     return NextResponse.json(
       {
         message: "User is not allowed",
       },
       { status: 400 }
     );
-  } */
+  }
 
   return NextResponse.next();
-
-  // if (!session && url.includes("/posts")) {
-  //   return NextResponse.redirect("/login");
-  // }
 }
