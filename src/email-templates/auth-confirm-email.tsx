@@ -19,37 +19,40 @@ interface LinearLoginCodeEmailProps {
   validationCode?: string;
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
-
 export const LinearLoginCodeEmail: React.FC<
   Readonly<LinearLoginCodeEmailProps>
 > = ({ validationCode = "0000312051" }) => (
   <Html>
     <Head />
-    <Preview>Your login code for Linear</Preview>
+    <Preview>Welcome!</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
-          src={`${baseUrl}/static/linear-logo.png`}
+          src={`/blog.svg`}
           width="42"
           height="42"
           alt="Linear"
           style={logo}
         />
-        <Heading style={heading}>Your login code for Linear</Heading>
+        <Heading style={heading}>Seu código para nosso blogDev</Heading>
         <Section style={buttonContainer}>
-          <Button pY={11} pX={23} style={button} href="https://linear.app">
-            Login to Linear
+          <Button
+            pY={11}
+            pX={23}
+            style={button}
+            href="https://blog-prisma-gray.vercel.app/"
+          >
+            Login
           </Button>
         </Section>
         <Text style={paragraph}>
-          This link and code will only be valid for the next 5 minutes. If the
-          link does not work, you can use the login verification code directly:
+          Abaixo está o código seu código de verificação. Pode copiar e colar no
+          seu navegador.
         </Text>
         <code style={code}>{validationCode}</code>
         <Hr style={hr} />
-        <Link href="https://linear.app" style={reportLink}>
-          Linear
+        <Link href="https://blog-prisma-gray.vercel.app/" style={reportLink}>
+          ThiagoDev
         </Link>
       </Container>
     </Body>
