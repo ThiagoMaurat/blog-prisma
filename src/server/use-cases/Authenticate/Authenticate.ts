@@ -2,6 +2,7 @@ import { compare } from "bcryptjs";
 import { User, UserRole } from "@prisma/client";
 import { InvalidCredentialsError } from "@/server/errors/invalid-credentials-error";
 import { UsersRepository } from "@/server/repositories/user-repository";
+import { UserDoesNotExistsError } from "@/server/errors/user-does-not-exist";
 
 interface AuthenticateUseCaseRequest {
   email: string;
@@ -16,7 +17,7 @@ type AuthenticateUserCase = Omit<
   "password"
 >;
 
-type AuthenticateUserCaseResponse = {
+export type AuthenticateUserCaseResponse = {
   user: AuthenticateUserCase;
 };
 
@@ -29,14 +30,14 @@ export class AuthenticateUseCase {
   }: AuthenticateUseCaseRequest): Promise<AuthenticateUserCaseResponse> {
     const user = await this.userRepository.findByEmail(email);
 
-    if (!user?.password) {
-      throw new InvalidCredentialsError();
+    if (!user || !user.password) {
+      throw new UserDoesNotExistsError();
     }
 
     const doesPasswordMatches = await compare(password, user.password);
 
     if (!doesPasswordMatches) {
-      throw new InvalidCredentialsError();
+      throw new Error("Password does not match");
     }
 
     return {

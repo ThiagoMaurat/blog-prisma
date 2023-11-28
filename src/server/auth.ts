@@ -15,7 +15,7 @@ import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 import { AuthenticateExternalProvider } from "./use-cases/Authenticate/AuthenticateExternalProvider";
 import { env } from "@/../env.mjs";
 import { makeAuthenticateUseCase } from "./factories/make-authenticate-use-case";
-import { data } from "autoprefixer";
+import { signInAction } from "@/actions/auth/sign-in/sign-in";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -101,19 +101,16 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials.password) {
           return null;
         }
-
-        const authenticateUseCase = makeAuthenticateUseCase();
-
-        const { user } = await authenticateUseCase.execute({
+        const user = await signInAction({
           email: credentials.email,
           password: credentials.password,
         });
 
-        if (user) {
-          return user as Awaitable<User | null>;
+        if (user.data?.user) {
+          return user.data?.user as Awaitable<User | null>;
         }
 
-        throw new Error("Invalid credentials");
+        throw new Error(user.error || "Invalid credentials");
       },
     }),
   ],

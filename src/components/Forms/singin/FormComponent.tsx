@@ -46,6 +46,7 @@ export const FormComponent = ({}) => {
     });
 
     if (response?.error) {
+      console.log(response.error);
       return toast({
         title: "Erro",
         description: "Credenciais inválidas",
