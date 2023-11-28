@@ -44,6 +44,7 @@ export const FormComponent = ({}) => {
       password: data.password,
       redirect: false,
     });
+
     if (response?.error) {
       return toast({
         title: "Erro",
