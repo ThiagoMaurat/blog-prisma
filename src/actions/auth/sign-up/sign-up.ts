@@ -2,7 +2,7 @@
 
 import { createSafeAction } from "@/lib/create-safe-action";
 import { makeRegisterUseCase } from "@/server/factories/make-register-use-case";
-import { authSignUpSchemaForm } from "@/components/Forms/singup/schema";
+import { authSignUpSchema } from "@/components/Forms/singup/schema";
 import { SignUpSchemaType, SignUpTypeOutput } from "./schema";
 
 const handler = async (data: SignUpSchemaType): Promise<SignUpTypeOutput> => {
@@ -17,4 +17,4 @@ const handler = async (data: SignUpSchemaType): Promise<SignUpTypeOutput> => {
   };
 };
 
-export const signUpAction = createSafeAction(authSignUpSchemaForm, handler);
+export const signUpAction = createSafeAction(authSignUpSchema, handler);

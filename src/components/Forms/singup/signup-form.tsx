@@ -7,12 +7,6 @@ import { SignOnTypeForm, authSignUpSchemaForm } from "./schema";
 import { Button } from "@/components/Button";
 import { ptBR } from "date-fns/locale";
 import { useRouter } from "next/navigation";
-import { render } from "@react-email/components";
-import { LinearLoginCodeEmail } from "@/email-templates/auth-confirm-email";
-import {
-  saveRandomNumberOnDB,
-  sendEmailConfirmation,
-} from "@/actions/email-verified";
 import { useToast } from "@/components/Toast/use-toast";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import {
@@ -47,59 +41,29 @@ export function SignUpForm() {
 
   function onSubmit(data: SignOnTypeForm) {
     startTransition(async () => {
-      try {
-        const response = await signUpAction({
-          email: data.email,
-          password: data.password,
-          name: data.name,
-          birthday: data.birthday,
-        });
+      const response = await signUpAction({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        birthday: data.birthday,
+      });
 
-        if (response?.error) {
-          toast({
-            title: "Erro",
-            description: response?.error || "Erro ao criar conta.",
-            duration: 2000,
-          });
-        }
-
-        if (response?.status === 200) {
-          toast({
-            title: "Sucesso",
-            description: "Conta criada com sucesso.",
-            duration: 2000,
-          });
-
-          let randomNumber = Array.from({ length: 10 })
-            .map((_, index) => {
-              return Math.floor(Math.random() * index);
-            })
-            .join()
-            .replaceAll(",", "");
-
-          const emailHtml = render(
-            <LinearLoginCodeEmail validationCode={randomNumber} />
-          );
-
-          try {
-            await sendEmailConfirmation(data?.email, emailHtml);
-            await saveRandomNumberOnDB(randomNumber, data?.email);
-            router.push(`/signup/verify-email/?email=${data?.email}`);
-          } catch (error) {
-            toast({
-              title: "Erro",
-              description: "Erro ao enviar email de confirmação.",
-              duration: 2000,
-            });
-          }
-        }
-      } catch (error) {
+      if (response?.error || response.fieldErrors) {
         toast({
           title: "Erro",
-          description: "Erro ao criar conta.",
+          description: response?.error || "Erro ao criar conta.",
           duration: 2000,
         });
+
+        return;
       }
+
+      router.push(`/signup/verify-email/?email=${data?.email}`);
+      toast({
+        title: "Sucesso",
+        description: "Conta criada com sucesso.",
+        duration: 2000,
+      });
     });
   }
 
