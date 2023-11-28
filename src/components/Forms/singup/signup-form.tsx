@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/PasswordInput";
 import { DatePicker } from "@/components/Calendar/date-picker";
+import { signUpAction } from "@/actions/auth/sign-up/sign-up";
 
 export function SignUpForm() {
   const [isPending, startTransition] = React.useTransition();
@@ -47,25 +48,17 @@ export function SignUpForm() {
   function onSubmit(data: SignOnTypeForm) {
     startTransition(async () => {
       try {
-        const response = await fetch("/api/auth/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-            name: data.name,
-            birthdate: data.birthday,
-          }),
+        const response = await signUpAction({
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          birthday: data.birthday,
         });
 
-        const result = await response.json();
-
-        if (response?.status === 400) {
+        if (response?.error) {
           toast({
             title: "Erro",
-            description: result?.message
-              ? result?.message
-              : "Erro ao criar conta.",
+            description: response?.error || "Erro ao criar conta.",
             duration: 2000,
           });
         }

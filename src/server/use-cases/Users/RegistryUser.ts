@@ -3,11 +3,11 @@ import { Prisma, User } from "@prisma/client";
 import { UserAlreadyExistsError } from "@/server/errors/user-already-exists";
 import { UsersRepository } from "@/server/repositories/user-repository";
 
-interface RegisterUseCaseRequest {
+interface RegisterUseCaseInput {
   data: Prisma.UserCreateInput;
 }
 
-interface RegisterUseCaseResponse {
+export interface RegisterUseCaseOutput {
   user: User;
 }
 
@@ -16,7 +16,7 @@ export class RegisterUseCase {
 
   async execute({
     data,
-  }: RegisterUseCaseRequest): Promise<RegisterUseCaseResponse> {
+  }: RegisterUseCaseInput): Promise<RegisterUseCaseOutput> {
     if (!data.password || !data.email) {
       throw new UserAlreadyExistsError();
     }
