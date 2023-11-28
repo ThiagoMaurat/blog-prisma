@@ -1,7 +1,9 @@
 import { type GetServerSidePropsContext } from "next";
 import {
+  Awaitable,
   DefaultSession,
   getServerSession,
+  User,
   type NextAuthOptions,
 } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
@@ -12,6 +14,8 @@ import { Role, UserRole } from "@prisma/client";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 import { AuthenticateExternalProvider } from "./use-cases/Authenticate/AuthenticateExternalProvider";
 import { env } from "@/../env.mjs";
+import { makeAuthenticateUseCase } from "./factories/make-authenticate-use-case";
+import { data } from "autoprefixer";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -98,24 +102,15 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        const data = await fetch(
-          `https://blog-prisma-gray.vercel.app/api/auth/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: credentials.email,
-              password: credentials.password,
-            }),
-          }
-        );
+        const authenticateUseCase = makeAuthenticateUseCase();
 
-        const user = await data.json();
+        const { user } = await authenticateUseCase.execute({
+          email: credentials.email,
+          password: credentials.password,
+        });
 
         if (user) {
-          return user.user;
+          return user as Awaitable<User | null>;
         }
 
         throw new Error("Invalid credentials");

@@ -37,8 +37,7 @@ export const LinearLoginCodeEmail: React.FC<
         <Heading style={heading}>Seu código para nosso blogDev</Heading>
         <Section style={buttonContainer}>
           <Button
-            pY={11}
-            pX={23}
+            className="py-2 px-4"
             style={button}
             href="https://blog-prisma-gray.vercel.app/"
           >
