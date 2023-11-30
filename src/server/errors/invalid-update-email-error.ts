@@ -1,5 +1,5 @@
 export class InvalidUpdateUserEmailError extends Error {
   constructor() {
-    super("Invalid update email");
+    super("Email a ser atualizado inválido");
   }
 }
