@@ -9,7 +9,6 @@ import {
 } from "@/components/CardNav/card";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
-import { redirect } from "next/navigation";
 import { VerifyEmailForm } from "@/components/Forms/verify-email-form/verify-email-form";
 
 export const metadata: Metadata = {
@@ -29,20 +28,6 @@ export default async function VerifyEmailPage({
 }: VerifyEmailPageProps) {
   const user = await getServerSession(authOptions);
 
-  const checkUserEmail = () => {
-    if (user) {
-      return user.user.email;
-    }
-
-    if (searchParams.email) {
-      return searchParams.email;
-    }
-  };
-
-  if (!checkUserEmail()) {
-    redirect("/signin");
-  }
-
   return (
     <div className="my-auto">
       <Card className="max-w-[420px] w-full mx-auto md:mx-0 h-fit">
@@ -54,7 +39,7 @@ export default async function VerifyEmailPage({
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <VerifyEmailForm email={checkUserEmail()!} />
+          <VerifyEmailForm email={searchParams.email} />
         </CardContent>
       </Card>
     </div>

@@ -41,29 +41,26 @@ export function SignUpForm() {
 
   function onSubmit(data: SignOnTypeForm) {
     startTransition(async () => {
-      const response = await signUpAction({
-        email: data.email,
-        password: data.password,
-        name: data.name,
-        birthday: data.birthday,
-      });
-
-      if (response?.error || response.fieldErrors) {
+      try {
+        await signUpAction({
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          birthday: data.birthday,
+        });
         toast({
-          title: "Erro",
-          description: response?.error || "Erro ao criar conta.",
+          title: "Sucesso",
+          description: "Conta criada com sucesso.",
           duration: 2000,
         });
-
-        return;
+        router.push(`/signup/verify-email/?email=${data?.email}`);
+      } catch (error: any) {
+        toast({
+          title: "Erro",
+          description: error || "Erro ao criar conta.",
+          duration: 2000,
+        });
       }
-
-      router.push(`/signup/verify-email/?email=${data?.email}`);
-      toast({
-        title: "Sucesso",
-        description: "Conta criada com sucesso.",
-        duration: 2000,
-      });
     });
   }
 

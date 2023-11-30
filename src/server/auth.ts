@@ -1,10 +1,9 @@
 import { type GetServerSidePropsContext } from "next";
 import {
-  Awaitable,
-  DefaultSession,
   getServerSession,
   User,
   type NextAuthOptions,
+  Awaitable,
 } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -14,8 +13,8 @@ import { Role, UserRole } from "@prisma/client";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
 import { AuthenticateExternalProvider } from "./use-cases/Authenticate/AuthenticateExternalProvider";
 import { env } from "@/../env.mjs";
-import { makeAuthenticateUseCase } from "./factories/make-authenticate-use-case";
 import { signInAction } from "@/actions/auth/sign-in/sign-in";
+import { AuthenticateUserCaseOutput } from "./use-cases/Authenticate/Authenticate";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -24,26 +23,10 @@ import { signInAction } from "@/actions/auth/sign-in/sign-in";
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 
-interface IUser {
-  id: string;
-  email: string | null;
-  created_at: Date | null;
-  image: string | null;
-  name: string | null;
-  userRole: (UserRole & {
-    role: Role;
-  })[];
-}
+interface IUser extends Partial<AuthenticateUserCaseOutput["user"]> {}
 
 declare module "next-auth" {
-  interface User extends DefaultSession {
-    id: string;
-    email: string;
-    created_at: string;
-    image: string;
-    name: string;
-    role: UserRole;
-  }
+  interface User extends IUser {}
   interface JWT {
     user: IUser;
     token: {
@@ -106,8 +89,12 @@ export const authOptions: NextAuthOptions = {
           password: credentials.password,
         });
 
+        if (!user.data?.user.emailVerified) {
+          throw new Error(`Email não verificado ${user.data?.user?.email}`);
+        }
+
         if (user.data?.user) {
-          return user.data?.user as Awaitable<User | null>;
+          return user.data?.user as unknown as Awaitable<User>;
         }
 
         throw new Error(user.error || "Invalid credentials");
@@ -121,18 +108,20 @@ export const authOptions: NextAuthOptions = {
     // only for external providers like github
     // it wont affect the credentials providers
     async signIn({ profile, user, account }) {
-      const makeExternalProviderAuth = new AuthenticateExternalProvider();
-
-      if (profile?.email && account) {
-        return makeExternalProviderAuth.execute({
-          email: profile.email,
-          accountExternalAuthProvider: account,
-          userExternalAuthProvider: user,
-        });
+      if (account?.provider === "github") {
+        const makeExternalProviderAuth = new AuthenticateExternalProvider();
+        if (profile?.email && account) {
+          return makeExternalProviderAuth.execute({
+            email: profile.email,
+            accountExternalAuthProvider: account,
+            userExternalAuthProvider: user,
+          });
+        }
       }
 
       return Promise.resolve(true);
     },
+
     async session({ session, token }) {
       session.user = token.user;
       return { ...session };
