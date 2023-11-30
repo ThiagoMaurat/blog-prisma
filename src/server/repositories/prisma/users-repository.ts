@@ -1,9 +1,43 @@
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 import { UsersRepository } from "../user-repository";
 import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 
 export class PrismaUsersRepository implements UsersRepository {
+  async updateUser(
+    data: Prisma.UserUpdateInput,
+    id: string
+  ): Promise<User | null> {
+    const user = await prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: data,
+    });
+
+    if (!user) {
+      return null;
+    }
+
+    return user;
+  }
+
+  async findUserAndCheckTheEmailCode(
+    code: string,
+    email: string
+  ): Promise<User | null> {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email,
+        emailCodeVerified: code,
+      },
+    });
+
+    if (!user) return null;
+
+    return user;
+  }
+
   async findByIdUserAndCheckIfAdmin(id: string) {
     const user = await prisma.user.findFirst({
       where: {
@@ -35,7 +69,11 @@ export class PrismaUsersRepository implements UsersRepository {
       include: {
         UserRole: {
           include: {
-            role: true,
+            role: {
+              select: {
+                name: true,
+              },
+            },
           },
         },
       },
