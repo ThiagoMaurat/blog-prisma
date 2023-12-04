@@ -1,14 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { UsersRepository } from "@/server/repositories/user-repository";
 import { randomUUID } from "crypto";
-import { AuthenticateUserCaseOutput } from "./Authenticate";
+import { Account, User } from "next-auth";
+
 interface AuthenticateExternalProviderUseCaseInput {
   email: string;
-  accountExternalAuthProvider?: any;
-  userExternalAuthProvider?: any;
+  accountExternalAuthProvider?: Account;
+  userExternalAuthProvider?: User;
 }
-
-export type User = {} & AuthenticateUserCaseOutput["user"];
 
 export class AuthenticateExternalProvider {
   constructor(private userRepository: UsersRepository) {}
@@ -17,19 +16,11 @@ export class AuthenticateExternalProvider {
     email,
     accountExternalAuthProvider,
     userExternalAuthProvider,
-  }: AuthenticateExternalProviderUseCaseInput): Promise<User | null> {
+  }: AuthenticateExternalProviderUseCaseInput) {
     const existingUser = await this.userRepository.findByEmail(email);
 
     if (existingUser) {
-      return {
-        id: existingUser.id,
-        name: existingUser.name,
-        email: existingUser.email,
-        emailVerified: existingUser.emailVerified,
-        image: existingUser.image,
-        created_at: existingUser.created_at,
-        role: existingUser.UserRole[0].role.name,
-      };
+      return Promise.resolve(true);
     }
 
     if (!existingUser && accountExternalAuthProvider) {
@@ -81,18 +72,7 @@ export class AuthenticateExternalProvider {
       if (!createUser) {
         throw new Error("User not found");
       }
-
-      return {
-        id: createUser.id,
-        name: createUser.name,
-        email: createUser.email,
-        emailVerified: createUser.emailVerified,
-        image: createUser.image,
-        created_at: createUser.created_at,
-        role: createUser.UserRole[0].role.name,
-      };
+      return Promise.resolve(true);
     }
-
-    throw new Error("User not found");
   }
 }
