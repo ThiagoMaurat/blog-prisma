@@ -1,32 +1,39 @@
 import { prisma } from "@/lib/prisma";
-import { AdapterUser } from "next-auth/adapters";
+import { UsersRepository } from "@/server/repositories/user-repository";
 import { randomUUID } from "crypto";
-import { Account, User } from "next-auth";
-
-interface AuthenticateExternalProviderUseCaseRequest {
+import { AuthenticateUserCaseOutput } from "./Authenticate";
+interface AuthenticateExternalProviderUseCaseInput {
   email: string;
-  userExternalAuthProvider?: AdapterUser | User;
-  accountExternalAuthProvider?: Account | null;
+  accountExternalAuthProvider?: any;
+  userExternalAuthProvider?: any;
 }
 
+export type User = {} & AuthenticateUserCaseOutput["user"];
+
 export class AuthenticateExternalProvider {
-  constructor() {}
+  constructor(private userRepository: UsersRepository) {}
 
   async execute({
     email,
-    userExternalAuthProvider,
     accountExternalAuthProvider,
-  }: AuthenticateExternalProviderUseCaseRequest) {
-    const existingUser = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
+    userExternalAuthProvider,
+  }: AuthenticateExternalProviderUseCaseInput): Promise<User | null> {
+    const existingUser = await this.userRepository.findByEmail(email);
 
     if (existingUser) {
-      return Promise.resolve(true);
-    } else if (accountExternalAuthProvider) {
-      await prisma.user.create({
+      return {
+        id: existingUser.id,
+        name: existingUser.name,
+        email: existingUser.email,
+        emailVerified: existingUser.emailVerified,
+        image: existingUser.image,
+        created_at: existingUser.created_at,
+        role: existingUser.UserRole[0].role.name,
+      };
+    }
+
+    if (!existingUser && accountExternalAuthProvider) {
+      const createUser = await prisma.user.create({
         data: {
           name: userExternalAuthProvider?.name,
           email: userExternalAuthProvider?.email,
@@ -41,6 +48,7 @@ export class AuthenticateExternalProvider {
               },
             },
           },
+          emailVerified: new Date(),
           Account: {
             create: {
               provider: accountExternalAuthProvider?.provider,
@@ -57,9 +65,34 @@ export class AuthenticateExternalProvider {
             },
           },
         },
+        include: {
+          UserRole: {
+            include: {
+              role: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
       });
+
+      if (!createUser) {
+        throw new Error("User not found");
+      }
+
+      return {
+        id: createUser.id,
+        name: createUser.name,
+        email: createUser.email,
+        emailVerified: createUser.emailVerified,
+        image: createUser.image,
+        created_at: createUser.created_at,
+        role: createUser.UserRole[0].role.name,
+      };
     }
 
-    return Promise.resolve(true);
+    throw new Error("User not found");
   }
 }
