@@ -1,5 +1,4 @@
 "use client";
-import { ThemeResponse } from "@/@types/ThemesResponse";
 import { Button } from "@/components/Button";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import { FieldTextAreaController } from "@/components/FieldTextArea/FieldTextAreaController";
@@ -25,10 +24,11 @@ import { postSchema } from "./schema";
 import { useToast } from "@/components/Toast/use-toast";
 import { useTheme } from "next-themes";
 import { Label } from "@radix-ui/react-dropdown-menu";
+import { Themes } from "@prisma/client";
 
 interface PostFormProps {
-  themes?: ThemeResponse;
-  authorId: string;
+  themes?: Themes[];
+  authorId: string | undefined;
 }
 
 export type JSONContent = {
@@ -148,7 +148,7 @@ export function PostForm(props: PostFormProps) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {themes?.themes?.map((theme) => (
+                  {themes?.map((theme) => (
                     <SelectItem key={theme?.id} value={theme?.id}>
                       {theme?.name}
                     </SelectItem>

@@ -1,13 +1,13 @@
 import { z } from "zod";
 import { NextResponse } from "next/server";
-import { makeThemeUseCase } from "@/server/factories/make-theme-use-case";
+import { makeCreateThemeUseCase } from "@/server/factories/make-create-theme-use-case";
 
 export async function POST(req: Request, res: Response) {
   const registerBodySchema = z.object({
     name: z.string().nonempty(),
   });
 
-  const themeUseCase = makeThemeUseCase();
+  const themeUseCase = makeCreateThemeUseCase();
   const request = await req.json();
 
   try {

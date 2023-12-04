@@ -64,7 +64,7 @@ export function MenuLinks({ isOpen, user }: MenuLinksProps) {
             </p>
           </Link>
 
-          {user?.userRole?.[0]?.role?.name === "admin" && (
+          {user?.role === "admin" && (
             <Link href="/admin">
               <p
                 className={`${
