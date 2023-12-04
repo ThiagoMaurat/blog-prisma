@@ -1,19 +1,13 @@
 import { type GetServerSidePropsContext } from "next";
-import {
-  getServerSession,
-  User,
-  type NextAuthOptions,
-  Awaitable,
-} from "next-auth";
+import { getServerSession, type NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "@/lib/prisma";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { Role, UserRole } from "@prisma/client";
 import { PrismaUsersRepository } from "./repositories/prisma/users-repository";
-import { AuthenticateExternalProvider } from "./use-cases/Authenticate/AuthenticateExternalProvider";
 import { env } from "@/../env.mjs";
 import { signInAction } from "@/actions/auth/sign-in/sign-in";
+import { makeExternalAuthUseCase } from "./factories/make-external-auth-use-case";
 import { AuthenticateUserCaseOutput } from "./use-cases/Authenticate/Authenticate";
 
 /**
@@ -23,7 +17,9 @@ import { AuthenticateUserCaseOutput } from "./use-cases/Authenticate/Authenticat
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 
-interface IUser extends Partial<AuthenticateUserCaseOutput["user"]> {}
+export type IUser = {
+  externalProvider?: boolean;
+} & AuthenticateUserCaseOutput["user"];
 
 declare module "next-auth" {
   interface User extends IUser {}
@@ -94,7 +90,10 @@ export const authOptions: NextAuthOptions = {
         }
 
         if (user.data?.user) {
-          return user.data?.user as unknown as Awaitable<User>;
+          return {
+            ...user.data?.user,
+            externalProvider: false,
+          };
         }
 
         throw new Error(user.error || "Invalid credentials");
@@ -109,13 +108,15 @@ export const authOptions: NextAuthOptions = {
     // it wont affect the credentials providers
     async signIn({ profile, user, account }) {
       if (account?.provider === "github") {
-        const makeExternalProviderAuth = new AuthenticateExternalProvider();
         if (profile?.email && account) {
-          return makeExternalProviderAuth.execute({
+          const makeExternalProviderAuth = makeExternalAuthUseCase();
+          const userExternalProvider = await makeExternalProviderAuth.execute({
             email: profile.email,
             accountExternalAuthProvider: account,
             userExternalAuthProvider: user,
           });
+
+          return Promise.resolve(true);
         }
       }
 
@@ -123,39 +124,46 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }) {
+      // only for external providers like github
+      if (token.user.externalProvider !== false && token.user.email) {
+        const prismaUsersRepository = new PrismaUsersRepository();
+        const sessionUser = await prismaUsersRepository.findByEmail(
+          token.user.email
+        );
+
+        if (!sessionUser) {
+          session.user = token.user;
+          return { ...session };
+        }
+
+        const user: IUser = {
+          id: sessionUser.id,
+          name: sessionUser.name,
+          email: sessionUser.email,
+          emailVerified: sessionUser.emailVerified,
+          image: sessionUser.image,
+          created_at: sessionUser.created_at,
+          role: sessionUser.UserRole[0].role.name,
+        };
+
+        session.user = user;
+        return { ...session };
+      }
+
+      //authorize with credentials
       session.user = token.user;
       return { ...session };
     },
-    jwt: async ({ token, session }) => {
-      const prisma = new PrismaUsersRepository();
 
-      if (token.email) {
-        const userInfo = await prisma.findByEmail(token.email);
-
-        if (!userInfo) {
-          return session;
-        }
-
-        const userDB = {
-          id: userInfo.id,
-          name: userInfo.name,
-          email: userInfo.email,
-          image: userInfo.image,
-          created_at: userInfo.created_at,
-          userRole: userInfo.UserRole,
+    jwt: async ({ token, user }) => {
+      if (user) {
+        return {
+          ...token,
+          user: {
+            ...token.user,
+            ...user,
+          },
         };
-
-        if (userDB) {
-          return {
-            user: userDB,
-            token: {
-              sub: token.sub,
-              iat: token.iat,
-              exp: token.exp,
-              jti: token.jti,
-            },
-          };
-        }
       }
 
       return token;

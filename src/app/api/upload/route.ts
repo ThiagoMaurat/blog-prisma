@@ -9,7 +9,7 @@ export async function POST(req: NextRequest, res: Response) {
   try {
     const session = await getToken({ req });
 
-    if (session?.user?.userRole?.[0]?.role?.name !== "admin") {
+    if (session?.user.role !== "admin") {
       throw new UserIsNotAdminError();
     }
 
