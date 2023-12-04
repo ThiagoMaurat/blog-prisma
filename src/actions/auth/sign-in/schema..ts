@@ -1,5 +1,5 @@
 import { ActionState } from "@/lib/create-safe-action";
-import { AuthenticateUserCaseResponse } from "@/server/use-cases/Authenticate/Authenticate";
+import { AuthenticateUserCaseOutput } from "@/server/use-cases/Authenticate/Authenticate";
 import { z } from "zod";
 
 export const signInSchema = z.object({
@@ -10,5 +10,5 @@ export const signInSchema = z.object({
 export type SignInSchemaType = z.infer<typeof signInSchema>;
 export type SignInTypeOutput = ActionState<
   SignInSchemaType,
-  AuthenticateUserCaseResponse
+  AuthenticateUserCaseOutput
 >;

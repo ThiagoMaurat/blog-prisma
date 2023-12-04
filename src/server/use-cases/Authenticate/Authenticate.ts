@@ -1,24 +1,23 @@
 import { compare } from "bcryptjs";
-import { User, UserRole } from "@prisma/client";
-import { InvalidCredentialsError } from "@/server/errors/invalid-credentials-error";
 import { UsersRepository } from "@/server/repositories/user-repository";
 import { UserDoesNotExistsError } from "@/server/errors/user-does-not-exist";
+import { User } from "@prisma/client";
 
 interface AuthenticateUseCaseRequest {
   email: string;
   password: string;
 }
 
-type AuthenticateUserCase = Omit<
-  | (User & {
-      UserRole: UserRole[];
-    })
-  | null,
-  "password"
->;
-
-export type AuthenticateUserCaseResponse = {
-  user: AuthenticateUserCase;
+export type AuthenticateUserCaseOutput = {
+  user: {
+    id: User["id"];
+    name: User["name"];
+    email: User["email"];
+    emailVerified: User["emailVerified"];
+    image: User["image"];
+    created_at: User["created_at"];
+    role: string;
+  };
 };
 
 export class AuthenticateUseCase {
@@ -27,7 +26,7 @@ export class AuthenticateUseCase {
   async execute({
     email,
     password,
-  }: AuthenticateUseCaseRequest): Promise<AuthenticateUserCaseResponse> {
+  }: AuthenticateUseCaseRequest): Promise<AuthenticateUserCaseOutput> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user || !user.password) {
@@ -45,9 +44,10 @@ export class AuthenticateUseCase {
         id: user.id,
         name: user.name,
         email: user.email,
+        created_at: user.created_at,
         emailVerified: user.emailVerified,
         image: user.image,
-        created_at: user.created_at,
+        role: user.UserRole[0].role.name,
       },
     };
   }

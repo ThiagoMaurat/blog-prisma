@@ -7,12 +7,6 @@ import { SignOnTypeForm, authSignUpSchemaForm } from "./schema";
 import { Button } from "@/components/Button";
 import { ptBR } from "date-fns/locale";
 import { useRouter } from "next/navigation";
-import { render } from "@react-email/components";
-import { LinearLoginCodeEmail } from "@/email-templates/auth-confirm-email";
-import {
-  saveRandomNumberOnDB,
-  sendEmailConfirmation,
-} from "@/actions/email-verified";
 import { useToast } from "@/components/Toast/use-toast";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import {
@@ -25,6 +19,7 @@ import {
 } from "@/components/ui/form";
 import { PasswordInput } from "@/components/PasswordInput";
 import { DatePicker } from "@/components/Calendar/date-picker";
+import { signUpAction } from "@/actions/auth/sign-up/sign-up";
 
 export function SignUpForm() {
   const [isPending, startTransition] = React.useTransition();
@@ -47,63 +42,22 @@ export function SignUpForm() {
   function onSubmit(data: SignOnTypeForm) {
     startTransition(async () => {
       try {
-        const response = await fetch("/api/auth/signup", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: data.email,
-            password: data.password,
-            name: data.name,
-            birthdate: data.birthday,
-          }),
+        await signUpAction({
+          email: data.email,
+          password: data.password,
+          name: data.name,
+          birthday: data.birthday,
         });
-
-        const result = await response.json();
-
-        if (response?.status === 400) {
-          toast({
-            title: "Erro",
-            description: result?.message
-              ? result?.message
-              : "Erro ao criar conta.",
-            duration: 2000,
-          });
-        }
-
-        if (response?.status === 200) {
-          toast({
-            title: "Sucesso",
-            description: "Conta criada com sucesso.",
-            duration: 2000,
-          });
-
-          let randomNumber = Array.from({ length: 10 })
-            .map((_, index) => {
-              return Math.floor(Math.random() * index);
-            })
-            .join()
-            .replaceAll(",", "");
-
-          const emailHtml = render(
-            <LinearLoginCodeEmail validationCode={randomNumber} />
-          );
-
-          try {
-            await sendEmailConfirmation(data?.email, emailHtml);
-            await saveRandomNumberOnDB(randomNumber, data?.email);
-            router.push(`/signup/verify-email/?email=${data?.email}`);
-          } catch (error) {
-            toast({
-              title: "Erro",
-              description: "Erro ao enviar email de confirmação.",
-              duration: 2000,
-            });
-          }
-        }
-      } catch (error) {
+        toast({
+          title: "Sucesso",
+          description: "Conta criada com sucesso.",
+          duration: 2000,
+        });
+        router.push(`/signup/verify-email/?email=${data?.email}`);
+      } catch (error: any) {
         toast({
           title: "Erro",
-          description: "Erro ao criar conta.",
+          description: error || "Erro ao criar conta.",
           duration: 2000,
         });
       }

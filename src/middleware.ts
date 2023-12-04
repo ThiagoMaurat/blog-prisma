@@ -6,7 +6,7 @@ export async function middleware(req: NextRequest) {
 
   const url = req.url;
   // admin pages
-  const isAdmin = session?.user?.userRole?.[0]?.role?.name === "admin";
+  /*   const isAdmin = session?.user.role === "admin";
 
   if (!isAdmin && url.includes("/api/admin")) {
     return NextResponse.json(
@@ -15,7 +15,7 @@ export async function middleware(req: NextRequest) {
       },
       { status: 400 }
     );
-  }
+  } */
 
   return NextResponse.next();
 }

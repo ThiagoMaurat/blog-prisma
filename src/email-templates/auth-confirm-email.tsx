@@ -1,4 +1,3 @@
-"use client";
 import {
   Body,
   Button,
@@ -19,44 +18,46 @@ interface LinearLoginCodeEmailProps {
   validationCode?: string;
 }
 
-export const LinearLoginCodeEmail: React.FC<
-  Readonly<LinearLoginCodeEmailProps>
-> = ({ validationCode = "0000312051" }) => (
-  <Html>
-    <Head />
-    <Preview>Welcome!</Preview>
-    <Body style={main}>
-      <Container style={container}>
-        <Img
-          src={`/blog.svg`}
-          width="42"
-          height="42"
-          alt="Linear"
-          style={logo}
-        />
-        <Heading style={heading}>Seu código para nosso blogDev</Heading>
-        <Section style={buttonContainer}>
-          <Button
-            className="py-2 px-4"
-            style={button}
-            href="https://blog-prisma-gray.vercel.app/"
-          >
-            Login
-          </Button>
-        </Section>
-        <Text style={paragraph}>
-          Abaixo está o código seu código de verificação. Pode copiar e colar no
-          seu navegador.
-        </Text>
-        <code style={code}>{validationCode}</code>
-        <Hr style={hr} />
-        <Link href="https://blog-prisma-gray.vercel.app/" style={reportLink}>
-          ThiagoDev
-        </Link>
-      </Container>
-    </Body>
-  </Html>
-);
+export default function LinearLoginCodeEmail({
+  validationCode,
+}: LinearLoginCodeEmailProps) {
+  return (
+    <Html>
+      <Head />
+      <Preview>Welcome!</Preview>
+      <Body style={main}>
+        <Container style={container}>
+          <Img
+            src={`/blog.svg`}
+            width="42"
+            height="42"
+            alt="Linear"
+            style={logo}
+          />
+          <Heading style={heading}>Seu código para nosso blogDev</Heading>
+          <Section style={buttonContainer}>
+            <Button
+              className="py-2 px-4"
+              style={button}
+              href="https://blog-prisma-gray.vercel.app/"
+            >
+              Login
+            </Button>
+          </Section>
+          <Text style={paragraph}>
+            Abaixo está o código seu código de verificação. Pode copiar e colar
+            no seu navegador.
+          </Text>
+          <code style={code}>{validationCode}</code>
+          <Hr style={hr} />
+          <Link href="https://blog-prisma-gray.vercel.app/" style={reportLink}>
+            ThiagoDev
+          </Link>
+        </Container>
+      </Body>
+    </Html>
+  );
+}
 
 const logo = {
   borderRadius: 21,

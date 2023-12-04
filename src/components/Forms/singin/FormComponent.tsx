@@ -46,12 +46,20 @@ export const FormComponent = ({}) => {
     });
 
     if (response?.error) {
-      console.log(response.error);
-      return toast({
+      if (response?.error.includes("Email não verificado")) {
+        const email = response.error.split("Email não verificado ")[1];
+        push(`/signup/verify-email/?email=${email}`);
+
+        return;
+      }
+
+      toast({
         title: "Erro",
-        description: "Credenciais inválidas",
+        description: response?.error || "Credenciais inválidas",
         duration: 3000,
       });
+
+      return;
     }
 
     prefetch("/");

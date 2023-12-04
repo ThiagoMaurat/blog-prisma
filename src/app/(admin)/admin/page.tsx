@@ -2,18 +2,18 @@ import React from "react";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
 import { redirect } from "next/navigation";
-import { getThemes } from "@/queries/get-themes";
 import CreateThemeDialog from "@/components/CreateThemeDialog";
 import { PostForm } from "@/components/Forms/create-post-form";
+import { getListThemesAction } from "@/actions/themes/list-themes/list-theme";
 
 export default async function Admin() {
   const data = await getServerSession(authOptions);
 
-  if (!data || data.user.userRole?.[0].role.name !== "admin") {
+  if (!data || data.user.role !== "admin") {
     redirect("/");
   }
 
-  const themes = await getThemes();
+  const themes = await getListThemesAction({});
 
   return (
     <main className="max-w-[1000px] w-full mx-auto">
@@ -23,7 +23,7 @@ export default async function Admin() {
         <h2>Temas</h2>
         <CreateThemeDialog />
         <ol style={{ listStyle: "inside" }}>
-          {themes?.themes?.map((theme) => (
+          {themes?.data?.theme?.map((theme) => (
             <li key={theme?.id}>{theme?.name}</li>
           ))}
         </ol>
@@ -31,7 +31,7 @@ export default async function Admin() {
 
       <section className="flex flex-col gap-2 my-2 border-2 border-gray-400 p-4 rounded-md ">
         <h2>Posts</h2>
-        <PostForm themes={themes} authorId={data.user.id} />
+        <PostForm themes={themes.data?.theme} authorId={data.user.id} />
       </section>
     </main>
   );

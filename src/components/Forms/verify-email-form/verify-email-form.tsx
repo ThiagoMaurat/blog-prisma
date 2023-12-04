@@ -8,9 +8,9 @@ import { type z } from "zod";
 
 import { verfifyEmailSchema } from "@/components/Forms/verify-email-form/schema";
 import { Button } from "@/components/Button";
-import { Loader2 } from "lucide-react";
 import { FieldInputController } from "@/components/FieldInput/FieldInputController";
 import { useToast } from "@/components/Toast/use-toast";
+import { validateEmailCodeAction } from "@/actions/auth/validate-email/validate-email";
 
 type Inputs = z.infer<typeof verfifyEmailSchema>;
 
@@ -23,6 +23,7 @@ export function VerifyEmailForm({ email }: { email: string }) {
     resolver: zodResolver(verfifyEmailSchema),
     defaultValues: {
       code: "",
+      email: email || "",
     },
   });
 
@@ -30,29 +31,23 @@ export function VerifyEmailForm({ email }: { email: string }) {
 
   function onSubmit(data: Inputs) {
     startTransition(async () => {
-      const response = await fetch("/api/auth/signup/verify-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          code: data.code,
-          email: email,
-        }),
-      });
+      try {
+        await validateEmailCodeAction({
+          ...data,
+        });
 
-      if (response.status === 200) {
         toast({
           title: "Sucesso",
-          description: "Email verificado com sucesso.",
+          description: "Email verificado com sucesso. Favor logar.",
           duration: 2000,
         });
 
         router.push("/signin");
-      }
-
-      if (!response.ok) {
+      } catch (error: any) {
+        console.log(error);
         toast({
           title: "Erro",
-          description: "Erro ao verificar o email.",
+          description: error?.message || "Erro ao verificar o email.",
           duration: 2000,
         });
       }
@@ -65,6 +60,12 @@ export function VerifyEmailForm({ email }: { email: string }) {
       className="grid gap-4"
       onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
     >
+      <FieldInputController
+        control={form.control}
+        name="email"
+        label="Selecione o e-mail"
+      />
+
       <FieldInputController
         control={form.control}
         name="code"

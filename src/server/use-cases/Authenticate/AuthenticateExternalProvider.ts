@@ -1,32 +1,30 @@
 import { prisma } from "@/lib/prisma";
-import { AdapterUser } from "next-auth/adapters";
+import { UsersRepository } from "@/server/repositories/user-repository";
 import { randomUUID } from "crypto";
 import { Account, User } from "next-auth";
 
-interface AuthenticateExternalProviderUseCaseRequest {
+interface AuthenticateExternalProviderUseCaseInput {
   email: string;
-  userExternalAuthProvider?: AdapterUser | User;
-  accountExternalAuthProvider?: Account | null;
+  accountExternalAuthProvider?: Account;
+  userExternalAuthProvider?: User;
 }
 
 export class AuthenticateExternalProvider {
-  constructor() {}
+  constructor(private userRepository: UsersRepository) {}
 
   async execute({
     email,
-    userExternalAuthProvider,
     accountExternalAuthProvider,
-  }: AuthenticateExternalProviderUseCaseRequest) {
-    const existingUser = await prisma.user.findUnique({
-      where: {
-        email: email,
-      },
-    });
+    userExternalAuthProvider,
+  }: AuthenticateExternalProviderUseCaseInput) {
+    const existingUser = await this.userRepository.findByEmail(email);
 
     if (existingUser) {
       return Promise.resolve(true);
-    } else if (accountExternalAuthProvider) {
-      await prisma.user.create({
+    }
+
+    if (!existingUser && accountExternalAuthProvider) {
+      const createUser = await prisma.user.create({
         data: {
           name: userExternalAuthProvider?.name,
           email: userExternalAuthProvider?.email,
@@ -41,6 +39,7 @@ export class AuthenticateExternalProvider {
               },
             },
           },
+          emailVerified: new Date(),
           Account: {
             create: {
               provider: accountExternalAuthProvider?.provider,
@@ -57,9 +56,23 @@ export class AuthenticateExternalProvider {
             },
           },
         },
+        include: {
+          UserRole: {
+            include: {
+              role: {
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
       });
-    }
 
-    return Promise.resolve(true);
+      if (!createUser) {
+        throw new Error("User not found");
+      }
+      return Promise.resolve(true);
+    }
   }
 }

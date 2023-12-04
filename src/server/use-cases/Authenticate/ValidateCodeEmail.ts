@@ -1,49 +1,50 @@
-import { prisma } from "@/lib/prisma";
 import { InvalidCredentialsError } from "@/server/errors/invalid-credentials-error";
 import { InvalidUpdateUserEmailError } from "@/server/errors/invalid-update-email-error";
+import { UserIsAlreadyVerifiedError } from "@/server/errors/user-is-already-verified";
+import { UsersRepository } from "@/server/repositories/user-repository";
 
-interface ValidateCodeEmailRequest {
+type ValidateCodeEmailInput = {
   code: string;
   email: string;
-}
+};
 
-type AuthenticateUserCaseResponse = {
+export type ValidateCodeOutput = {
   code: string;
+  email: string;
 };
 
 export class ValidateCodeEmail {
-  constructor() {}
+  constructor(private userRepository: UsersRepository) {}
 
   async execute({
     code,
     email,
-  }: ValidateCodeEmailRequest): Promise<AuthenticateUserCaseResponse> {
-    const isEqual = await prisma.user.findFirst({
-      where: {
-        email: email,
-        emailCodeVerified: code,
-      },
-    });
+  }: ValidateCodeEmailInput): Promise<ValidateCodeOutput> {
+    const isUserAndCodeValid =
+      await this.userRepository.findUserAndCheckTheEmailCode(code, email);
 
-    if (!isEqual) {
+    if (!isUserAndCodeValid) {
       throw new InvalidCredentialsError();
     }
 
-    const user = await prisma.user.update({
-      where: {
-        email: email,
-      },
-      data: {
+    if (!!isUserAndCodeValid.emailVerified) {
+      throw new UserIsAlreadyVerifiedError();
+    }
+
+    const updateUser = await this.userRepository.updateUser(
+      {
         emailVerified: new Date(),
       },
-    });
+      isUserAndCodeValid.id
+    );
 
-    if (!user) {
+    if (!updateUser) {
       throw new InvalidUpdateUserEmailError();
     }
 
     return {
-      code,
+      code: code,
+      email: email,
     };
   }
 }
