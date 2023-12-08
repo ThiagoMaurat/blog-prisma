@@ -169,6 +169,7 @@ export function PostForm(props: PostFormProps) {
         />
 
         <Label className="font-bold text-base">Post</Label>
+
         <Editor
           onUpdate={(editor) => {
             formCreatePost.setValue(
