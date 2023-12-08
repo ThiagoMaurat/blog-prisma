@@ -1,5 +1,6 @@
 import { Themes } from "@prisma/client";
 import { ThemeRepository } from "@/server/repositories/theme-repository";
+import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 
 interface ThemeCreateUseCaseInput {
   name: string;
@@ -18,7 +19,7 @@ export class CreateThemeUseCase {
     role,
   }: ThemeCreateUseCaseInput): Promise<ThemeCreateUseCaseOutput> {
     if (role !== "admin") {
-      throw new Error("Only admins can create themes");
+      throw new UserIsNotAdminError();
     }
 
     const theme = await this.themeRepository.create({
