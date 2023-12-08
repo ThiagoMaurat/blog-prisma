@@ -11,6 +11,7 @@ export const env = createEnv({
     GMAIL_PASSWORD: z.string(),
     NEXTAUTH_URL: z.string(),
     DATABASE_URL: z.string(),
+    SHADOW_DATABASE_URL: z.string(),
     NODE_ENV: z.enum(["development", "test", "production"]),
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === "production"
@@ -41,6 +42,7 @@ export const env = createEnv({
     GITHUB_ID: process.env.GITHUB_ID,
     GITHUB_SECRET: process.env.GITHUB_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    SHADOW_DATABASE_URL: process.env.SHADOW_DATABASE_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,

@@ -8,6 +8,7 @@ const nextConfig = {
       "external-content.duckduckgo.com",
       "raw.githubusercontent.com",
       "avatars.githubusercontent.com",
+      "www.freecodecamp.org",
     ],
   },
 };
