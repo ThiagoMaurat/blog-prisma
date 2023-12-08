@@ -3,9 +3,9 @@ import React from "react";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Limiter } from "@/components/Limiter";
-import { getPostsById } from "@/queries/get-posts-by-id";
 import { CustomSectionTitlePostPage } from "@/components/CustomSectionTitlePostPage";
 import EditorNovel from "@/components/EditorNovel";
+import { listPostByIdAction } from "@/actions/posts/list-post-by-id/list-post-by-id";
 interface PostsProps {
   params: {
     id: string;
@@ -13,20 +13,20 @@ interface PostsProps {
 }
 
 export async function generateMetadata({ params }: PostsProps) {
-  const { post } = await getPostsById({
+  const { data } = await listPostByIdAction({
     id: params.id,
   });
 
   return {
-    title: `Post - ${post?.title}`,
-    description: `Descrição - ${post?.description}`,
+    title: `Post - ${data?.title}`,
+    description: `Descrição - ${data?.description}`,
   };
 }
 
 export default async function Posts({ params }: PostsProps) {
   const { id } = params;
 
-  const { post } = await getPostsById({
+  const { data } = await listPostByIdAction({
     id: id,
   });
 
@@ -35,7 +35,7 @@ export default async function Posts({ params }: PostsProps) {
       <Header />
 
       <CustomSectionTitlePostPage
-        post={post}
+        post={data!}
         className="min-h-[30vh] h-auto rounded-3xl flex md:justify-evenly md:items-center pt-4 md:pt-12 pb-16 px-8 mx-auto gap-8 justify-around"
       />
 
@@ -44,12 +44,12 @@ export default async function Posts({ params }: PostsProps) {
           className="rounded-xl"
           width={700}
           height={500}
-          src={post?.thumbnail}
+          src={data!.thumbnail}
           alt="post blog image"
         />
       </div>
 
-      <EditorNovel defaultValue={JSON.parse(post?.content)} />
+      <EditorNovel defaultValue={JSON.parse(data!.content)} />
 
       <Footer />
     </Limiter>
