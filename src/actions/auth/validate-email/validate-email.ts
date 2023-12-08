@@ -6,7 +6,7 @@ import {
   ValidateCodeEmailTypeOutput,
   validateCodeEmailSchema,
 } from "./schema";
-import { makeValidateEmailCode } from "@/server/factories/make-validate-email-code";
+import { makeValidateEmailCode } from "@/server/factories/make-validate-email-code-use-case";
 
 const handler = async (
   data: ValidateCodeEmailSchemaType

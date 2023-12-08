@@ -1,5 +1,5 @@
 import { ActionState } from "@/lib/create-safe-action";
-import { PostUseCaseResponse } from "@/server/use-cases/Posts/post";
+import { PostUseCaseResponse } from "@/server/use-cases/Posts/createPosts";
 import { z } from "zod";
 
 export const createPostSchema = z.object({
