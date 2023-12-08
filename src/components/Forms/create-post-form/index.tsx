@@ -8,6 +8,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import {
   Select,
@@ -25,10 +26,12 @@ import { useToast } from "@/components/Toast/use-toast";
 import { useTheme } from "next-themes";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Themes } from "@prisma/client";
+import { createPostAction } from "@/actions/posts/create-posts/create-post";
 
 interface PostFormProps {
   themes?: Themes[];
   authorId: string | undefined;
+  role: string;
 }
 
 export type JSONContent = {
@@ -51,17 +54,19 @@ interface CreatePostFormInput {
   description: string;
 }
 export function PostForm(props: PostFormProps) {
-  const { authorId, themes } = props;
+  const { authorId, themes, role } = props;
+
+  const defaultValues: CreatePostFormInput = {
+    title: "",
+    content: "",
+    thumbnail: "",
+    themeId: "",
+    description: "",
+  };
 
   const formCreatePost = useForm<CreatePostFormInput>({
     resolver: zodResolver(postSchema),
-    defaultValues: {
-      title: "",
-      content: "",
-      thumbnail: "",
-      themeId: "",
-      description: "",
-    },
+    defaultValues: defaultValues,
   });
 
   const { toast } = useToast();
@@ -69,16 +74,16 @@ export function PostForm(props: PostFormProps) {
   const { theme } = useTheme();
 
   const submitForm = async (data: CreatePostFormInput) => {
+    if (!authorId || !role) return;
+    console.log(data, role, authorId);
     try {
-      const response = await fetch("/api/admin/posts", {
-        method: "POST",
-        body: JSON.stringify({
-          ...data,
-          authorId,
-        }),
+      const response = await createPostAction({
+        ...data,
+        role,
+        authorId,
       });
 
-      if (response.ok) {
+      if (!response.error) {
         toast({
           title: "Sucesso",
           description: "Post criado com sucesso.",
@@ -135,26 +140,30 @@ export function PostForm(props: PostFormProps) {
               <FormLabel className="font-bold text-base">
                 Escolhe o tema
               </FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
+
+              <Select
+                value={field.value}
+                onValueChange={field.onChange}
+                defaultValue={field.value}
+              >
                 <FormControl>
-                  <SelectTrigger
-                    placeholder="Theme"
-                    className="w-full text-black"
-                  >
+                  <SelectTrigger className="w-full bg-background border border-offset-foreground placeholder:text-muted-foreground ring-offset-background rounded-lg">
                     <SelectValue
-                      placeholder="Theme"
-                      className="w-full text-black"
+                      placeholder="Insira o tema associado"
+                      className="w-full"
                     />
                   </SelectTrigger>
                 </FormControl>
+
                 <SelectContent>
                   {themes?.map((theme) => (
-                    <SelectItem key={theme?.id} value={theme?.id}>
+                    <SelectItem key={theme?.id} value={String(theme?.id)}>
                       {theme?.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
+              <FormMessage className="text-red-500 text-xs" />
             </FormItem>
           )}
         />

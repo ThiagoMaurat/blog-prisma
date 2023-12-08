@@ -1,17 +1,18 @@
 import { Post } from "@prisma/client";
 import { PostRepository } from "@/server/repositories/post-repository";
-import { UsersRepository } from "@/server/repositories/user-repository";
+import { UserIsNotAdminError } from "@/server/errors/user-is-not-admin-error";
 
-interface PostUseCaseRequest {
+interface PostUseCaseInput {
   title: string;
   content: string;
   authorId: string;
   thumbnail: string;
   themeId: string;
   description: string;
+  role: string;
 }
 
-interface PostUseCaseResponse {
+export interface PostUseCaseResponse {
   post: Post;
 }
 
@@ -25,7 +26,12 @@ export class PostUseCase {
     themeId,
     thumbnail,
     description,
-  }: PostUseCaseRequest): Promise<PostUseCaseResponse> {
+    role,
+  }: PostUseCaseInput): Promise<PostUseCaseResponse> {
+    if (role !== "admin") {
+      throw new UserIsNotAdminError();
+    }
+
     const post = await this.postRepository.create({
       author: {
         connect: {

@@ -31,7 +31,11 @@ export default async function Admin() {
 
       <section className="flex flex-col gap-2 my-2 border-2 border-gray-400 p-4 rounded-md ">
         <h2>Posts</h2>
-        <PostForm themes={themes.data?.theme} authorId={data.user.id} />
+        <PostForm
+          themes={themes.data?.theme}
+          authorId={data.user.id}
+          role={data.user.role}
+        />
       </section>
     </main>
   );
