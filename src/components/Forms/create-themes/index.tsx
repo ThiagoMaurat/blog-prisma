@@ -4,13 +4,13 @@ import FieldInput from "@/components/FieldInput";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/Button";
 import { useToast } from "@/components/Toast/use-toast";
-import { mutateForm } from "./form-server-action";
+import { createThemesAction } from "@/actions/themes/create-themes/create-theme";
 
-export interface FormLogin {
-  name: string;
+export interface CreateThemeFormsProps {
+  role: string;
 }
 
-export default function CreateThemeForms() {
+export default function CreateThemeForms({ role }: CreateThemeFormsProps) {
   const ref = useRef<HTMLFormElement>(null);
 
   const { toast } = useToast();
@@ -18,31 +18,31 @@ export default function CreateThemeForms() {
   return (
     <form
       className="grid gap-4"
+      ref={ref}
       action={async (formData) => {
         ref.current?.reset();
 
-        try {
-          const mutate = await mutateForm(formData);
+        const formDataName = formData.get("name")?.toString();
 
-          if (!mutate?.ok) {
-            return toast({
-              title: "Erro",
-              description: "Não foi possível adicionar o tema",
-              duration: 3000,
-            });
-          }
+        if (!formDataName || !role) return;
+
+        try {
+          const mutate = await createThemesAction({
+            name: formDataName,
+            role: role,
+          });
+
+          document?.getElementById?.("closeDialog")?.click();
 
           toast({
             title: "Sucesso",
             description: "Adicionado com sucesso",
             duration: 3000,
           });
-
-          document?.getElementById?.("closeDialog")?.click();
-        } catch (error) {
+        } catch (error: any) {
           toast({
             title: "Erro",
-            description: "Não foi possível adicionar o tema",
+            description: error?.message || "Erro ao adicionar",
             duration: 3000,
           });
         }

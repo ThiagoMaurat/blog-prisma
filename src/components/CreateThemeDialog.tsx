@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -8,8 +9,12 @@ import {
 } from "./ui/dialog";
 import { Button } from "./Button";
 import CreateThemeForms from "./Forms/create-themes";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/server/auth";
 
-export default function CreateThemeDialog() {
+export default async function CreateThemeDialog() {
+  const user = await getServerSession(authOptions);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -21,12 +26,13 @@ export default function CreateThemeDialog() {
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
+        <DialogClose id="closeDialog" />
         <DialogHeader>
           <DialogTitle>Criação de temas</DialogTitle>
         </DialogHeader>
 
         <div className="grid gap-4 py-2">
-          <CreateThemeForms />
+          <CreateThemeForms role={user?.user.role || ""} />
         </div>
       </DialogContent>
     </Dialog>
