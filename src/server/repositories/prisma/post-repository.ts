@@ -1,6 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { Post, Prisma } from "@prisma/client";
-import { PostRepository } from "../post-repository";
+import {
+  FindAllPostsOutput,
+  FindByIdOutput,
+  PostRepository,
+} from "../post-repository";
 
 export class PrismaPostRepository implements PostRepository {
   async create(data: Prisma.PostCreateInput): Promise<Post> {
@@ -17,7 +21,7 @@ export class PrismaPostRepository implements PostRepository {
     return createPost;
   }
 
-  async find(id: string) {
+  async find(id: string): Promise<FindByIdOutput> {
     const post = await prisma.post.findUnique({
       where: {
         id,
@@ -50,7 +54,7 @@ export class PrismaPostRepository implements PostRepository {
     page?: number | null,
     limit?: number | null,
     search?: string | null
-  ) {
+  ): Promise<FindAllPostsOutput> {
     const pageSizeFindAll = limit ?? 0;
     const pageFindAll = page ?? 9999999;
 
