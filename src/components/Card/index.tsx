@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { format, parseISO } from "date-fns";
-import { Post } from "@/@types/PostResponse";
+import { format } from "date-fns";
+import { FindAllPostsOutput } from "@/server/repositories/post-repository";
 
 interface CardProps {
-  data: Post;
+  data: FindAllPostsOutput["posts"][0];
   href: string;
 }
 
@@ -56,7 +56,7 @@ export function Card(props: CardProps) {
             <p className="font-medium text-0.8rem">{author.name}</p>
 
             <p className="text-muted-foreground text-sm">
-              {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
+              {format(publishedAt, "dd/MM/yyyy, 'às' HH:mm.")}
             </p>
           </div>
         </div>

@@ -1,13 +1,11 @@
 import Link from "next/link";
 import React from "react";
-import { letterCounter } from "../../helpers/charactersCount";
-import { format, parseISO } from "date-fns";
-import { Post } from "@/@types/PostResponse";
+import { format } from "date-fns";
 import Image from "next/image";
-import { useTheme } from "next-themes";
+import { FindAllPostsOutput } from "@/server/repositories/post-repository";
 
 type FirstCardProps = {
-  data: Post;
+  data: FindAllPostsOutput["posts"][0];
   href: string;
 };
 export function FirstCard(props: FirstCardProps) {
@@ -45,9 +43,7 @@ export function FirstCard(props: FirstCardProps) {
           <h2 className={`font-bold text-2xl`}>{title}</h2>
 
           {description && (
-            <p className="font-semibold text-sm">
-              {letterCounter(description, 300)}
-            </p>
+            <p className="line-clamp-3 font-semibold text-sm">{description}</p>
           )}
 
           <div className="flex items-center gap-2">
@@ -64,7 +60,7 @@ export function FirstCard(props: FirstCardProps) {
 
               {publishedAt && (
                 <p className="text-muted-foreground text-sm">
-                  {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
+                  {format(publishedAt, "dd/MM/yyyy, 'às' HH:mm.")}
                 </p>
               )}
             </div>

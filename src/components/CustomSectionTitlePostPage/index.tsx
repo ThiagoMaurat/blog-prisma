@@ -1,10 +1,10 @@
-import { Post } from "@/@types/PostResponse";
+import { ListPostByIdResponse } from "@/server/use-cases/Posts/listPostById";
 import clsx from "clsx";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
 import Image from "next/image";
 
 interface CustomSectionTitlePostPage {
-  post: Post;
+  post: ListPostByIdResponse;
   className?: string;
 }
 
@@ -49,7 +49,7 @@ export const CustomSectionTitlePostPage = (
           <p className="font-bold text-white text-sm">{author.name}</p>
 
           <p className="text-white text-xs">
-            {format(parseISO(publishedAt), "dd/MM/yyyy, 'às' HH:mm.")}
+            {format(publishedAt, "dd/MM/yyyy, 'às' HH:mm.")}
           </p>
         </div>
       </div>

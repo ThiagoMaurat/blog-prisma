@@ -19,6 +19,7 @@ const FieldSearchComponent: ForwardRefRenderFunction<
         >
           <Search className="text-black text-xl" />
         </div>
+
         <input
           className="pl-14 py-3 border rounded-full bg-white text-black focus:outline-gray-500 w-full"
           placeholder="Search (mínimo 3 caracteres)"
