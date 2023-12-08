@@ -1,10 +1,16 @@
-import React from "react";
+import { type Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/server/auth";
 import { redirect } from "next/navigation";
 import CreateThemeDialog from "@/components/CreateThemeDialog";
 import { PostForm } from "@/components/Forms/create-post-form";
 import { getListThemesAction } from "@/actions/themes/list-themes/list-theme";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXTAUTH_URL ?? ""),
+  title: "Admin Page",
+  description: "Private Page for admins",
+};
 
 export default async function Admin() {
   const data = await getServerSession(authOptions);

@@ -20,6 +20,10 @@ export async function generateMetadata({ params }: PostsProps) {
   return {
     title: `Post - ${data?.title}`,
     description: `Descrição - ${data?.description}`,
+    openGraph: {
+      title: `Post - ${data?.title}`,
+      description: `Descrição - ${data?.description}`,
+    },
   };
 }
 

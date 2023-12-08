@@ -12,9 +12,9 @@ import { revalidatePath } from "next/cache";
 const handler = async (
   data: CreateThemeSchemaType
 ): Promise<CreateThemeTypeOutput> => {
-  const createthemeUseCase = makeCreateThemeUseCase();
+  const createThemeUseCase = makeCreateThemeUseCase();
 
-  const themes = await createthemeUseCase.execute(data);
+  const themes = await createThemeUseCase.execute(data);
 
   revalidatePath("/admin");
 

@@ -13,14 +13,15 @@ import {
   Text,
 } from "@react-email/components";
 import * as React from "react";
+import { env } from "../../env.mjs";
 
-interface LinearLoginCodeEmailProps {
+interface LoginCodeEmailProps {
   validationCode?: string;
 }
 
-export default function LinearLoginCodeEmail({
+export default function LoginCodeEmail({
   validationCode,
-}: LinearLoginCodeEmailProps) {
+}: LoginCodeEmailProps) {
   return (
     <Html>
       <Head />
@@ -28,19 +29,15 @@ export default function LinearLoginCodeEmail({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`/blog.svg`}
+            src={`${env.NEXTAUTH_URL}/blog.svg`}
             width="42"
             height="42"
             alt="Linear"
             style={logo}
           />
-          <Heading style={heading}>Seu código para nosso blogDev</Heading>
+          <Heading style={heading}>Seu código para nosso Blog!</Heading>
           <Section style={buttonContainer}>
-            <Button
-              className="py-2 px-4"
-              style={button}
-              href="https://blog-prisma-gray.vercel.app/"
-            >
+            <Button style={button} href={env.NEXTAUTH_URL}>
               Login
             </Button>
           </Section>
@@ -106,6 +103,7 @@ const button = {
   textDecoration: "none",
   textAlign: "center" as const,
   display: "block",
+  padding: "12px 12px",
 };
 
 const reportLink = {

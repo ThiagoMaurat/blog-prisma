@@ -29,6 +29,7 @@ export const metadata: Metadata = {
       url: "https://github.com/thiagomaurat",
     },
   ],
+  applicationName: "Thiago Maurat Blog",
 };
 
 interface BlogPageProps {
