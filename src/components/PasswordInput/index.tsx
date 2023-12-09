@@ -18,7 +18,7 @@ const PasswordInput = React.forwardRef<
       <FieldInput
         type={showPassword ? "text" : "password"}
         className={cn(
-          "bg-[#E1F5FE] px-3 text-black rounded-lg h-10 w-full focus:outline-blue-500",
+          "bg-background px-3 border placeholder:text-muted-foreground rounded-lg ring-offset-background h-10 w-full",
           className
         )}
         ref={ref}
