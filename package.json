@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.2",
@@ -73,6 +74,7 @@
     "@types/lodash": "^4.14.202",
     "@types/react-input-mask": "^3.0.5",
     "encoding": "^0.1.13",
+    "husky": "^8.0.3",
     "ts-node": "^10.9.1",
     "tsx": "^4.6.0"
   }
