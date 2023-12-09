@@ -9,9 +9,9 @@ export const env = createEnv({
   server: {
     GMAIL_MAIL: z.string(),
     GMAIL_PASSWORD: z.string(),
-    NEXTAUTH_URL: z.string(),
+    NEXTAUTH_URL: z.string().optional(),
     DATABASE_URL: z.string(),
-    SHADOW_DATABASE_URL: z.string(),
+    SHADOW_DATABASE_URL: z.string().optional(),
     NODE_ENV: z.enum(["development", "test", "production"]),
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === "production"
