@@ -7,17 +7,17 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    GMAIL_MAIL: z.string(),
+    GMAIL_MAIL: z.string().email(),
     GMAIL_PASSWORD: z.string(),
-    NEXTAUTH_URL: z.string().optional(),
-    DATABASE_URL: z.string(),
-    SHADOW_DATABASE_URL: z.string().optional(),
+    NEXTAUTH_URL: z.string().url().optional(),
+    DATABASE_URL: z.string().url(),
+    SHADOW_DATABASE_URL: z.string().url().optional(),
     NODE_ENV: z.enum(["development", "test", "production"]),
     NEXTAUTH_SECRET:
       process.env.NODE_ENV === "production"
         ? z.string().min(1)
         : z.string().min(1),
-    SUPABASE_URL: z.string().min(1),
+    SUPABASE_URL: z.string().url().min(1),
     SUPABASE_AMON_KEY: z.string().min(1),
     GITHUB_ID: z.string().min(1),
     GITHUB_SECRET: z.string().min(1),
