@@ -4,11 +4,13 @@ const nextConfig = {
     serverComponentsExternalPackages: ["@prisma/client", "bcrypt"],
   },
   images: {
-    domains: [
-      "external-content.duckduckgo.com",
-      "raw.githubusercontent.com",
-      "avatars.githubusercontent.com",
-      "www.freecodecamp.org",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+        port: "",
+        pathname: "**",
+      },
     ],
   },
 };

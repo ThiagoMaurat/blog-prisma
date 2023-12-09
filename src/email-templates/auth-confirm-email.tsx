@@ -30,8 +30,7 @@ export default function LoginCodeEmail({
         <Container style={container}>
           <Img
             src={`${env.NEXT_PUBLIC_APP_URL}/blog.svg`}
-            width="42"
-            height="42"
+            width="100%"
             alt="Linear"
             style={logo}
           />
