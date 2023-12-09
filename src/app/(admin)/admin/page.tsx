@@ -7,7 +7,7 @@ import { PostForm } from "@/components/Forms/create-post-form";
 import { getListThemesAction } from "@/actions/themes/list-themes/list-theme";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXTAUTH_URL ?? ""),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? ""),
   title: "Admin Page",
   description: "Private Page for admins",
 };
