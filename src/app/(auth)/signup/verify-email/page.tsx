@@ -12,7 +12,7 @@ import { authOptions } from "@/server/auth";
 import { VerifyEmailForm } from "@/components/Forms/verify-email-form/verify-email-form";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXTAUTH_URL ?? ""),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? ""),
   title: "Verify Email",
   description: "Verify your email address to continue with your sign up",
 };

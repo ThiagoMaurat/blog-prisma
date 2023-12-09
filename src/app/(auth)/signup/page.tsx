@@ -10,7 +10,7 @@ import {
 import { SignUpForm } from "@/components/Forms/singup/signup-form";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXTAUTH_URL ?? ""),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? ""),
   title: "Sign Up",
   description: "Sign up for an account",
 };
