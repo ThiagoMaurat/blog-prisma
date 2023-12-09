@@ -29,7 +29,7 @@ export default function LoginCodeEmail({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`${env.NEXTAUTH_URL}/blog.svg`}
+            src={`${env.NEXT_PUBLIC_APP_URL}/blog.svg`}
             width="42"
             height="42"
             alt="Linear"
@@ -37,7 +37,7 @@ export default function LoginCodeEmail({
           />
           <Heading style={heading}>Seu código para nosso Blog!</Heading>
           <Section style={buttonContainer}>
-            <Button style={button} href={env.NEXTAUTH_URL}>
+            <Button style={button} href={env.NEXT_PUBLIC_APP_URL}>
               Login
             </Button>
           </Section>
