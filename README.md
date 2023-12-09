@@ -1,37 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Thiago Portfolio and Blog
 
-## Getting Started
+Welcome to my personal portfolio, an innovative platform that leverages cutting-edge technologies to create an amazing experience for developers users! 🚀🚀
 
-First, run the development server:
+![Texto Alternativo](https://blog-prisma-gray.vercel.app/Slider/blog-project/blog-dark.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Main Technologies used
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- TypeScript - Bringing static typing to JavaScript, increasing productivity, and improving code robustness.
+- Next.js - A React framework that makes it easy to build modern web applications, with server-side rendering, simplified routing, and many powerful features.
+- shadcn/ui - Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
+- Prisma - A modern Object-Relational Mapping (ORM) for Node.js and TypeScript, simplifying interaction with SQL databases and providing an efficient development experience.
+- PlanetScale - A cloud-native distributed database, designed to scale effortlessly and deliver consistent performance for modern applications.
+- Next-Auth - Auth.js is a set of open-source packages that are built on Web Standard APIs for authentication in modern applications with any framework on any platform in any JS runtime.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Prerequisites
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+- [Node.js](https://nodejs.org/) (v18.17 or later)
+- [Pnpm](https://pnpm.io/pt/) (opcional)
+- [MySql](https://www.mysql.com/) (Planet Scale)
+- [Docker](https://www.docker.com/) (may be needed for shadowDatabaseUrl)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Installation
 
-## Learn More
+1. Clone the repo:
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   git clone https://github.com/seu-username/seu-projeto.git
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+2. Copy the .env.example to .env and update the variables.
 
-## Deploy on Vercel
+   ```bash
+   cp .env.example .env
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# blog-prisma-test
+3. Install the dependencies
+
+   ```bash
+   pnpm i
+
+   ```
+
+4. May be needed docker-compose image for prisma shadowDatabaseUrl
+
+   ```bash
+   docker compose up
+
+   ```
+
+5. Run the migrations
+
+   ```bash
+   pnpm prisma migrate dev
+
+   ```
+
+6. Run the migrations
+
+   ```bash
+   pnpm prisma migrate dev
+
+   ```
+
+7. Run the seed
+
+   ```bash
+   pnpm run seed
+
+   ```
