@@ -19,6 +19,8 @@ interface LoginCodeEmailProps {
   validationCode?: string;
 }
 
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
+
 export default function LoginCodeEmail({
   validationCode,
 }: LoginCodeEmailProps) {
@@ -29,10 +31,9 @@ export default function LoginCodeEmail({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`${env.NEXT_PUBLIC_APP_URL}/blog.svg`}
-            width="100%"
+            src={`${baseUrl}/blog.svg`}
             alt="Linear"
-            style={logo}
+            className="aspect-video w-full object-cover"
           />
           <Heading style={heading}>Seu código para nosso Blog!</Heading>
           <Section style={buttonContainer}>
