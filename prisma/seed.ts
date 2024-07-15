@@ -1,17 +1,18 @@
 import { prisma } from "@/lib/prisma";
 
 async function main() {
-  await prisma.role.createMany({
-    data: [
-      {
-        name: "admin",
-        id: "1",
-      },
-      {
-        name: "reader",
-        id: "2",
-      },
-    ],
+  await prisma.role.create({
+    data: {
+      name: "admin",
+      id: "1",
+    },
+  });
+
+  await prisma.role.create({
+    data: {
+      name: "reader",
+      id: "2",
+    },
   });
 }
 

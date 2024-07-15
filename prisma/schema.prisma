@@ -6,10 +6,9 @@ generator client {
 }
 
 datasource db {
-  provider          = "mysql"
-  url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
-  relationMode      = "prisma"
+  provider     = "sqlite"
+  url          = "file:./dev.db"
+  relationMode = "prisma"
 }
 
 model Account {
@@ -18,12 +17,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -67,14 +66,9 @@ model Session {
   @@index([userId])
 }
 
-enum RoleType {
-  admin
-  reader
-}
-
 model Role {
   id    String     @id @default(uuid())
-  name  RoleType   @unique
+  name  String     @unique
   users UserRole[]
 }
 
@@ -99,7 +93,7 @@ model Post {
   id          String       @id @default(uuid())
   title       String
   description String
-  content     String       @db.MediumText()
+  content     String
   publishedAt DateTime     @default(now())
   thumbnail   String
   authorId    String
