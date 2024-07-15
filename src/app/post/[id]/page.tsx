@@ -4,8 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Limiter } from "@/components/Limiter";
 import { CustomSectionTitlePostPage } from "@/components/CustomSectionTitlePostPage";
-import EditorNovel from "@/components/EditorNovel";
 import { listPostByIdAction } from "@/actions/posts/list-post-by-id/list-post-by-id";
+import Editor from "@/components/Editor/advanced-editor";
 interface PostsProps {
   params: {
     id: string;
@@ -43,7 +43,7 @@ export default async function Posts({ params }: PostsProps) {
         className="min-h-[30vh] h-auto rounded-3xl flex md:justify-evenly md:items-center pt-4 md:pt-12 pb-16 px-8 mx-auto gap-8 justify-around"
       />
 
-      <div className="w-700 h-500 flex mt-[-4rem] justify-center w-full">
+      <div className="w-700 h-500 mb-4 flex mt-[-4rem] justify-center w-full">
         <Image
           className="rounded-xl"
           width={700}
@@ -53,8 +53,10 @@ export default async function Posts({ params }: PostsProps) {
         />
       </div>
 
-      <EditorNovel defaultValue={JSON.parse(data!.content)} />
-
+      <Editor
+        initialContent={data?.content && JSON.parse(data?.content)}
+        editable={false}
+      />
       <Footer />
     </Limiter>
   );

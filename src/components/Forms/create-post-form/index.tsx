@@ -18,7 +18,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Editor } from "novel";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { postSchema } from "./schema";
@@ -27,6 +26,7 @@ import { useTheme } from "next-themes";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { Themes } from "@prisma/client";
 import { createPostAction } from "@/actions/posts/create-posts/create-post";
+import Editor from "@/components/Editor/advanced-editor";
 
 interface PostFormProps {
   themes?: Themes[];
@@ -171,16 +171,9 @@ export function PostForm(props: PostFormProps) {
         <Label className="font-bold text-base">Post</Label>
 
         <Editor
-          onUpdate={(editor) => {
-            formCreatePost.setValue(
-              "content",
-              JSON.stringify(editor!.getJSON())
-            );
+          onChange={(editor) => {
+            formCreatePost.setValue("content", JSON.stringify(editor));
           }}
-          className={`w-full my-8 mx-auto bg-background border-stone-200 sm:rounded-lg sm:border sm:shadow-lg ${
-            theme === "dark" ? "dark-mode" : "light-mode"
-          }`}
-          disableLocalStorage
         />
 
         {formCreatePost.formState.errors.content && (
