@@ -1,4 +1,3 @@
-import { supabase } from "@/lib/supabase";
 import { NextRequest, NextResponse } from "next/server";
 import { UserAlreadyExistsError } from "@/server/errors/user-already-exists";
 import { randomUUID } from "node:crypto";
@@ -31,15 +30,15 @@ export async function POST(req: NextRequest, res: Response) {
       type: "image/png",
     });
 
-    await supabase.storage.from("blog-images").upload(filename, fileBody);
+    /* await supabase.storage.from("blog-images").upload(filename, fileBody);
 
     const { data } = await supabase.storage
       .from("blog-images")
-      .getPublicUrl(filename);
+      .getPublicUrl(filename); */
 
     return NextResponse.json(
       {
-        url: data.publicUrl,
+        /* url: data.publicUrl, */
       },
       { status: 200 }
     );

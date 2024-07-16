@@ -1,11 +1,11 @@
-import { $Enums, Prisma, User } from "@prisma/client";
+import { Prisma, User } from "@prisma/client";
 
 export interface UsersRepository {
   findByEmail(email: string): Promise<
     | (User & {
         UserRole: ({
           role: {
-            name: $Enums.RoleType;
+            name: string;
           };
         } & {
           userId: string;

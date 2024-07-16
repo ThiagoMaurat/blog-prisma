@@ -14,8 +14,6 @@ export const env = createEnv({
       process.env.NODE_ENV === "production"
         ? z.string().min(1)
         : z.string().min(1),
-    SUPABASE_URL: z.string().url().min(1),
-    SUPABASE_AMON_KEY: z.string().min(1),
     GITHUB_ID: z.string().min(1),
     GITHUB_SECRET: z.string().min(1),
   },
@@ -41,8 +39,6 @@ export const env = createEnv({
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    SUPABASE_URL: process.env.SUPABASE_URL,
-    SUPABASE_AMON_KEY: process.env.SUPABASE_AMON_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
