@@ -13,12 +13,9 @@ const nextConfig = {
       },
     ],
   },
+  output: 'standalone',
 };
 
 module.exports = {
   ...nextConfig,
-  // env:{
-  //   GITHUB_ID: env.GITHUB_ID,
-  //   GITHUB_SECRET: env.GITHUB_SECRET,
-  // }
 };
