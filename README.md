@@ -42,10 +42,6 @@ Welcome to my personal portfolio, an innovative platform that leverages cutting-
 
    ```
 
-   ```
-
-   ```
-
 4. Run the migrations
 
    ```bash
