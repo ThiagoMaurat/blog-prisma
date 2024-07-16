@@ -39,6 +39,7 @@ const Editor = ({ initialValue, onChange, ...rest }: EditorProp) => {
     <EditorRoot>
       <EditorContent
         className="border p-4 rounded-xl"
+        immediatelyRender={false}
         extensions={extensions}
         editorProps={{
           handleDOMEvents: {
