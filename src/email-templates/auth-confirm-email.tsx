@@ -16,13 +16,13 @@ import * as React from "react";
 import { env } from "../../env.mjs";
 
 interface LoginCodeEmailProps {
-  validationCode?: string;
+  validationCode: string;
+  email: string;
 }
-
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
 
 export default function LoginCodeEmail({
   validationCode,
+  email,
 }: LoginCodeEmailProps) {
   return (
     <Html>
@@ -31,13 +31,16 @@ export default function LoginCodeEmail({
       <Body style={main}>
         <Container style={container}>
           <Img
-            src={`${baseUrl}/blog.svg`}
+            src={`https://www.hostinger.com.br/tutoriais/wp-content/uploads/sites/12/2020/08/Como-Criar-um-Blog.png`}
             alt="Linear"
             className="aspect-video w-full object-cover"
           />
           <Heading style={heading}>Seu código para nosso Blog!</Heading>
           <Section style={buttonContainer}>
-            <Button style={button} href={env.NEXT_PUBLIC_APP_URL}>
+            <Button
+              style={button}
+              href={`${env.NEXT_PUBLIC_APP_URL}/signup/verify-email?email=${email}`}
+            >
               Login
             </Button>
           </Section>

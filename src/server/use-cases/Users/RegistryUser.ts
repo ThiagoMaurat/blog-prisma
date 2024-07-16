@@ -41,6 +41,7 @@ export class RegisterUseCase {
     const emailHtml = render(
       LinearLoginCodeEmail({
         validationCode: emailCode,
+        email: data.email,
       }),
       {
         pretty: true,

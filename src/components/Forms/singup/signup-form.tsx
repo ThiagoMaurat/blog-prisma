@@ -22,7 +22,6 @@ import { DatePicker } from "@/components/Calendar/date-picker";
 import { signUpAction } from "@/actions/auth/sign-up/sign-up";
 
 export function SignUpForm() {
-  const [isPending, startTransition] = React.useTransition();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -39,29 +38,27 @@ export function SignUpForm() {
     },
   });
 
-  function onSubmit(data: SignOnTypeForm) {
-    startTransition(async () => {
-      try {
-        await signUpAction({
-          email: data.email,
-          password: data.password,
-          name: data.name,
-          birthday: data.birthday,
-        });
-        toast({
-          title: "Sucesso",
-          description: "Conta criada com sucesso.",
-          duration: 2000,
-        });
-        router.push(`/signup/verify-email/?email=${data?.email}`);
-      } catch (error: any) {
-        toast({
-          title: "Erro",
-          description: error || "Erro ao criar conta.",
-          duration: 2000,
-        });
-      }
-    });
+  async function onSubmit(data: SignOnTypeForm) {
+    try {
+      await signUpAction({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        birthday: data.birthday,
+      });
+      toast({
+        title: "Sucesso",
+        description: "Conta criada com sucesso.",
+        duration: 2000,
+      });
+      router.push(`/signup/verify-email/?email=${data?.email}`);
+    } catch (error: any) {
+      toast({
+        title: "Erro",
+        description: error?.message ?? "Erro ao criar conta.",
+        duration: 2000,
+      });
+    }
   }
 
   return (
@@ -150,7 +147,11 @@ export function SignUpForm() {
           )}
         />
 
-        <Button disabled={isPending} isLoading={isPending} label="Continue">
+        <Button
+          disabled={form.formState.isSubmitting}
+          isLoading={form.formState.isSubmitting}
+          label="Continue"
+        >
           <span className="sr-only">Continue to email verification page</span>
         </Button>
       </form>

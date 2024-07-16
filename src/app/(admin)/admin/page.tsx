@@ -5,9 +5,10 @@ import { redirect } from "next/navigation";
 import CreateThemeDialog from "@/components/CreateThemeDialog";
 import { PostForm } from "@/components/Forms/create-post-form";
 import { getListThemesAction } from "@/actions/themes/list-themes/list-theme";
+import { env } from "../../../../env.mjs";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? ""),
+  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL ?? ""),
   title: "Admin Page",
   description: "Private Page for admins",
 };

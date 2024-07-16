@@ -18,7 +18,7 @@ export default function SecondSection(props: SecondSectionProps) {
     {
       title: "👌 O que pretendo aprender",
       content:
-        "Dentre as infinitas tecnologias disponíveis, basta sabermos tudo (👀). Temos de ser seletivos em que iremos aprender pois diferentemente das possibilidades nosso tempo é limitado. Com isso, tenho como meta o desenvolvimento full-stack e atualmente busco aprender, também, SQL e NodeJs. Estou em busca de conhecimento em banco de dados relacional e frameworks amplamente utilizados no mercado como NestJS e outros como prioridade secundária. Como ORM, utilizo Prisma (assim como nesse projeto) e estou de olho no DrizzleORM (além dos já consolidados no mercado como Knex e TypeORM e Sequelize). Cabe ressaltar o incrível ecossistema do NextJs que, através da facilidade do serveless, permite a criação de aplicações escaláveis e efetuar o pagamento somente pelo custo efetivo.",
+        "Dentre as infinitas tecnologias disponíveis, basta sabermos tudo (👀). Temos de ser seletivos em que iremos aprender pois diferentemente das possibilidades nosso tempo é limitado. Com isso, tenho como meta o desenvolvimento full-stack e atualmente busco aprender, também, SQL e NodeJs. Estou em busca de conhecimento em banco de dados relacional e frameworks amplamente utilizados no mercado como NestJS e outros como prioridade secundária. Como ORM, utilizo Prisma (assim como nesse projeto) e estou de olho no DrizzleORM (além dos já consolidados no mercado como Knex e TypeORM e Sequelize). Cabe ressaltar o incrível ecossistema do NextJs que, através da facilidade do serveless abre diversas portas.",
     },
   ];
 

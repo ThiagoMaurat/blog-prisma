@@ -16,7 +16,6 @@ type Inputs = z.infer<typeof verfifyEmailSchema>;
 
 export function VerifyEmailForm({ email }: { email: string }) {
   const router = useRouter();
-  const [isPending, startTransition] = React.useTransition();
 
   // react-hook-form
   const form = useForm<Inputs>({
@@ -29,29 +28,26 @@ export function VerifyEmailForm({ email }: { email: string }) {
 
   const { toast } = useToast();
 
-  function onSubmit(data: Inputs) {
-    startTransition(async () => {
-      try {
-        await validateEmailCodeAction({
-          ...data,
-        });
+  async function onSubmit(data: Inputs) {
+    try {
+      await validateEmailCodeAction({
+        ...data,
+      });
 
-        toast({
-          title: "Sucesso",
-          description: "Email verificado com sucesso. Favor logar.",
-          duration: 2000,
-        });
+      toast({
+        title: "Sucesso",
+        description: "Email verificado com sucesso. Favor logar.",
+        duration: 2000,
+      });
 
-        router.push("/signin");
-      } catch (error: any) {
-        console.log(error);
-        toast({
-          title: "Erro",
-          description: error?.message || "Erro ao verificar o email.",
-          duration: 2000,
-        });
-      }
-    });
+      router.push("/signin");
+    } catch (error: any) {
+      toast({
+        title: "Erro",
+        description: error?.message || "Erro ao verificar o email.",
+        duration: 2000,
+      });
+    }
   }
 
   return (
@@ -72,7 +68,11 @@ export function VerifyEmailForm({ email }: { email: string }) {
         label="Código de verificação"
       />
 
-      <Button disabled={isPending} label="Criar conta" isLoading={isPending} />
+      <Button
+        disabled={form.formState.isSubmitting}
+        label="Criar conta"
+        isLoading={form.formState.isSubmitting}
+      />
     </form>
   );
 }

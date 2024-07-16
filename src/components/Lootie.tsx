@@ -10,7 +10,7 @@ export const Lottie = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    if (!containerRef.current) {
+    if (!containerRef.current || document === undefined) {
       return;
     }
 

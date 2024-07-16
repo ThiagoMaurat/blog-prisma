@@ -7,12 +7,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/CardNav/card";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/server/auth";
 import { VerifyEmailForm } from "@/components/Forms/verify-email-form/verify-email-form";
+import { env } from "../../../../../env.mjs";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? ""),
+  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL ?? ""),
   title: "Verify Email",
   description: "Verify your email address to continue with your sign up",
 };
@@ -26,8 +25,6 @@ interface VerifyEmailPageProps {
 export default async function VerifyEmailPage({
   searchParams,
 }: VerifyEmailPageProps) {
-  const user = await getServerSession(authOptions);
-
   return (
     <div className="my-auto">
       <Card className="max-w-[420px] w-full mx-auto md:mx-0 h-fit">

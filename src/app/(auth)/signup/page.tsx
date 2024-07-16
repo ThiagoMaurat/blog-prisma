@@ -8,9 +8,10 @@ import {
   CardTitle,
 } from "@/components/CardNav/card";
 import { SignUpForm } from "@/components/Forms/singup/signup-form";
+import { env } from "../../../../env.mjs";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? ""),
+  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL ?? ""),
   title: "Sign Up",
   description: "Sign up for an account",
 };
