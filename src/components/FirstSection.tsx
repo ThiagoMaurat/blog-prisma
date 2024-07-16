@@ -1,9 +1,8 @@
-"use client";
 import React from "react";
-import { Lottie } from "./Lootie";
 import Link from "next/link";
 import { Button } from "@/components/Button";
-import { NoSSRWrapper } from "@/hooks/no-ssr-wrapper";
+import NoSsrWrapper from "@/hooks/no-ssr-wrapper";
+import Lottie from "./Lootie";
 
 export default function FirstPage() {
   return (
@@ -23,9 +22,9 @@ export default function FirstPage() {
       </article>
 
       <aside className="max-w-full md:max-w-[50%] w-full">
-        <NoSSRWrapper>
+        <NoSsrWrapper>
           <Lottie />
-        </NoSSRWrapper>
+        </NoSsrWrapper>
       </aside>
     </section>
   );
