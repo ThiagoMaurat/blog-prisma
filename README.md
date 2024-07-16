@@ -2,7 +2,7 @@
 
 Welcome to my personal portfolio, an innovative platform that leverages cutting-edge technologies to create an amazing experience for developers users! 🚀🚀
 
-![Texto Alternativo](https://blog-prisma-gray.vercel.app/Slider/blog-project/blog-dark.png)
+![Texto Alternativo](http://rco4s8s.195.26.247.60.sslip.io/Slider/blog-project/blog-dark.png)
 
 ## Main Technologies used
 
@@ -10,15 +10,14 @@ Welcome to my personal portfolio, an innovative platform that leverages cutting-
 - Next.js - A React framework that makes it easy to build modern web applications, with server-side rendering, simplified routing, and many powerful features.
 - shadcn/ui - Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.
 - Prisma - A modern Object-Relational Mapping (ORM) for Node.js and TypeScript, simplifying interaction with SQL databases and providing an efficient development experience.
-- PlanetScale - A cloud-native distributed database, designed to scale effortlessly and deliver consistent performance for modern applications.
+- Turso - Build with and integrate SQLite into your production applications. Whether you’re building with a single database or millions with a per-tenant architecture for mobile, web or desktop, Turso has all the developer tools you need to integrate in seconds.
 - Next-Auth - Auth.js is a set of open-source packages that are built on Web Standard APIs for authentication in modern applications with any framework on any platform in any JS runtime.
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (v18.17 or later)
 - [Pnpm](https://pnpm.io/pt/) (opcional)
-- [MySql](https://www.mysql.com/) (Planet Scale)
-- [Docker](https://www.docker.com/) (may be needed for shadowDatabaseUrl)
+- [Docker](https://www.docker.com/)
 
 ### Installation
 
@@ -43,30 +42,13 @@ Welcome to my personal portfolio, an innovative platform that leverages cutting-
 
    ```
 
-4. May be needed docker-compose image for prisma shadowDatabaseUrl
-
-   ```bash
-   docker compose up
+   ```
 
    ```
 
-5. Run the migrations
+4. Run the migrations
 
    ```bash
    pnpm prisma migrate dev
-
-   ```
-
-6. Run the migrations
-
-   ```bash
-   pnpm prisma migrate dev
-
-   ```
-
-7. Run the seed
-
-   ```bash
-   pnpm run seed
 
    ```
